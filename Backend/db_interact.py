@@ -1,51 +1,30 @@
-import sqlite3
+from socket import IPV6_DSTOPTS
+import mysql.connector
 
-sqliteConnection = sqlite3.connect('skillcloud.db')
-cursor = sqliteConnection.cursor()
+mydb = mysql.connector.connect(
+  host="127.0.0.1",
+  port=3306,
+  user="root",
+  password="admin",
+  database = "skillcloud"
+)
 
+cursor = mydb.cursor()
+# cursor.execute("CREATE DATABASE skillcloud")
+# cursor.execute("DROP TABLE projects")
 
-# cursor.execute('DROP TABLE IF EXISTS users_login')
-# cursor.execute('DROP TABLE IF EXISTS users')
-
-create_login = """CREATE TABLE users_login (
-                email TEXT PRIMARY KEY,
-                password TEXT);"""
-
-create_users = """CREATE TABLE users (
-                email TEXT PRIMARY KEY,
-                fname TEXT,
-                lname TEXT,
-                job_title TEXT,
-                role TEXT,
-                level TEXT,                
-                edu_name TEXT,         
-                edu_school TEXT,         
-                edu_gradyear TEXT,        
-                edu_summary TEXT,
-                project_ids TEXT,
-                certifications TEXT,
-                availability TEXT
-                );"""
-
-create_projects = """CREATE TABLE projects (
-                project_id TEXT,
-                project_title TEXT,
-                project_author TEXT,
-                project_createdate TEXT,
-                project_startdate TEXT,
-                project_enddate TEXT,
-                project_length TEXT,
-                project_desc TEXT,  
-                project_state TEXT,
-                project_roles TEXT,
-                project_github TEXT
-                );"""
+sql = "DELETE FROM projects WHERE project_id = '1'"
+cursor.execute(sql)
+mydb.commit()
 
 
-# cursor.execute(create_login)
-# cursor.execute(create_projects)
-# cursor.execute(create_users)
-sqliteConnection.commit()
-sqliteConnection.close()
+# create_login = """CREATE TABLE users_login (
+#                 email TEXT PRIMARY KEY,
+#                 password TEXT);"""
+
+# cursor.execute("CREATE TABLE roles (project_id TEXT,role_category TEXT,role_title TEXT,role_desc TEXT,role_no_needed TEXT);")
+# cursor.execute("CREATE TABLE projects (project_id TEXT,project_title TEXT,project_author TEXT,project_createdate TEXT,project_startdate TEXT,project_enddate TEXT,project_summary TEXT,project_state TEXT);")
+# cursor.execute("CREATE TABLE users (email TEXT,fname TEXT,lname TEXT,job_title TEXT,job_category TEXT,job_desc TEXT,previous_roles TEXT,edu_name TEXT,edu_school TEXT,edu_summary TEXT,project_ids TEXT,certifications TEXT,availability TEXT);")
+
 
 

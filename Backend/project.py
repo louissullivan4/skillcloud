@@ -1,6 +1,7 @@
-from inspect import modulesbyfile
 import mysql.connector
 from datetime import date
+import random
+from gf import check_id
 
 mydb = mysql.connector.connect(
   host="localhost",
@@ -49,8 +50,9 @@ class Project:
                 roles.append(role)
         return roles
 
-    def create_project(self, id, title, author, start_date, end_date, summary, state, roles):
+    def create_project(self, title, author, start_date, end_date, summary, state, roles):
         today = str(date.today())
+        id = check_id(mydb)
         cursor = mydb.cursor()
         sql = "SELECT * FROM projects WHERE project_id = %s"
         cursor.execute(sql, (id, ))
@@ -94,7 +96,8 @@ class Project:
             self.roles = self.get_roles(id)
             return (self.id, self.title, self.author, self.create_date, self.start_date, self.end_date, self.summary, self.state, self.roles)
 
-p1 = Project()
-p1.create_project('1', 'Tree View Estate Development', 'louis@gmail.com', '2022/10/01', '2023/4/01', 'Development of 20 house estate called TreeView on the North East side of Cork City.', 'Open', [['Trades workers, construction, electrical and other related', 'Electrician', 'Electrician with multiple year experience for private and commercial projects', '4'], ['Trades workers, construction, electrical and other related', 'Block Layers', 'Block Layers for private and commercial projects. Experience not needed but ideal', '8']])
 
-print(p1.get_project('1'))
+p1 = Project()
+p1.create_project('Tree View Estate Development', 'louis@gmail.com', '2022/10/01', '2023/4/01', 'Development of 20 house estate called TreeView on the North East side of Cork City.', 'Open', [['Trades workers, construction, electrical and other related', 'Electrician', 'Electrician with multiple year experience for private and commercial projects', '4'], ['Trades workers, construction, electrical and other related', 'Block Layers', 'Block Layers for private and commercial projects. Experience not needed but ideal', '8']])
+
+# print(p1.get_project(''))
