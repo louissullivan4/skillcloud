@@ -4,6 +4,9 @@
     box-sizing: border-box;
     font-family: Helvetica, sans-serif;
 }
+h1 {
+    margin-left: 3em;
+}
 .sidebar{
     width: 5em;
     height: 100%;

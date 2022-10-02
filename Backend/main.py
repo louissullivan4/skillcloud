@@ -1,5 +1,7 @@
-import sqlite3
 from match_skills import match_job
+from db_connect import connect_db
+
+mydb = connect_db()
 
 def get_final_candidates_dict(job, candidates):
     percentages_dict = {}
@@ -10,8 +12,7 @@ def get_final_candidates_dict(job, candidates):
     return dict(sorted(final_dict.items(), key=lambda val: val[1]))
 
 def get_input_users(category):
-    sqliteConnection = sqlite3.connect('skillcloud.db')
-    cursor = sqliteConnection.cursor()
+    cursor = mydb.cursor()
     cursor.execute("SELECT * FROM users")
     row = cursor.fetchall()
     candidates = []

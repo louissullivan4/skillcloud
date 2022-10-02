@@ -1,13 +1,6 @@
-from socket import IPV6_DSTOPTS
-import mysql.connector
+from db_connect import connect_db
 
-mydb = mysql.connector.connect(
-  host="127.0.0.1",
-  port=3306,
-  user="root",
-  password="admin",
-  database = "skillcloud"
-)
+mydb = connect_db()
 
 cursor = mydb.cursor()
 # cursor.execute("CREATE DATABASE skillcloud")

@@ -1,14 +1,8 @@
-import mysql.connector
 from datetime import date
-import random
 from gf import check_id
+from db_connect import connect_db
 
-mydb = mysql.connector.connect(
-  host="localhost",
-  user="root",
-  password="admin",
-  database="skillcloud"
-)
+mydb = connect_db()
 
 class Project:
     def __init__(self):
