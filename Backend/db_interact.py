@@ -6,7 +6,7 @@ cursor = mydb.cursor()
 # cursor.execute("CREATE DATABASE skillcloud")
 # cursor.execute("DROP TABLE projects")
 
-sql = "DELETE FROM projects WHERE project_id = '1'"
+sql = "DELETE FROM projects WHERE project_id = '06135534'"
 cursor.execute(sql)
 mydb.commit()
 

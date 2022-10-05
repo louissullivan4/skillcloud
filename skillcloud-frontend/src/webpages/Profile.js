@@ -1,26 +1,17 @@
-import { useEffect, useState } from "react";
-import { Navigate } from "react-router-dom";
-
 import Sidebar from "../components/Sidebar";
 
 import "../index.css";
 
 function Home() {
-    const authenticated = localStorage.getItem("authenticated") || false;
-    const [auth, setauth] = useState(authenticated);
-    useEffect(() => {
-        setauth(authenticated);
-    }, [authenticated]);
-    console.log(auth);
-    if (!auth) {
-        console.log("not authenticated");
-        return <Navigate replace to="/loginform" />;
-    } else {
     return (
-        <div className="App">
+        <div>
             <Sidebar/>
-            <h1>Profile</h1>
+            <div className="page">
+                <div className="pageheading">
+                    <h1>Profile</h1>
+                </div>
+            </div>
         </div>
-    );}
+    );
 }
 export default Home;

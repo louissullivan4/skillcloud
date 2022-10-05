@@ -1,4 +1,5 @@
 from datetime import date
+from re import S
 from gf import check_id
 from db_connect import connect_db
 
@@ -86,12 +87,39 @@ class Project:
             self.start_date = row[4]
             self.end_date = row[5]
             self.summary = row[6]
-            self.state = row[6]
+            self.state = row[7]
             self.roles = self.get_roles(id)
             return (self.id, self.title, self.author, self.create_date, self.start_date, self.end_date, self.summary, self.state, self.roles)
 
+    def create_project_pane(self, num=20):
+        cursor = mydb.cursor()
+        sql = "SELECT project_id, project_title, project_summary, project_state, project_createdate FROM projects ORDER BY project_createdate DESC LIMIT %s"
+        cursor.execute(sql, (num, ))
+        row = cursor.fetchall()
+        if row == None:
+            project_json = {"Status Code": 404, "Message": "Error! No projects exist."}
+        else:
+            projects = []
+            for project in row:
+                project_json = {"id":project[0], "title":project[1], "summary":project[2], "state":project[3]}
+                projects.append(project_json)
+            projects_json = {"result":projects}
+            return projects_json
+    
+    def get_project_json(self):
+        roles_json = []
+        for val in self.roles:
+            role_json = {"role_category":val[1], "role_title":val[2], "role_desc":val[3], "role_no_needed":val[4]}
+            roles_json.append(role_json)
+        projects = []
+        project_json = {"id":self.id, "title":self.title, "author":self.author, "create_date":self.create_date, "start_date":self.start_date, "end_date":self.end_date, "summary":self.summary, "state":self.state, "roles":roles_json}
+        projects.append(project_json)
+        projects_json = {"result":projects}
+        return projects_json
 
-p1 = Project()
-p1.create_project('Tree View Estate Development', 'louis@gmail.com', '2022/10/01', '2023/4/01', 'Development of 20 house estate called TreeView on the North East side of Cork City.', 'Open', [['Trades workers, construction, electrical and other related', 'Electrician', 'Electrician with multiple year experience for private and commercial projects', '4'], ['Trades workers, construction, electrical and other related', 'Block Layers', 'Block Layers for private and commercial projects. Experience not needed but ideal', '8']])
 
-# print(p1.get_project(''))
+
+# p1 = Project()
+# p1.create_project('DB Productions', 'ddotbridge@gmail.com', '2022-10-02', '2023-6-31', 'A production of a short film starring one actor who plays multiple roles.', 'Closed', [['Acting, Music and other Creative Arts', 'Actor', 'Looking for a male actor who has a wealth of experience. Preferred to have starred in silent pieces and to be an expert in the field of interpretive dancing.', '1']])
+
+# # print(p1.get_project(''))
