@@ -3,7 +3,7 @@ from flask_cors import CORS
 
 import json
 
-from project import Project
+from Classes.project import Project
 
 app = Flask(__name__)
 CORS(app)

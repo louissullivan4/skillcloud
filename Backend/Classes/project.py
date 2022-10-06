@@ -1,7 +1,7 @@
 from datetime import date
 from re import S
-from gf import check_id
-from db_connect import connect_db
+from Tools.gf import check_id
+from Database.db_connect import connect_db
 
 mydb = connect_db()
 
@@ -118,8 +118,9 @@ class Project:
         return projects_json
 
 
-
 # p1 = Project()
 # p1.create_project('DB Productions', 'ddotbridge@gmail.com', '2022-10-02', '2023-6-31', 'A production of a short film starring one actor who plays multiple roles.', 'Closed', [['Acting, Music and other Creative Arts', 'Actor', 'Looking for a male actor who has a wealth of experience. Preferred to have starred in silent pieces and to be an expert in the field of interpretive dancing.', '1']])
+# # p1.create_project('Trew View Real Estate', 'louis@gmail.com', '2022-11-02', '2023-7-31', 'Development of 5, bungalow houses in Waterford city', 'Open', [['Trades workers, construction, electrical and other related', 'Electritian', 'Electritian with multiple years experience in house related projects. Skills include wiring and smoke alarms', '1'], ['Trades workers, construction, electrical and other related', 'Plumber', 'Plumber with multiple years experience in house related projects. Skills include restroom piping and immersion tanks', '1'], ['Trades workers, construction, electrical and other related', 'Block Layers', 'Block Layers with diffrent levels of experience both junior and senior accepted. Must have be fully qualified', '3']])
+# p1.create_project('Banana Apps', 'laiah@gmail.com', '2022-11-02', '2023-8-31', 'A new app coming to android and ios.', 'Open', [['Information and communications technology', 'Software Engineer', 'Backend app developer with skills in the following technologies, android, ios, sqlite3, xml and java. Must have a degree in Computer Science or related degrees.', '1'], ['Information and communications technology', 'UI/UX Designer', 'UI/UX Designer that has used wireframe, photoshop and has done app development before. Portfolio and related degree', '1']])
 
-# # print(p1.get_project(''))
+# print(p1.get_project(''))

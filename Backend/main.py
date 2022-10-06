@@ -1,5 +1,5 @@
 from match_skills import match_job
-from db_connect import connect_db
+from Database.db_connect import connect_db
 
 mydb = connect_db()
 
