@@ -1,6 +1,5 @@
 from flask import Flask
 from flask_cors import CORS
-
 import json
 
 from Classes.project import Project

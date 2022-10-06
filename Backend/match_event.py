@@ -25,14 +25,8 @@ def get_input_users(category):
 
 
 def main():
-    # category = 'Information and communications technology'
     category = 'Trades workers, construction, electrical and other related'
-    # job = """Backend developer with computer science degree and experience in Kubernetes for 10 years"""
     job = """Electrician with multiple year experience for private and commercial projects"""
-    # person1 = ['1@gmail.com', """Computer science backend developer with 10 years in kubernetes and some frontend development in react.js. projects worked on include htp and cisco"""]
-    # person2 = ['2@gmail.com', """Computer science frontend developer with experience in Docker"""]
-    # person3 = ['3@gmail.com',"""Butcher with experience in business building"""]
-    # candidates = [person1, person2, person3]
     final = {}
     candidates = get_input_users(category)
     final = get_final_candidates_dict(job, candidates)
