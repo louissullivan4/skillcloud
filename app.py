@@ -8,7 +8,7 @@ app = Flask(__name__)
 CORS(app)
 
 @app.route('/')
-def welcome():
+def index():
     homepage = """
         <br>
         <p>Welcome to SkillCloud's backend server.</p>
@@ -16,13 +16,13 @@ def welcome():
     """
     return homepage
 
-@app.route('/home')
+@app.route('/home/ ', methods=['GET'])
 def homepage():
     home_panes = Project();
     project_panes = home_panes.create_project_pane()
     return json.dumps(project_panes)
 
-@app.route('/project/<string:id>')
+@app.route('/project/<string:id>/', methods=['GET'])
 def projectpage(id: str):
     project = Project();
     project.get_project(id)
@@ -30,5 +30,5 @@ def projectpage(id: str):
     return json.dumps(project_json)
 
 
-if __name__ == "__main__":
-    app.run()
+if __name__ == '__main__':
+    app.run(threaded=True, port=5000)
