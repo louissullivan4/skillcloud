@@ -1,7 +1,7 @@
 from datetime import date
 from re import S
 from Tools.gf import check_id
-from Database.db_connect import connect_db
+from db_connect import connect_db
 
 mydb = connect_db()
 
@@ -45,18 +45,18 @@ class Project:
                 roles.append(role)
         return roles
 
-    def create_project(self, title, author, start_date, end_date, summary, state, roles):
+    def create_project(self, title, author, start_date, end_date, summary, roles):
         today = str(date.today())
         id = check_id(mydb)
         cursor = mydb.cursor()
-        sql = "SELECT * FROM projects WHERE project_id = %s"
+        sql = "SELECT * FROM projects WHERE project_id = %s"                
         cursor.execute(sql, (id, ))
         row = cursor.fetchone()
         if row == None:
             sql = """INSERT INTO projects 
                 (project_id, project_title, project_author, project_createdate, project_startdate, project_enddate, project_summary, project_state)
-                VALUES (%s,%s,%s,%s,%s,%s,%s,%s)"""
-            val = (id, title, author, today, start_date, end_date, summary, state)
+                VALUES (%s,%s,%s,%s,%s,%s,%s,'Open')"""
+            val = (id, title, author, today, start_date, end_date, summary)
             cursor.execute(sql, val)
             mydb.commit()
             self.id = id

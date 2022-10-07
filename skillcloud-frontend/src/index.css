@@ -47,3 +47,36 @@
 .pagecontent p{
     padding-bottom: 2em;
 }
+
+.addrow-btn {
+    margin-bottom: 1em;
+}
+
+.create-project-buts{
+    margin-bottom: 2em;
+}
+
+.but-pos {
+    background-color: #50fa7b;
+    border-color: #50fa7b;
+}
+
+.but-pos:hover {
+    background-color: #2eb34f;
+    border-color: #2eb34f;
+}
+
+.but-neg {
+    background-color: #ff5555;
+    border-color: #ff5555;
+}
+
+.but-neg:hover {
+    background-color: #be1d1d;
+    border-color: #be1d1d;
+}
+
+.but-submit {
+    background-color: #8bbefd;
+    border-color: #8be9fd;
+}

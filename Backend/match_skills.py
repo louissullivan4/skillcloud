@@ -3,12 +3,13 @@ from sklearn.feature_extraction.text import CountVectorizer
 from sklearn.metrics.pairwise import cosine_similarity
 from nltk.tokenize import word_tokenize
 from nltk.corpus import stopwords
+import nltk
 
 
-# nltk.download('punkt')
-# nltk.download('stopwords')
-# nltk.download('wordnet')
-# nltk.download('omw-1.4')
+nltk.download('punkt')
+nltk.download('stopwords')
+nltk.download('wordnet')
+nltk.download('omw-1.4')
 
 def tokenise_descs(val):
     return word_tokenize(val)
@@ -25,7 +26,6 @@ def convert_string(val):
 
 def get_percent_match(tests):
     candidates = {}
-    print(tests)
     for val in range(len(tests)-1):
         Match_Test=[tests[0], tests[val+1]]
         count_vect = CountVectorizer()

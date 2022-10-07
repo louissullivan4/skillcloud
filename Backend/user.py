@@ -1,4 +1,5 @@
-from Database.db_connect import connect_db
+
+from db_connect import connect_db
 
 mydb = connect_db()
 
@@ -69,4 +70,7 @@ class User:
 p1 = User()
 p2 = User()
 p3 = User()
-p1.create_user("cl@gmail.com", "Clara", "Marsh", "Dairy Farmer", "Agricultural, forestry and fishery labourers", "Responsible for managing and caring for dairy cows. and feeding animals, administering medication, and discarding waste in a safe manner, maintaining & operating milking equipment, harvesting feed, and collaborating with animal nutritionists.", "Raised and milked on average cows twice daily. Operated heavy equipment. Performed test on feed and hay production for the University of Tennessee Department of Agriculture. Responsible for the raising, cleaning and caring of the calves and chickens.", "Leaving Certificate", "Ursuline", "English, Maths, Irish, Economics, Home Economics, Chemistry, Accounting", "Level 5 Certificate in Agriculture Award", "Open")
+
+p1.create_user("bob@gmail.com", "Bob", "Wall", "Actor", "Acting, Music and other Creative Arts", "Actor of ten years with roles in multiple classic pieces. Took 2 years of interpertive dance school and ballet", " ", "Bachelor in Acting", "Trinity College Dublin", "Acting and Text, Movement Studies and Voice Studies. Multiple performances over a 7-day period and will play to invited agents, directors, producers, as well as the general public", " ", "Open")
+p2.create_user("niamh@gmail.com", "Niamh", "Morrison", "Electrician", "Trades workers, construction, electrical and other related", " Electrician with three years and is involved in the installation, commissioning, testing and maintenance of various wiring systems and services in domestic, commercial and industrial applications.", " ",  "Electrical Apprenticeship", "Kerry College of Further Education", "Panel Wiring, Household electrics and Intruder and Fire Alarm Systems", "QQI Level 6", "Open")
+p3.create_user("cian@gmail.com", "Cian", "Flynn", "App Developer", "Information and communications technology", "Junior Software Engineer who is heavily invovled with android app development in java", " ",  "Computer Science", "University College Cork", "Databases, Programming, Web Development, Algorithms and Databases", "Associate Android Developer Google Certification", "Open")
