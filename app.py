@@ -16,13 +16,13 @@ def index():
     """
     return homepage
 
-@app.route('/home/ ', methods=['GET'])
+@app.route('/home')
 def homepage():
     home_panes = Project();
     project_panes = home_panes.create_project_pane()
     return json.dumps(project_panes)
 
-@app.route('/project/<string:id>/', methods=['GET'])
+@app.route('/project/<string:id>')
 def projectpage(id: str):
     project = Project();
     project.get_project(id)
