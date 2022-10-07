@@ -1,5 +1,4 @@
 from datetime import date
-from re import S
 from gf import check_id
 from db_connect import connect_db
 
