@@ -1,49 +1,87 @@
 import React, { useEffect, useState } from 'react'
 
 import { Form, Row, Col, Button } from "react-bootstrap";
+import { useNavigate } from "react-router-dom";
 
 import "../index.css";
 
 
 function ProjectForm() {
-    // const [user, setUser] = useState(localStorage.getItem("username"));
-    // localStorage.setItem("username", user);
+    // const [user, setUser] = useState();
+    localStorage.setItem("username", "test@gmail.com");
     // setUser("amy@gmail.com")
-    const [projectDetails, setProjectDetails] = useState([]);
-    const [roleList, setRoleList] = useState([{ 
+    const [projectDetails, setProjectDetails] = useState(
+        {roles: [{ 
         role_category: "",
         role_title: "",
         role_desc: "",
         role_no_needed: "",
-    },]);
+        },]}
+    );
 
-    const submitHandler = (e) => {
-        e.preventDefault()
-        console.log(projectDetails)
-        console.log(roleList)
-    }
-
-    const roleHandler = (e, index, name) => {
-        let newList = [...roleList];
-        newList[index][name] = e.target.value;
-        setRoleList(newList);
-    }
-
-    const addRole = () => {
-        let newRole = { 
-            role_category: "",
-            role_title: "",
-            role_desc: "",
-            role_no_needed: "",
+    const sendData = async () => {
+        const resp = await fetch(`http://127.0.0.1:5000/createproject`,{'method':'POST', headers : {'Content-Type':'application/json'}, body: JSON.stringify(projectDetails)})
+        if (resp.status === 200) {
+            alert("Project created successfully");
+            window.location.reload(false);
+        } else {
+            alert("Project creation failed. Please try again.");
         }
-        setRoleList([...roleList, newRole])
+
       };
 
+    useEffect(() => {
+        const authorAdd = {...projectDetails, project_author: localStorage.getItem("username")}
+        setProjectDetails(authorAdd)
+    }, []);
+
+    const validateForm = () => {
+        let valid = true;
+        let message = "";
+        let start = new Date(projectDetails.project_startdate);
+        let end = new Date(projectDetails.project_enddate);
+        console.log(start);
+        console.log(end);
+        console.log(projectDetails.start_date);
+        if (projectDetails.project_title === "" || projectDetails.project_summary === "" || projectDetails.project_startdate === "" || projectDetails.project_enddate === "" || projectDetails.project_author === "") {
+            valid = false;
+            message = "Error! Please fill in all required fields";
+        } else if (start > end) {
+            valid = false;
+            message = "Error! Please choose a start date before the entered end date.";
+        }
+        projectDetails.roles.forEach((role) => {
+            if (role.role_category === "" || role.role_title === "" || role.role_desc === "" || role.role_no_needed === "" || role.role_category === "Select a role category..." || role.role_category < 1) {
+                valid = false;
+                message = "Error! Please fill in all required fields";
+            }
+        })
+        return [valid, message]
+    }
+
+    const submitHandler = (e) => {        
+        e.preventDefault()
+        let validated = validateForm()
+        if (validated[0]) {
+            sendData()
+        } else {
+            alert(validated[1])
+        }
+    };
+
+    const addRole = () => {
+        let newList = [...projectDetails.roles, {role_category: "", role_title: "", role_desc: "", role_no_needed: ""}]
+        let newProjectDetails = {...projectDetails, roles: newList}
+        setProjectDetails(newProjectDetails)
+    };
+
       const removeRole = () => {
-        let newList = [...roleList]
-        if (newList.length > 1){
+        let newList = [...projectDetails.roles]
+        let end = newList.length
+        if (end > 1){
             newList.pop();
-            setRoleList(newList);
+            let newProjectDetails = {...projectDetails, roles: newList}
+            setProjectDetails(newProjectDetails)
         }
       };
 
@@ -92,14 +130,14 @@ function ProjectForm() {
             </Col>
         </Row>
 
-        {roleList.map((role, index) => (
+        {projectDetails.roles.map((_role, index) => (
         <Row key={index} className="mb-3">
             <Col>
                 <Form.Group className="mb-3" controlId="formRoleTitle">
                     <Form.Control 
                     type="text" 
                     placeholder="Enter role title"
-                    onChange={e => roleHandler(e, index, "role_title")}
+                    onChange={e => projectDetails.roles[index]["role_title"] = e.target.value}
                     />
                 </Form.Group>
             </Col>
@@ -108,13 +146,13 @@ function ProjectForm() {
                     <Form.Control 
                     type="text" 
                     placeholder="Enter a detailed role description" 
-                    onChange={e => roleHandler(e, index, "role_desc")}
+                    onChange={e => projectDetails.roles[index]["role_desc"] = e.target.value}
                     />
                 </Form.Group>
             </Col>
             <Col>
                 <Form.Group controlId="formRoleCategory">
-                    <Form.Select onChange={e => roleHandler(e, index, "role_category")}>
+                    <Form.Select onChange={e => projectDetails.roles[index]["role_category"] = e.target.value}>
                         <option>Select a role category...</option>
                         <option>Acting, Music and other Creative Arts</option>
                         <option>Agricultural, forestry and fishery labourers</option>
@@ -141,7 +179,7 @@ function ProjectForm() {
                     placeholder="1" 
                     min='1'
                     max='100'   
-                    onChange={e => roleHandler(e, index, "role_no_needed")}
+                    onChange={e => projectDetails.roles[index]["role_no_needed"] = e.target.value}
                     />
                 </Form.Group>
             </Col>
@@ -154,17 +192,17 @@ function ProjectForm() {
                 Add another role +
             </Button>
             </Col>
-            {roleList.length > 1 && (
-                    <Col>
-                    <Button type="button" className="but-neg" onClick={removeRole}>
-                        Remove role - 
-                    </Button>
-                    </Col>
-                )}
+            {projectDetails.roles.length > 1 && (
+            <Col>
+            <Button type="button" className="but-neg" onClick={removeRole}>
+                Remove role - 
+            </Button>
+            </Col>
+            )}
         </Row>
         <Row>
             <Col>
-                <Button variant="primary" className="but-submit"  type="submit">
+                <Button variant="primary" className="but-submit"  type="submit" >
                     Create
                 </Button> 
             </Col>
@@ -172,5 +210,6 @@ function ProjectForm() {
         </Form>
     );
 }
+
 
 export default ProjectForm;

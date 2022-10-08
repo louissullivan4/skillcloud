@@ -5,7 +5,6 @@ import Profile from "./webpages/Profile";
 import Project from "./webpages/Project";
 import CreateProject from "./webpages/CreateProject";
 
-
 import LoginForm from "./components/LoginForm";
 import ProtectedRoutes from './components/ProtectedRoutes';
 

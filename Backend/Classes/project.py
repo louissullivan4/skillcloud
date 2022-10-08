@@ -20,10 +20,10 @@ class Project:
     def create_roles(self, project_id, roles):
         cursor = mydb.cursor()
         for val in roles:
-            role_category = val[0]
-            role_title = val[1]
-            role_desc = val[2]
-            role_no_needed = val[3]
+            role_category = val['role_category']
+            role_title = val['role_title']
+            role_desc = val['role_desc']
+            role_no_needed = val['role_no_needed']
             sql = """INSERT INTO roles 
                 (project_id, role_category, role_title, role_desc, role_no_needed)
                 VALUES (%s,%s,%s,%s,%s)"""
@@ -45,9 +45,18 @@ class Project:
                 roles.append(role)
         return roles
 
-    def create_project(self, title, author, start_date, end_date, summary, roles):
+    def create_project(self, requestjson):
+        # title, author, start_date, end_date, summary, roles
         today = str(date.today())
         id = check_id(mydb)
+        title = requestjson['project_title']
+        author = requestjson['project_author']
+        start_date = requestjson['project_startdate']
+        end_date = requestjson['project_enddate']
+        summary = requestjson['project_summary']
+        roles = requestjson['roles']
+        
+
         cursor = mydb.cursor()
         sql = "SELECT * FROM projects WHERE project_id = %s"                
         cursor.execute(sql, (id, ))
@@ -66,8 +75,16 @@ class Project:
             self.start_date = start_date
             self.end_date = end_date
             self.summary = summary
-            self.state = state
+            self.state = 'Open'
             self.roles = self.create_roles(id, roles)
+            if self.author == 'test@gmail.com':
+                sql = "DELETE FROM projects WHERE project_author = 'test@gmail.com'"
+                cursor.execute(sql)
+                mydb.commit()
+                sql = "DELETE FROM roles WHERE project_id = %s"
+                cursor.execute(sql, (self.id, ))
+                mydb.commit()
+            return 200
         else:
             return "Error! Project already exists."
             
