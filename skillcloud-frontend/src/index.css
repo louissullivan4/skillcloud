@@ -42,6 +42,9 @@
 
 .pageheading{
     padding-bottom: 2em;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
 }
 
 .pagecontent p{
@@ -79,4 +82,19 @@
 .but-submit {
     background-color: #8bbefd;
     border-color: #8be9fd;
+}
+
+.profileCard {
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-end;
+    align-items: flex-end;
+}
+
+.profileCardVals {
+    display: flex;
+    flex-direction: column;
+    flex-wrap: wrap;
+    align-content: center;
+
 }

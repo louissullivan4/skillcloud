@@ -22,8 +22,8 @@ function ProjectTile() {
                             style={{ height: '15em', width: '19em', margin: '1em'}}
                             border={tileData.state === 'Open' ? 'success' : 'danger'}
                             text='primary'>
-                            <Card.Header style={{color: "black"}}>{tileData.title}</Card.Header>
-                                <Card.Body style={{color: "black"}}>
+                            <Card.Header style={{color: "black",  height: '4em'}}>{tileData.title}</Card.Header>
+                                <Card.Body style={{color: "black", height: '10em'}}>
                                     <Card.Text>{tileData.summary}...</Card.Text>
                                 </Card.Body>
                             <Card.Footer style={{color: "black"}}>State: {tileData.state}</Card.Footer>

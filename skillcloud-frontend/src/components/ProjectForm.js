@@ -31,7 +31,7 @@ function ProjectForm() {
       };
 
     useEffect(() => {
-        const authorAdd = {...projectDetails, project_author: localStorage.getItem("username")}
+        const authorAdd = {...projectDetails, project_author: "test@gmail.com"}
         setProjectDetails(authorAdd)
     }, []);
 
@@ -91,7 +91,7 @@ function ProjectForm() {
             <Col sm={6}>
             <Form.Group className="mb-3" controlId="formTitle">
                 <Form.Label>Project Title</Form.Label>
-                <Form.Control type="text" placeholder="Enter project title" onChange={(e) => setProjectDetails({...projectDetails, project_title: e.target.value})}/>
+                <Form.Control maxLength={"25"} type="text" placeholder="Enter project title" onChange={(e) => setProjectDetails({...projectDetails, project_title: e.target.value})}/>
             </Form.Group>
             </Col>
             <Col>
