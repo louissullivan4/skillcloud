@@ -2,7 +2,8 @@ from flask import Flask, request
 from flask_cors import CORS
 import json
 
-from Classes.project import Project
+from project import Project
+from user import User
 
 app = Flask(__name__)
 CORS(app)
@@ -37,6 +38,14 @@ def createproject():
         return json.dumps({"Status Code": 200, "Message": "Success!"})
     else:
         return json.dumps({"Status Code": 404, "Message": "Error!"})
+
+@app.route('/profile/<string:email>')
+def profilepage(email: str):
+    user = User();
+    user.get_user(email)
+    user_json = user.get_user_json()
+    return json.dumps(user_json)
+
 
 
 if __name__ == "__main__":

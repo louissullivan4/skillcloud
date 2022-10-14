@@ -1,5 +1,5 @@
 import Sidebar from "../components/Sidebar";
-import ProjectForm from "../components/ProjectForm";
+import ProfileForm from "../components/ProfileForm";
 
 import { useNavigate } from "react-router-dom";
 
@@ -16,13 +16,13 @@ function Home() {
             <Sidebar/>
             <div className="page">
                 <div className="page-heading">
-                    <h1>Create Project</h1>
+                    <h1>Create Profile</h1>
                     <button type="button" className="butNeg" onClick={handleClick}>
                         Back to Home
                     </button>
                 </div>
                 <div className="page-content">
-                    <ProjectForm/>
+                    <ProfileForm/>
                 </div>
             </div>
         </div>

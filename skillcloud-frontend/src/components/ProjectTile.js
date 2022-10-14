@@ -1,9 +1,9 @@
 import React, { useEffect, useState } from 'react'
-import { Card, Row, Col, Container } from "react-bootstrap";
 import { Link } from 'react-router-dom';
 
 function ProjectTile() {
     const [tileData, setTileData] = useState([]); 
+
     useEffect(() => {
       const fetchData = async () => {
         const resp = await fetch('http://127.0.0.1:5000/home')
@@ -11,28 +11,26 @@ function ProjectTile() {
         setTileData(data.result);
       };
       fetchData()
-  }, []);
+    }, []);
+
     return (
-        <Container style={{ position: "absolute"}}>
-            <Row>
+        <div className='container'>
+            <div className='row'>
                 {tileData.map((tileData, k) => (
-                    <Col key={k} xs={12} md={6} lg={3}>
-                        <Link style={{textDecoration: "none"}} to={`/project/${tileData.id}`}>
-                        <Card
-                            style={{ height: '15em', width: '19em', margin: '1em'}}
-                            border={tileData.state === 'Open' ? 'success' : 'danger'}
-                            text='primary'>
-                            <Card.Header style={{color: "black",  height: '4em'}}>{tileData.title}</Card.Header>
-                                <Card.Body style={{color: "black", height: '10em'}}>
-                                    <Card.Text>{tileData.summary}...</Card.Text>
-                                </Card.Body>
-                            <Card.Footer style={{color: "black"}}>State: {tileData.state}</Card.Footer>
-                            </Card>
+                    <div className='col'>
+                        <Link to={`/project/${tileData.id}`}>
+                            <div className='card' key={k}>
+                                <div className='card-header'>{tileData.title}</div>
+                                    <div className='card-body'>
+                                        {tileData.summary}...
+                                    </div>
+                                <div className='card-footer'>State: {tileData.state}</div>
+                            </div>
                         </Link>
-                    </Col>
+                    </div>
                 ))}
-            </Row>
-        </Container>
+            </div>
+        </div>
     )
 }
 export default ProjectTile

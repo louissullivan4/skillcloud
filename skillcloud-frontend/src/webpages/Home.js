@@ -1,10 +1,8 @@
 import Sidebar from "../components/Sidebar";
 import ProjectTile from "../components/ProjectTile";
 
-import { Button } from "react-bootstrap";
 import { useNavigate } from "react-router-dom";
 
-import 'bootstrap/dist/css/bootstrap.min.css';
 import "../index.css";
 
 function Home() {
@@ -14,16 +12,16 @@ function Home() {
         navigate(path);
     }
     return (
-        <div className="App">
+        <div className="app">
             <Sidebar/>
             <div className="page">
-                <div className="pageheading">
+                <div className="page-heading">
                     <h1>Home</h1>
-                    <Button type="button" className="but-pos" onClick={handleClick}>
+                    <button type="button" className="but-pos" onClick={handleClick}>
                         Create Project
-                    </Button>
+                    </button>
                 </div>
-                <div className="pagecontent">
+                <div className="page-content">
                     <ProjectTile/>
                 </div>
             </div>

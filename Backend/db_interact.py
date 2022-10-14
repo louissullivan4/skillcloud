@@ -6,11 +6,15 @@ cursor = mydb.cursor()
 # cursor.execute("CREATE DATABASE skillcloud")
 # cursor.execute("DROP TABLE projects")
 
-sql = "DELETE FROM projects WHERE project_author = 'amy@gmail.com'"
+sql = "DELETE FROM users WHERE email = 'cian@gmail.com'"
 cursor.execute(sql)
 mydb.commit()
 
 
+# sql = "SELECT COUNT * FROM users WHERE email = 'sullivanlouis0@gmail.com'"
+# cursor.execute(sql)
+# row = cursor.fetchone()
+# print(row)
 # create_login = """CREATE TABLE users_login (
 #                 email TEXT PRIMARY KEY,
 #                 password TEXT);"""
