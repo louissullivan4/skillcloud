@@ -49,6 +49,7 @@ def match_job(job_desc, all_candidates):
         # if all_candidates.index(val) != 0:
         #     filtered =[w for w in filtered if w.lower() in job_desc]
         filtered_string = convert_string(filtered)
+        print(filtered_string)
         final.append(filtered_string)
     final_percent_dict = get_percent_match(final)
     return final_percent_dict

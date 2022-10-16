@@ -32,31 +32,66 @@ li a:hover {
 
 /* Profile */
 .page-content {
+    margin: 1em;
     display: grid;
-    grid-template-columns: 20% 80%;
-    gap: 50px;
+    grid-template-columns: 20%;
+    row-gap: 120px;
+    column-gap: 35px;
     grid-auto-rows: 25%;
 }
 .container-1 {
     grid-column: 1/2;
-    grid-row: 1/2;
 }
+
 .container-2 {
-    grid-column: 1/2;
-    grid-row: 2/2;
-}
-.container-3 {
     grid-column: 2/2;
 }
 .card {
-    padding: 30px;
+    padding: 20px;
     border: solid 1px rgba(0, 0, 0, 0.08);
+    margin-bottom: 1.5em;
 }
 .card-header {
     font-size: 18px;
     color: rgb(0, 0, 0);
+    margin-bottom: 1em;
+}
+.card-body-profile {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
 }
 .card-text {
     font-size: 18px;
     color: rgba(0, 0, 0, 0.6);
 }
+
+.card-image {
+
+    margin-bottom: 10px;
+}
+
+.tabs {  
+    display: flex;  
+  }
+  .tab {  
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    background: lightsteelblue; 
+    padding: 2em 0;  
+    border: none;
+  }
+  .tab.active {
+    background: steelblue;
+    font-weight: bold;
+  }
+  .chosen {
+    display: none;
+    padding: 10px;
+  }
+  .chosen.active {
+    display: block;
+  }
+  
