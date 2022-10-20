@@ -1,32 +1,46 @@
-import React, { useEffect, useState } from 'react'
-import { act } from 'react-dom/test-utils';
+import React, { useEffect, useState, useRef } from 'react'
 
 import { Link } from 'react-router-dom';
-
 
 function ProfileTabs() {
     localStorage.setItem("username", "sullivanlouis0@gmail.com");
     let email = "sullivanlouis0@gmail.com"
+
     const [userData, setUserData] = useState([]);
     const [userProjects, setUserProjects] = useState([]);
     const [userCerts, setUserCerts] = useState([]);
+    const [userEducation, setUserEducation] = useState([]);
+    const [userWork, setUserWork] = useState([]);
+    const hasFetchedData = useRef(false);
+
     useEffect(() => {
       const fetchData = async () => {
         const resp = await fetch('http://127.0.0.1:5000/profile/'+email)
         const data = await resp.json();
         setUserData(data.result[0]);
+
         const certs = data.result[0].certifications.split(',');
         setUserCerts(certs)
+
+        const education = data.result[0].education
+        setUserEducation(education)
+        
+        const work = data.result[0].work_experience
+        setUserWork(work)
+
         if (data.result[0].project_ids !== "None"){
             const ids = data.result[0].project_ids.split(',');
             for (let i = 0; i < ids.length; i++) {
                 const resp = await fetch('http://127.0.0.1:5000/project/'+ids[i])
                 const data = await resp.json();
-                setUserProjects([...userProjects, data.result[0]]);
+                setUserProjects(userProjects => [...userProjects, data.result[0]]);
             } 
         }
       };
-      fetchData()
+      if (hasFetchedData.current === false) {
+        fetchData();
+        hasFetchedData.current = true;
+      } 
     }, []);
     const [activeIndex, setActiveIndex] = useState(1);
     const handleClick = (index) => setActiveIndex(index);
@@ -66,14 +80,34 @@ function ProfileTabs() {
             <div className="card">
                 <div className="card-header">Education</div>
                     <div className="card-body">
-                        <div className='card'>
-                            <div className="card-text"><b>{userData.edu_name}</b></div>
-                            <div className="card-text">{userData.edu_school}</div>
-                            <div className="card-text">{userData.edu_summary}</div>
+                        {userEducation.map((userEducation, k) => (
+                        <div className='col' key={k}>
+                            <div className="card-text"><b>{userEducation.type}</b> {userEducation.degree}</div>
+                            <div className="card-text">{userEducation.school}</div>
+                            <div className="card-text">{userEducation.description}</div>
+                            <br></br>
                         </div>
+                        ))}
                     </div>
+                </div>
             </div>
         </div>
+        <div className="row">
+        <div className="col">
+            <div className="card">
+                <div className="card-header">Work Experience</div>
+                    <div className="card-body">
+                        {userWork.map((userWork, k) => (
+                        <div className='col' key={k}>
+                            <div className="card-text"><b>{userWork.name} - {userWork.job_title}</b></div>
+                            <div className="card-text">{userWork.startdate} - {userWork.enddate}</div>
+                            <div className="card-text">{userWork.description}</div>
+                            <br></br>
+                        </div>
+                        ))}
+                    </div>
+                </div>
+            </div>
         </div>
         <div className="row">
         <div className="col">
