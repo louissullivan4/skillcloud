@@ -134,8 +134,16 @@ class User:
         return (self.email, self.fname, self.lname, self.location, self.job_title, self.job_category, self.job_desc, self.work_experience, self.education, self.project_ids, self.certifications, self.availability)
 
     def get_user_json(self):
+        experience_json = []
+        for val in self.work_experience:
+            newVal = {"experience_name":val[1], "experience_title":val[2], "experience_start":val[3], "experience_end":val[4], "experience_desc":val[5]}
+            experience_json.append(newVal)
+        education_json = []
+        for val in self.education:
+            newVal = {"edu_type":val[1], "edu_degree":val[2], "edu_school":val[3], "edu_desc":val[4]}
+            education_json.append(newVal)
         user = []
-        user_json = {"email":self.email, "fname" : self.fname, "lname" : self.lname, "job_title" : self.job_title, "job_category" : self.job_category, "job_desc" : self.job_desc, "previous_roles" : self.previous_roles, "edu_name" : self.edu_name, "edu_school" : self.edu_school, "edu_summary" : self.edu_summary, "project_ids" : self.project_ids, "certifications" : self.certifications, "availability" : self.availability}
+        user_json = {"email" : self.email, "fname" : self.fname, "lname" : self.lname, "location" : self.location, "job_title" : self.job_title, "job_category" : self.job_category, "job_desc" : self.job_desc, "work_experience" : experience_json, "education" : education_json, "project_ids" : self.project_ids, "certifications" : self.certifications, "availability" : self.availability}
         user.append(user_json)
         user_json = {"result":user}
         return user_json

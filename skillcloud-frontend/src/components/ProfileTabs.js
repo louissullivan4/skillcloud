@@ -18,13 +18,14 @@ function ProfileTabs() {
         const resp = await fetch('http://127.0.0.1:5000/profile/'+email)
         const data = await resp.json();
         setUserData(data.result[0]);
+        console.log(data.result[0]);
 
         const certs = data.result[0].certifications.split(',');
         setUserCerts(certs)
 
         const education = data.result[0].education
         setUserEducation(education)
-        
+                
         const work = data.result[0].work_experience
         setUserWork(work)
 
@@ -82,9 +83,9 @@ function ProfileTabs() {
                     <div className="card-body">
                         {userEducation.map((userEducation, k) => (
                         <div className='col' key={k}>
-                            <div className="card-text"><b>{userEducation.type}</b> {userEducation.degree}</div>
-                            <div className="card-text">{userEducation.school}</div>
-                            <div className="card-text">{userEducation.description}</div>
+                            <div className="card-text"><b>{userEducation.edu_type}</b> {userEducation.edu_degree}</div>
+                            <div className="card-text">{userEducation.edu_school}</div>
+                            <div className="card-text">{userEducation.edu_desc}</div>
                             <br></br>
                         </div>
                         ))}
@@ -99,9 +100,9 @@ function ProfileTabs() {
                     <div className="card-body">
                         {userWork.map((userWork, k) => (
                         <div className='col' key={k}>
-                            <div className="card-text"><b>{userWork.name} - {userWork.job_title}</b></div>
-                            <div className="card-text">{userWork.startdate} - {userWork.enddate}</div>
-                            <div className="card-text">{userWork.description}</div>
+                            <div className="card-text"><b>{userWork.experience_name} - {userWork.experience_title}</b></div>
+                            <div className="card-text">{userWork.experience_start} - {userWork.experience_end}</div>
+                            <div className="card-text">{userWork.experience_desc}</div>
                             <br></br>
                         </div>
                         ))}
