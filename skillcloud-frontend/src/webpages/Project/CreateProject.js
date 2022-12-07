@@ -1,9 +1,9 @@
-import Sidebar from "../components/Sidebar";
-import ProjectForm from "../components/ProjectForm";
-
 import { useNavigate } from "react-router-dom";
 
-import "../index.css";
+import Sidebar from "../../components/Sidebar";
+import ProjectForm from "../../components/Project/ProjectForm";
+
+import "../../index.css";
 
 function Home() {
     let navigate = useNavigate(); 

@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import { Link } from 'react-router-dom';
 
-function ProjectTile() {
+const ProjectTile = () => {
     const [tileData, setTileData] = useState([]); 
 
     useEffect(() => {

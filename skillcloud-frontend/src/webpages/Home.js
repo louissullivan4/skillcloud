@@ -1,11 +1,11 @@
 import Sidebar from "../components/Sidebar";
-import ProjectTile from "../components/ProjectTile";
+import ProjectTile from "../components/Project/ProjectTile";
 
 import { useNavigate } from "react-router-dom";
 
 import "../index.css";
 
-function Home() {
+const Home = () => {
     let navigate = useNavigate(); 
     const handleClick = () =>{ 
         let path = `/createproject`; 

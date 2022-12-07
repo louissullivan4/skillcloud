@@ -1,13 +1,12 @@
 import React, { useEffect, useState } from 'react'
 
-import Sidebar from "../components/Sidebar";
-import ProfileTabs from '../components/ProfileTabs';
+import Sidebar from "../../components/Sidebar";
+import ProfileTabs from '../../components/Profile/ProfileTabs';
 
-import "../index.css";
+import "../../index.css";
 
-function Profile () {
-    localStorage.setItem("username", "sullivanlouis0@gmail.com");
-    let email = "sullivanlouis0@gmail.com"
+const Profile = () => {
+    let email = localStorage.user;
     let imageName = email.split('@')[0];
 
     const [userData, setUserData] = useState([]);
@@ -30,7 +29,7 @@ function Profile () {
                             <div className="col">
                                 <div className="card">
                                     <div className="card-body-profile">
-                                        <div className="card-image"> <img src={require(`../assets/profiles/${imageName}.jpg`)} height="150" width="auto" alt="Profile Pictures"/></div>
+                                        <div className="card-image"> <img src={require(`../../assets/profiles/${imageName}.jpg`)} height="150" width="auto" alt="Profile Pictures"/></div>
                                         <div className="card-text">{userData.fname} {userData.lname}</div>
                                         <div className="card-text">{userData.job_title}</div>
                                         <div className="card-text">{userData.location}</div>

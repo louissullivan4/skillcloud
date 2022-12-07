@@ -80,7 +80,7 @@ class Project:
                 sql = "DELETE FROM roles WHERE project_id = %s"
                 cursor.execute(sql, (self.id, ))
                 mydb.commit()
-            return 200
+            return 200, self.id
         else:
             return "Error! Project already exists."
             

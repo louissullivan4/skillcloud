@@ -109,8 +109,26 @@ class User:
             self.certifications = certifications
             self.availability = availability
             mydb.commit()
+            return "200"
+        elif row != None:
+            return "409"
         else:
-            return "Error! User already exists."
+            return "404"
+
+    def register_user(self, requestjson):
+        cursor = mydb.cursor()
+        email = requestjson['email']
+        pwd = requestjson['pwd']
+        cursor.execute("SELECT * FROM users WHERE email = %s", (email, ))
+        row = cursor.fetchone()
+        if row == None:
+            sql = """INSERT INTO users 
+                (email, pwd)
+                VALUES (%s,%s)"""
+            val = (email, pwd)
+            cursor.execute(sql, val)
+            mydb.commit()
+            return "200"
 
     def get_user(self, email):
         cursor = mydb.cursor()

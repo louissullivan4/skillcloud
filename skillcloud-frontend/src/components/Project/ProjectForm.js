@@ -1,11 +1,11 @@
 import React, { useEffect, useState } from 'react'
+import { useNavigate } from 'react-router-dom'
 
-import "../index.css";
+import "../../index.css";
 
-function ProjectForm() {
-    // const [user, setUser] = useState();
-    localStorage.setItem("username", "test@gmail.com");
-    // setUser("amy@gmail.com")
+const ProjectForm = () => {
+    const navigate = useNavigate();
+    const user = localStorage.user;
     const [projectDetails, setProjectDetails] = useState(
         {roles: [{ 
         role_category: "",
@@ -19,14 +19,15 @@ function ProjectForm() {
         const resp = await fetch(`http://127.0.0.1:5000/createproject`,{'method':'POST', headers : {'Content-Type':'application/json'}, body: JSON.stringify(projectDetails)})
         if (resp.status === 200) {
             alert("Project created successfully");
-            window.location.reload(false);
+            navigate('/');
         } else {
             alert("Project creation failed. Please try again.");
         }
       };
 
+    
     useEffect(() => {
-        const authorAdd = {...projectDetails, project_author: "test@gmail.com"}
+        const authorAdd = {...projectDetails, project_author: user}
         setProjectDetails(authorAdd)
     }, []);
 
@@ -35,9 +36,6 @@ function ProjectForm() {
         let message = "";
         let start = new Date(projectDetails.project_startdate);
         let end = new Date(projectDetails.project_enddate);
-        console.log(start);
-        console.log(end);
-        console.log(projectDetails.start_date);
         if (projectDetails.project_title === "" || projectDetails.project_summary === "" || projectDetails.project_startdate === "" || projectDetails.project_enddate === "" || projectDetails.project_author === "") {
             valid = false;
             message = "Error! Please fill in all required fields";

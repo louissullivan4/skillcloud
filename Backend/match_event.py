@@ -1,36 +1,59 @@
 from match_skills import match_job
 from db_connect import connect_db
-
+import json
+import re
 mydb = connect_db()
 
 def get_final_candidates_dict(job, candidates):
     percentages_dict = {}
     percentages_dict = match_job(job, candidates)
-    final_dict = {}
-    for key, val in percentages_dict.items():
-        final_dict[candidates[key-1][0]] = val
-    return dict(sorted(final_dict.items(), key=lambda val: val[1]))
+    return dict(sorted(percentages_dict.items(), key=lambda val: val[:1]))
 
 def get_input_users(category):
     cursor = mydb.cursor()
-    sql = "SELECT * FROM users WHERE job_category = %s && availability = 'Open'"
+    sql = "SELECT email, job_title, job_desc, certifications FROM users WHERE job_category = %s && availability = 'Open'"
     cursor.execute(sql, (category, ))     
     row = cursor.fetchall()
-    print(row)
-    candidates = []
-    for val in row:
-        desc = str(val[3] + " " + val[4] + " " + val[5] + " " + val[6] + " " + val[7] + " " + val[9] + " " + val[11]).replace("\n", " ").replace("\r", "").lower()
-        user = [val[0], desc]
-        candidates.append(user)
+    candidates = {}    
+    for person in row:
+        if len(row) > 0:
+            candidates[person[0]] = ' '.join(person[1:])
+    cursor = mydb.cursor()
+    for key, val in candidates.items():
+        sql = "SELECT experience_desc FROM user_experience WHERE user_email = %s"
+        cursor.execute(sql, (key, ))     
+        row = cursor.fetchall()
+        row = [i[0] for i in row]
+        row = ' '.join(row)
+        candidates[key] = val + " " + row
+    for key, val in candidates.items():
+        sql = "SELECT edu_type, edu_degree, edu_desc FROM user_education WHERE user_email = %s"
+        cursor.execute(sql, (key, ))     
+        row = cursor.fetchall()
+        if len(row) > 0:
+            row = [i[0] + " " + i[1] + " " + i[2] for i in row]
+            row = ' '.join(row)
+            candidates[key] = val + " " + row
+    return candidates
+
+def fulfill_roles(data):
+    for val in data["roles"]:
+        category = val["role_category"].lower()
+        candidates = get_input_users(category)
+        desc = val["role_desc"]
+        title = val["role_title"]
+        job = desc + " " + title
+        final  = {}
+        final = get_final_candidates_dict(job, candidates)
+    return final
+
+def event_match(jsonVals):
+    data = json.loads(jsonVals)
+    candidates = fulfill_roles(data)
+    # print(candidates)
     return candidates
 
 
-def main():
-    category = 'Trades workers, construction, electrical and other related'
-    job = """Electrician with multiple year experience for private and commercial projects"""
-    final = {}
-    candidates = get_input_users(category)
-    final = get_final_candidates_dict(job, candidates)
-    print(final)
-    
-main()
+# x = '{"roles": [{"role_category": "Information and communications technology", "role_title": "Software Developer", "role_desc": "Software Developer who likes kubernetes", "role_no_needed": "1"}], "project_author": "sullivanlouis0@gmail.com", "project_title": "Another test", "project_startdate": "2022-11-03", "project_enddate": "2022-11-30", "project_summary": "Making another test project"}'
+# eventMatch(x)
+
