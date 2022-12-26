@@ -9,7 +9,7 @@ from project import Project
 from user import User
 from auth_login import auth_user
 from match_event import event_match
-# from notification_service import notify_user
+from notification_service import get_notifications
 
 app = Flask(__name__)
 CORS(app)
@@ -85,9 +85,15 @@ def createuser():
     u1 = User()
     created = u1.create_user(request.json)
     if created != 200:
-        return json.dumps({"Status Code": 200, "Message": "Success!"})
-    else:
         return json.dumps({"Status Code": 404, "Message": "Error!"})
+    else:
+        return json.dumps({"Status Code": 200, "Message": "Success!"})
+    
+    
+@app.route('/inbox')
+def inbox():
+    result = get_notifications()
+    return json.dumps(result)
 
 
 

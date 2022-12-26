@@ -4,7 +4,6 @@ import json
 
 mydb = connect_db()
 
-
 def get_notifications(user_email):
     cursor = mydb.cursor()
     sql = "SELECT * FROM notifications WHERE user_notified = %s"
@@ -18,7 +17,6 @@ def get_notifications(user_email):
             val = {"type": msg[0], "project_author": msg[1], "user_notified": msg[2], "project_id": msg[3], "date_created": msg[4], "status": msg[5]}
             msg_json.append(val)
         return {"Status Code": 200, "result": msg_json}
-        
             
 # project = '{"roles": [{"role_category": "Information and communications technology", "role_title": "Software Developer", "role_desc": "Software Developer who likes kubernetes", "role_no_needed": "1"}], "project_author": "sullivanlouis0@gmail.com", "project_title": "Another test", "project_startdate": "2022-11-03", "project_enddate": "2022-11-30", "project_summary": "Making another test project", "project_id: "01766992"}'
 project = {"project_author": "sullivanlouis0@gmail.com", "project_title": "Another test", "project_startdate": "2022-11-03", "project_id": "01766993"}
