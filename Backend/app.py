@@ -38,20 +38,20 @@ def login():
 
 @app.route('/home')
 def homepage():
-    home_panes = Project();
+    home_panes = Project()
     project_panes = home_panes.create_project_pane()
     return json.dumps(project_panes)
         
 @app.route('/project/<string:id>')
 def projectpage(id: str):
-    project = Project();
+    project = Project()
     project.get_project(id)
     project_json = project.get_project_json()
     return json.dumps(project_json)
 
 @app.route('/createproject', methods=['POST'])
 def createproject():
-    p1 = Project();
+    p1 = Project()
     created = p1.create_project(request.json)
     print(request.json)
     candidates = event_match(request.json)
@@ -90,11 +90,10 @@ def createuser():
         return json.dumps({"Status Code": 200, "Message": "Success!"})
     
     
-@app.route('/inbox')
-def inbox():
-    result = get_notifications()
+@app.route('/inbox/<string:user>')
+def inbox(user : str):
+    result = get_notifications(user)
     return json.dumps(result)
-
 
 
 if __name__ == "__main__":
