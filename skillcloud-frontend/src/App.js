@@ -13,7 +13,7 @@ import Project from "./webpages/Project/Project";
 import CreateProject from "./webpages/Project/CreateProject";
 
 import Inbox from "./webpages/Inbox/Inbox";
-import Msg from "./webpages/Inbox/Msg";
+import MsgDefault from "./webpages/Inbox/MsgDefault";
 import MsgInvite from "./webpages/Inbox/MsgInvite";
 import MsgResponse from "./webpages/Inbox/MsgResponse";
 import CompleteRequest from "./webpages/Inbox/CompleteRequest";
@@ -26,13 +26,13 @@ function App() {
       <Routes>
           <Route path="/" element={<Layout />}>
               {/* Public */}
-                <Route path="/login" element={<LoginForm />} />
+                {/* <Route path="/login" element={<LoginForm />} /> */}
                 <Route path="/" element={<Home />} />
                 <Route path="/profile" element={<Profile />} />
                 <Route path="/project/:id" element={<Project />} />
                 <Route path="/createproject" element={<CreateProject />} />
                 <Route path="/inbox" element={<Inbox />} />
-                <Route path="/msg" element={<Msg />} />
+                <Route path="/msg" element={<MsgDefault />} />
                 <Route path="/msginvite" element={<MsgInvite />} />
                 <Route path="/msgresponse" element={<MsgResponse />} />
                 <Route path="/completerequest" element={<CompleteRequest />} />

@@ -9,7 +9,7 @@ from project import Project
 from user import User
 from auth_login import auth_user
 from match_event import event_match
-from notification_service import get_notifications, notify_response_project
+from notification_service import *
 
 app = Flask(__name__)
 CORS(app)
@@ -98,6 +98,11 @@ def inbox(user : str):
 @app.route('/invitationresponse/<string:email>/<string:project_id>/<string:response>')
 def invitationresponse(email : str, project_id : str, response : str):
     result = notify_response_project(email, project_id, response)
+    return json.dumps(result)
+
+@app.route('/projectrolechange/<string:author>/<string:email>/<string:project_id>/<string:response>')
+def projectrolechange(author : str, email : str, project_id : str, response : str):
+    result = notify_project_role_change(author, email, project_id, response)
     return json.dumps(result)
 
 if __name__ == "__main__":

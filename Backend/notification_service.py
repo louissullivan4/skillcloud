@@ -46,9 +46,7 @@ def notify_invite_project(candidates, project):
             mydb.commit()
             
 def notify_response_project(user_email, project_id, response):
-    print(user_email, project_id, response)
     cursor = mydb.cursor()
-    newtype = ""
     try :
         sql = "UPDATE notifications SET status = %s WHERE user_notified = %s && project_id = %s"
         cursor.execute(sql, (response, user_email, project_id))
@@ -56,9 +54,35 @@ def notify_response_project(user_email, project_id, response):
         return {"Status Code": 200, "Message": "Notification updated successfully."}
     except Exception as e:
         return {"Status Code": 404, "Message": "Error! Notification not updated."}
-            
+
+def notify_project_role_change(project_author, user_email, project_id, response):
+    cursor = mydb.cursor()
+    updated_users = []
+    try :
+        sql = "SELECT ineligible_users FROM notifications WHERE project_author = %s && project_id = %s"
+        cursor.execute(sql, (project_author, project_id))
+        ineligible_users = cursor.fetchone()
+        for val in ineligible_users:
+            if val is None:
+                updated_users.append(val)
+        if response == "add":   
+            for val in updated_users:
+                if val == user_email:
+                    updated_users.remove(user_email)
+        if response == "remove":
+            updated_users.append(user_email)
+        new = " ".join(updated_users)
+        
+        sql = "UPDATE notifications SET ineligible_users = %s WHERE project_author = %s && project_id = %s"
+        cursor.execute(sql, (str(tuple(updated_users)), project_author, project_id))
+        mydb.commit()
+        return {"Status Code": 200, "Message": "Notification updated successfully."}
+    except Exception as e:
+        return {"Status Code": 404, "Message": "Error! Notification not updated."}
+    
         
         
 # notify_invite_project(candidates, project)
 # notify_response_project("louis@gmail.com", "01766992", "accepted")
 # print(get_notifications("louis@gmail.com"))
+# print(notify_project_role_change("louis@gmail.com", "jim@gmail.com", "01766994", "add"))
