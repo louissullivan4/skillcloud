@@ -9,7 +9,7 @@ from project import Project
 from user import User
 from auth_login import auth_user
 from match_event import event_match
-from notification_service import get_notifications
+from notification_service import get_notifications, notify_response_project
 
 app = Flask(__name__)
 CORS(app)
@@ -95,6 +95,10 @@ def inbox(user : str):
     result = get_notifications(user)
     return json.dumps(result)
 
+@app.route('/invitationresponse/<string:email>/<string:project_id>/<string:response>')
+def notify_response_project(email : str, project_id : str, response : str):
+    result = notify_response_project(email, project_id, response)
+    return json.dumps(result)
 
 if __name__ == "__main__":
     app.run()

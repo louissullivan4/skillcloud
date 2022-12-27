@@ -38,7 +38,7 @@ function Project() {
                 <div className='col'>
                   <div className='card'>
                   <div className='card-header'>Project - {projectData.title} 
-                    {projectData.state === 'Open' ? <button type="button" className="but-pos" onClick={handleClick}>Apply Here  </button> : <button type="button" className="but-neg" onClick={goBack}>Back to Home</button>}</div>
+                    {projectData.state === 'Open' ? <button type="button" className="but-pos" onClick={handleClick}>Apply Here  </button> : <div></div>}</div>
                       <div className='card-body'>
                       <div card-text>Project Summary: {projectData.summary}</div>
                       <div card-text>Start Date: {projectData.start_date}</div>
