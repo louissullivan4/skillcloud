@@ -18,28 +18,20 @@ const MsgInvite = () => {
 
     const [completion, setCompletion] = useState([]);
 
-    const AcceptInvite = () => {
+    const AcceptInvite = async () => {
         console.log("Invite accepted")
-        useEffect(() => {
-        const fetchData = async () => {
-            const resp = await fetch('http://127.0.0.1:5000/invitationresponse/'+email+"/"+from.project_id+"/accepted")
-            const data = await resp.json();
-            setCompletion(data.result);
-        };
-        fetchData()
+        const resp = await fetch('http://127.0.0.1:5000/invitationresponse/'+email+"/"+from.project_id+"/accepted")
+        const data = await resp.json();
+        setCompletion(data.result);
         navigate("/completerequest" , { state: { from: completion } });
-    }, [])};
+    };
 
-    const DeclineInvite = () => {
-        useEffect(() => {
-            const fetchData = async () => {
-                const resp = await fetch('http://127.0.0.1:5000/invitationresponse/'+email+"/"+from.project_id+"/declined")
-                const data = await resp.json();
-                setCompletion(data.result);
-            };
-            fetchData()
-            navigate("/completerequest" , { state: { from: completion } });
-    }, [])};
+    const DeclineInvite = async () => {
+        const resp = await fetch('http://127.0.0.1:5000/invitationresponse/'+email+"/"+from.project_id+"/declined")
+        const data = await resp.json();
+        setCompletion(data.result);
+        navigate("/completerequest" , { state: { from: completion } });
+    };
 
     return (
         <div className="app">

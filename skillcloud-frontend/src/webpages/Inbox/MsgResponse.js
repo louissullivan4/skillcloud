@@ -13,12 +13,12 @@ const MsgResponse = () => {
     let header = ""
     let body = ""
 
-    if (from.status === "accpeted")  {
+    if (from.status === "accepted")  {
         header = "accepted"
-        body = "The request has been accepted by the user " + from.user + "."
-    } else if (from.status === "rejected") {
-        header = "rejected"
-        body = "The request has been rejected by the user " + from.user + "."
+        body = "The request has been accepted by the user " + from.user.toString() + "."
+    } else if (from.status === "declined") {    
+        header = "declined"
+        body = "The request has been declined by the user " + from.user.toString() + "."
     } else {
         header = "Error"
         body = "An error has occured."
