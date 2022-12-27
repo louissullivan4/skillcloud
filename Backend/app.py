@@ -96,7 +96,7 @@ def inbox(user : str):
     return json.dumps(result)
 
 @app.route('/invitationresponse/<string:email>/<string:project_id>/<string:response>')
-def notify_response_project(email : str, project_id : str, response : str):
+def invitationresponse(email : str, project_id : str, response : str):
     result = notify_response_project(email, project_id, response)
     return json.dumps(result)
 
