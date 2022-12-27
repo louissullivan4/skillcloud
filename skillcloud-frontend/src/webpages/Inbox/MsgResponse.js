@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react'
-import { useLocation } from 'react-router-dom'
+import { useLocation, Link } from 'react-router-dom'
 
 import Sidebar from "../../components/Sidebar"
 
@@ -10,19 +10,7 @@ const MsgResponse = () => {
     const location = useLocation()
     const { from } = location.state
     let email = "louis@gmail.com"
-    let header = ""
-    let body = ""
-
-    if (from.status === "accepted")  {
-        header = "accepted"
-        body = "The request has been accepted by the user " + from.user.toString() + "."
-    } else if (from.status === "declined") {    
-        header = "declined"
-        body = "The request has been declined by the user " + from.user.toString() + "."
-    } else {
-        header = "Error"
-        body = "An error has occured."
-    }
+    let projectLink = "/project/" + from.project_id
 
     return (
         <div className="app">
@@ -30,8 +18,8 @@ const MsgResponse = () => {
             <div className="page">
                 <div className="page-content">
                     <div className='container'>
-                        <div className='header'>{header}</div>
-                        <div className="body">{body}</div>
+                        <div className='header'>{from.status === "accepted" ? "Accepted!" : from.status === "declined" ? "Declined" : "Error"}</div>
+                        <div className="body">The request for project id <Link to={projectLink}>{from.project_id}</Link> has been {from.status} by {from.user_notified}.</div>
                     </div> 
                 </div>
             </div>
