@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import React, { useState } from 'react'
 import { useLocation, Link, useNavigate } from 'react-router-dom'
 
 import Sidebar from "../../components/Sidebar"
@@ -10,9 +10,9 @@ const MsgResponse = () => {
     const location = useLocation()
     const navigate = useNavigate()
     const { from } = location.state
-    let email = "louis@gmail.com"
-    let projectLink = "/project/" + from.project_id
     const [completion, setCompletion] = useState([]);
+    
+    let projectLink = "/project/" + from.project_id
 
     const addUser = async () => {
         console.log("Invite accepted")

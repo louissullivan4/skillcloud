@@ -17,7 +17,7 @@ def get_notifications(user_email):
             val = {"type": msg[0], "project_author": msg[1], "user_notified": msg[2], "project_id": msg[3], "date_created": msg[4], "status": msg[5]}
             msg_json.append(val)
     mydb.commit()
-    sql = "SELECT * FROM notifications WHERE project_author = %s"
+    sql = "SELECT * FROM notifications WHERE project_author = %s && status != 'pending'"
     cursor.execute(sql, (user_email, ))
     row = cursor.fetchall()
     if row == None:
@@ -51,9 +51,9 @@ def notify_response_project(user_email, project_id, response):
         sql = "UPDATE notifications SET status = %s WHERE user_notified = %s && project_id = %s"
         cursor.execute(sql, (response, user_email, project_id))
         mydb.commit()
-        return {"Status Code": 200, "Message": "Notification updated successfully."}
+        return 200
     except Exception as e:
-        return {"Status Code": 404, "Message": "Error! Notification not updated."}
+        return 404
 
 def notify_project_role_change(project_author, user_email, project_id, response):
     cursor = mydb.cursor()

@@ -98,7 +98,10 @@ def inbox(user : str):
 @app.route('/invitationresponse/<string:email>/<string:project_id>/<string:response>')
 def invitationresponse(email : str, project_id : str, response : str):
     result = notify_response_project(email, project_id, response)
-    return json.dumps(result)
+    if result == 200:
+        return json.dumps({"Status Code": 200, "Message": "Success!"}), 200
+    else:
+        return json.dumps({"Status Code": 404, "Message": "Error!"}), 404
 
 @app.route('/projectrolechange/<string:author>/<string:email>/<string:project_id>/<string:response>')
 def projectrolechange(author : str, email : str, project_id : str, response : str):

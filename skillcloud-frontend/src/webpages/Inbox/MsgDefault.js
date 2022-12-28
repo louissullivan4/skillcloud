@@ -1,13 +1,9 @@
-import React, { useEffect, useState } from 'react'
-
 import Sidebar from "../../components/Sidebar"
 
 import "../../index.css";
 
 const MsgDefault = () => {
     // let email = localStorage.user;
-    let email = "louis@gmail.com"
-
     return (
         <div className="app">
             <Sidebar/>

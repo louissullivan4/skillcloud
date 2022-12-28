@@ -7,13 +7,13 @@ import "../../index.css";
 
 const Inbox = () => {
     // let email = localStorage.user;
-    let email = "louis@gmail.com"
+    let email = "jim@gmail.com"
 
     const [inboxData, setInboxData] = useState([]);
     useEffect(() => {
       const fetchData = async () => {
         const resp = await fetch('http://127.0.0.1:5000/inbox/'+email)
-        const data = await resp.json();
+        const data = await resp.json();        
             setInboxData(data.result);
       };
       fetchData()
@@ -32,7 +32,7 @@ const Inbox = () => {
                                     <div className='row' key={k}>
                                         <div className='row-header'>{inboxData.project_author}</div>
                                             <div className='row-body'>
-                                                {inboxData.status === "pending" ? "You have recived a project invite!" : inboxData.status === "accepted" || inboxData.type === "declined" ? "You have recived a role update to one of your projects!" : "Click to see more" }
+                                                {inboxData.status === "pending" ? "You have received a project invite!" : inboxData.status === "accepted" || inboxData.type === "declined" ? "You have recived a role update to one of your projects!" : "Click to see more" }
                                             </div>
                                         <div className='card-footer'>Status: {inboxData.status}</div>
                                     </div>

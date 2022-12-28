@@ -19,23 +19,24 @@ class Project:
     def create_roles(self, project_id, roles):
         cursor = mydb.cursor()
         for val in roles:
+            role_id = check_id(mydb)
             role_category = val['role_category']
             role_title = val['role_title']
             role_desc = val['role_desc']
             role_no_needed = val['role_no_needed']
             sql = """INSERT INTO roles 
-                (project_id, role_category, role_title, role_desc, role_no_needed)
-                VALUES (%s,%s,%s,%s,%s)"""
-            val = (project_id, role_category, role_title, role_desc, role_no_needed)
+                (project_id, role_id, role_category, role_title, role_desc, role_no_needed)
+                VALUES (%s,%s,%s,%s,%s,%s)"""
+            val = (project_id, role_id, role_category, role_title, role_desc, role_no_needed)
             cursor.execute(sql, val)
             mydb.commit()
         return roles
 
-    def get_roles(self, id):
+    def get_roles(self, pid):
         roles = []
         cursor = mydb.cursor()
         sql = "SELECT * FROM roles WHERE project_id = %s"
-        cursor.execute(sql, (id, ))
+        cursor.execute(sql, (pid, ))
         row = cursor.fetchall()
         if row == None:
             return "Error! Project does not exist."
@@ -46,7 +47,7 @@ class Project:
 
     def create_project(self, requestjson):
         today = str(date.today())
-        id = check_id(mydb)
+        pid = check_id(mydb)
         title = requestjson['project_title']
         author = requestjson['project_author']
         start_date = requestjson['project_startdate']
@@ -61,10 +62,10 @@ class Project:
             sql = """INSERT INTO projects 
                 (project_id, project_title, project_author, project_createdate, project_startdate, project_enddate, project_summary, project_state)
                 VALUES (%s,%s,%s,%s,%s,%s,%s,'Open')"""
-            val = (id, title, author, today, start_date, end_date, summary)
+            val = (pid, title, author, today, start_date, end_date, summary)
             cursor.execute(sql, val)
             mydb.commit()
-            self.id = id
+            self.id = pid
             self.title = title
             self.author = author
             self.create_date = today
