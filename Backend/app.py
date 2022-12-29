@@ -47,20 +47,20 @@ def projectpage(id: str):
     project = Project()
     project.get_project(id)
     project_json = project.get_project_json()
+    print(project_json)
     return json.dumps(project_json)
 
 @app.route('/createproject', methods=['POST'])
 def createproject():
     p1 = Project()
-    created = p1.create_project(request.json)
-    print(request.json)
-    candidates = event_match(request.json)
-    print(candidates)
-    # notified = notify_user(candidates, created[1])
-    # if created[0] != 200:
-    #     return json.dumps({"Status Code": 200, "Message": "Success!"})
-    # else:
-    #     return json.dumps({"Status Code": 404, "Message": "Error!"})
+    p1.create_project(request.json)
+    projectvals = p1.get_project_json()
+    candidates = event_match(projectvals)
+    notified = create_role_notifications(candidates, projectvals)
+    if notified == 200:
+        return json.dumps({"Status Code": 200, "Message": "Success!"})
+    else:
+        return json.dumps({"Status Code": 404, "Message": "Error!"})
 
 @app.route('/profile/<string:email>')
 def profilepage(email: str):
@@ -95,9 +95,9 @@ def inbox(user : str):
     result = get_notifications(user)
     return json.dumps(result)
 
-@app.route('/invitationresponse/<string:email>/<string:project_id>/<string:response>')
-def invitationresponse(email : str, project_id : str, response : str):
-    result = notify_response_project(email, project_id, response)
+@app.route('/invitationresponse/<string:email>/<string:role_id>/<string:response>')
+def invitationresponse(email : str, role_id : str, response : str):
+    result = notify_response_project(email, role_id, response)
     if result == 200:
         return json.dumps({"Status Code": 200, "Message": "Success!"}), 200
     else:

@@ -48,6 +48,7 @@ def fulfill_roles(data):
     return final
 
 def event_match(jsonVals):
+    jsonVals = str(jsonVals).replace("'", '"')
     data = json.loads(jsonVals)
     candidates = fulfill_roles(data)
     # print(candidates)
