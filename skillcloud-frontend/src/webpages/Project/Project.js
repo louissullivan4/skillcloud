@@ -16,13 +16,13 @@ function Project() {
     const handleClick = () =>{ 
         let path = `/`; 
         navigate(path);
-    }
+    } 
     
     useEffect(() => {
       const fetchData = async () => {
         const resp = await fetch('http://127.0.0.1:5000/project/'+projectId.id)
         const data = await resp.json();
-        setProjectData(data.result[0]);
+        setProjectData(data);
       };
       fetchData()
     }, []);
@@ -40,10 +40,10 @@ function Project() {
                   <div className='card-header'>Project - {projectData.title} 
                     {projectData.state === 'Open' ? <button type="button" className="but-pos" onClick={handleClick}>Apply Here  </button> : <div></div>}</div>
                       <div className='card-body'>
-                      <div card-text>Project Summary: {projectData.summary}</div>
-                      <div card-text>Start Date: {projectData.start_date}</div>
-                      <div card-text>End Date: {projectData.end_date}</div>
-                      <div card-text>Project Creator: {projectData.author}</div>
+                      <div className='card-text'>Project Summary: {projectData.summary}</div>
+                      <div className='card-text'>Start Date: {projectData.start_date}</div>
+                      <div className='card-text'>End Date: {projectData.end_date}</div>
+                      <div className='card-text'>Project Creator: {projectData.author}</div>
                         <h2>Project Roles</h2>
                           <table>
                             <thead>
@@ -57,12 +57,12 @@ function Project() {
                             <tbody>
                             {projectData.roles?.map(
                             (roleData, k) => (
-                              <tr key={k}>
-                                <td>{roleData.role_title}</td>
-                                <td>{roleData.role_desc}</td>
-                                <td>{roleData.role_no_needed}</td>
-                                <td>{roleData.role_category}</td>
-                              </tr>
+                                <tr key={k}>
+                                  <td>{roleData.role_title}</td>
+                                  <td>{roleData.role_desc}</td>
+                                  <td>{roleData.role_no_needed - roleData.role_filled}</td>
+                                  <td>{roleData.role_category}</td>
+                                </tr>
                             ))}
                             </tbody>
                           </table>

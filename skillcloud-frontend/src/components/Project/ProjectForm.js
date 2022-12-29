@@ -5,7 +5,7 @@ import "../../index.css";
 
 const ProjectForm = () => {
     const navigate = useNavigate();
-    const user = localStorage.user;
+    const user = "louis@gmail.com";
     const [projectDetails, setProjectDetails] = useState(
         {roles: [{ 
         role_category: "",
