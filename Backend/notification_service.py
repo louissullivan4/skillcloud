@@ -56,21 +56,21 @@ def notify_invite_project(candidates, role, project_author, project_id):
     except Exception as e:
         return 404
 
-def notify_response_project(user_email, role_id, response):
+def notify_response_project(user_email, role_id, req):
     cursor = mydb.cursor()
     try :
         sql = "UPDATE notifications SET status = %s WHERE user_notified = %s && role_id = %s"
-        cursor.execute(sql, (response, user_email, role_id))
+        cursor.execute(sql, (req, user_email, role_id))
         mydb.commit()
         sql = "SELECT roles.role_no_needed, roles.roles_filled FROM roles WHERE role_id = %s"
         cursor.execute(sql, (role_id, ))
         row = cursor.fetchone()
-        if response == "accepted" and row[1] < row[0]:
+        if req == "accepted" and row[1] < row[0]:
             sql = "UPDATE roles SET roles_filled = %s WHERE role_id = %s"
             val = int(row[1]) + 1
             cursor.execute(sql, (str(val), role_id))
             mydb.commit()
-        elif response == "declined" and row[1] > 0:
+        elif req == "declined" and row[1] > 0:
             sql = "UPDATE roles SET role_no_needed = %s WHERE role_id = %s"
             val = int(row[1]) - 1
             cursor.execute(sql, (str(val), role_id))
@@ -79,26 +79,17 @@ def notify_response_project(user_email, role_id, response):
     except Exception as e:
         return 404
 
-def notify_project_role_change(project_author, user_email, project_id, response):
-    cursor = mydb.cursor()
-    updated_users = []
-    try :
-        sql = "SELECT ineligible_users FROM notifications WHERE project_author = %s && project_id = %s"
-        cursor.execute(sql, (project_author, project_id))
-        ineligible_users = cursor.fetchone()
-        for val in ineligible_users:
-            if val is None:
-                updated_users.append(val)
-        if response == "add":   
-            for val in updated_users:
-                if val == user_email:
-                    updated_users.remove(user_email)
-        if response == "remove":
-            updated_users.append(user_email)
-        new = " ".join(updated_users)
-        sql = "UPDATE notifications SET ineligible_users = %s WHERE project_author = %s && project_id = %s"
-        cursor.execute(sql, (str(tuple(updated_users)), project_author, project_id))
-        mydb.commit()
-        return {"Status Code": 200, "Message": "Notification updated successfully."}
+def notify_role_change(user_email, role_id, req):
+    try:
+        cursor = mydb.cursor()
+        if req == "add":
+            sql = "DELETE FROM ineligible WHERE user_email = %s"
+            cursor.execute(sql, (user_email, ))
+            mydb.commit()
+        elif req == "remove":
+            sql = "INSERT INTO ineligible (user_email, role_id) VALUES (%s, %s)"
+            cursor.execute(sql, (user_email, role_id))
+            mydb.commit()
+        return 200
     except Exception as e:
-        return {"Status Code": 404, "Message": "Error! Notification not updated."}
+        return 404
