@@ -95,17 +95,17 @@ def inbox(user : str):
     result = get_notifications(user)
     return json.dumps(result)
 
-@app.route('/invitationresponse/<string:email>/<string:role_id>/<string:response>')
-def invitationresponse(email : str, role_id : str, response : str):
-    result = notify_response_project(email, role_id, response)
+@app.route('/invitationresponse/<string:email>/<string:role_id>/<string:req>')
+def invitationresponse(email : str, role_id : str, req : str):
+    result = notify_response_project(email, role_id, req)
     if result == 200:
         return json.dumps({"Status Code": 200, "Message": "Success!"}), 200
     else:
         return json.dumps({"Status Code": 404, "Message": "Error!"}), 404
 
-@app.route('/projectrolechange/<string:author>/<string:email>/<string:project_id>/<string:response>')
-def projectrolechange(author : str, email : str, project_id : str, response : str):
-    result = notify_project_role_change(author, email, project_id, response)
+@app.route('/usereligibility/<string:author>/<string:email>/<string:role_id>/<string:response>')
+def usereligibility(author : str, email : str, role_id : str, response : str):
+    result = notify_role_change(author, email, role_id, response)
     return json.dumps(result)
 
 if __name__ == "__main__":

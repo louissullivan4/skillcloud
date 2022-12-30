@@ -11,19 +11,19 @@ const MsgResponse = () => {
     const navigate = useNavigate()
     const { from } = location.state
     const [completion, setCompletion] = useState([]);
-    
+     
     let projectLink = "/project/" + from.project_id
 
     const addUser = async () => {
         console.log("Invite accepted")
-        const resp = await fetch('http://127.0.0.1:5000/projectrolechange/'+from.project_author+"/"+from.user_notified+"/"+from.project_id+"/add")
+        const resp = await fetch('http://127.0.0.1:5000/usereligibility/'+from.project_author+"/"+from.user_notified+"/"+from.role_id+"/add")
         const data = await resp.json();
         setCompletion(data.result);
         navigate("/completerequest" , { state: { from: completion } });
     };
 
     const removeUser = async () => {
-        const resp = await fetch('http://127.0.0.1:5000/projectrolechange/'+from.project_author+"/"+from.user_notified+"/"+from.project_id+"/remove")
+        const resp = await fetch('http://127.0.0.1:5000/usereligibility/'+from.project_author+"/"+from.user_notified+"/"+from.role_id+"/remove")
         const data = await resp.json();
         setCompletion(data.result);
         navigate("/completerequest" , { state: { from: completion } });
