@@ -1,0 +1,28 @@
+[{
+    "email" : "timmy@gmail.com",
+    "fname" : "Timmy",
+    "lname" : "Tammy",
+    "location" : "Costa Del Sol, Ireland",
+    "job_title" : "Reporter",
+    "job_category" : "Other",
+    "job_desc" : "Recently graduated with a degree in english, trying to explore the area of new reporting.",
+    "project_ids" : "None",
+    "certifications" : "Silver Gaisce Award",
+    "availability" : "Open"
+},
+{
+    "user_email" : "timmy@gmail.com",
+    "experience_name" : "Healy Rae News",
+    "experience_title" : "News Article Writer",
+    "experience_start" : "2022-03-12",
+    "experience_end" : "2022-09-31",
+    "experience_desc" : "Writer of page 230 of the Healy Rae News magazine for six months work experience. Focused on how to eat and dress like a Healy Rae."
+},
+{
+    "user_email" : "timmy@gmail.com",
+    "edu_type" : "BA",
+    "edu_degree" : "English",
+    "edu_school" : "University of Limerick",
+    "edu_desc" : "Introduction to Literary Theory, Gothic Literature in Ireland, Irish Literature 1930-1990, Literary Modernism, Introduction to Creative Writing"
+}
+]

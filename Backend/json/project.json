@@ -1,0 +1,20 @@
+{
+    "id" : "05847316",
+    "title" : "Tech News Youtube Channel",
+    "author" : "louis@gmail.com",
+    "create_date" : "2022-12-29",
+    "start_date" : "2023-01-01",
+    "end_date" : "2023-04-30",
+    "summary" : "Need a host to present tech news on a youtube channel",
+    "state" : "Open",
+    "roles" : [
+        {
+            "role_category" : "Other",
+            "role_title" : "Host",
+            "role_desc" : "Need host with time spent in presenting news on a weekly basis. Degree in journalism preferred but not required. Preferred area in technology but also not required",
+            "role_no_needed" : "2",
+            "role_id" : "00550596",
+            "role_filled" : "0"
+        }
+    ]
+}
