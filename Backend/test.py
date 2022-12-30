@@ -1,5 +1,4 @@
 from db_connect import connect_db
-
 mydb = connect_db()
 
 def notify_role_change(user_email, role_id, req):
@@ -17,4 +16,4 @@ def notify_role_change(user_email, role_id, req):
     except Exception as e:
         return 404, e
 
-notify_role_change("billy@gmail.com", "00550596", "remove")
+notify_role_change("billy@gmail.com", "00550596", "add")
