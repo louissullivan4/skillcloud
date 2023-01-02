@@ -100,6 +100,8 @@ def invitationresponse(email : str, role_id : str, req : str):
     result = notify_response_project(email, role_id, req)
     if result == 200:
         return json.dumps({"Status Code": 200, "Message": "Success!"}), 200
+    elif result == 403:
+        return json.dumps({"Status Code": 403, "Message": "Role is now unavailable"}), 403
     else:
         return json.dumps({"Status Code": 404, "Message": "Error!"}), 404
 

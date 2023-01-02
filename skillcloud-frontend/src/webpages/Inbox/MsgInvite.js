@@ -8,7 +8,6 @@ import "../../index.css";
 
 const MsgInvite = () => {
     // let email = localStorage.user
-    let email = "billy@gmail.com";
 
     const location = useLocation()
     let navigate = useNavigate(); 
@@ -17,13 +16,13 @@ const MsgInvite = () => {
     let projectLink = "/project/" + from.project_id
     
     const AcceptInvite = async () => {
-        const resp = await fetch('http://127.0.0.1:5000/invitationresponse/'+email+"/"+from.role_id+"/accepted")
+        const resp = await fetch('http://127.0.0.1:5000/invitationresponse/'+from.user_notified+"/"+from.role_id+"/accepted")
         const data = await resp.status;
         navigate("/completerequest" , { state: { from: data } });
     };
 
     const DeclineInvite = async () => {
-        const resp = await fetch('http://127.0.0.1:5000/invitationresponse/'+email+"/"+from.role_id+"/declined")
+        const resp = await fetch('http://127.0.0.1:5000/invitationresponse/'+from.user_notified+"/"+from.role_id+"/declined")
         const data = await resp.status;
         navigate("/completerequest" , { state: { from: data } });
     };

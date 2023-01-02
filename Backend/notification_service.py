@@ -19,8 +19,6 @@ def get_notifications(user_email):
         for msg in row:
             val = {"type": msg[0], "project_author": msg[1], "user_notified": msg[2], "project_id": msg[3], "date_created": msg[4], "status": msg[5], "role_id": msg[6]}
             msg_json.append(val)
-    mydb.commit()
-
     sql = "SELECT * FROM notifications WHERE project_author = %s && status != 'pending'"
     cursor.execute(sql, (user_email, ))
     row = cursor.fetchall()
@@ -28,7 +26,6 @@ def get_notifications(user_email):
         return {"Status Code": 404, "Message": "Error! No notifications found."}
     else:
         for msg in row:
-            print(msg)
             val = {"type": msg[0], "project_author": msg[1], "user_notified": msg[2], "project_id": msg[3], "date_created": msg[4], "status": msg[5], "role_id": msg[6]}
             msg_json.append(val)
     mydb.commit()
@@ -47,6 +44,7 @@ def create_role_notifications(candidates, project):
         return 404
 
 def notify_invite_project(candidates, role, project_author, project_id):
+    print(candidates, role, project_author, project_id)
     try:
         cursor = mydb.cursor()
         total_needed = int(role["role_no_needed"]) - int(role["role_filled"])
@@ -57,6 +55,7 @@ def notify_invite_project(candidates, role, project_author, project_id):
             if len(candidates_needed) >= total_needed:
                 break
             candidates_needed[key] = val
+        print(candidates_needed)
         for key, val in candidates_needed.items():
             sql = "SELECT * FROM notifications WHERE user_notified = %s && role_id = %s"
             cursor.execute(sql, (key, role['role_id'])) 
@@ -77,7 +76,6 @@ def notify_response_project(user_email, role_id, req):
         cursor.execute(sql, (role_id, ))
         row = cursor.fetchone()
         if req == "accepted" and int(row[1]) < int(row[0]):
-            print("here")
             sql = "UPDATE roles SET roles_filled = %s WHERE role_id = %s"
             val = int(row[1]) + 1
             cursor.execute(sql, (str(val), role_id))
@@ -89,7 +87,7 @@ def notify_response_project(user_email, role_id, req):
             cursor.execute(sql, (req, user_email, role_id))
             mydb.commit()
         elif req == "declined":
-            if int(row[1]) == 0:
+            if int(row[1]) == 0 or int(row[1]) < 0:
                 val = 0
             else:
                 val = int(row[1]) - 1
@@ -116,40 +114,71 @@ def notify_response_project(user_email, role_id, req):
             sql = "UPDATE notifications SET status = %s WHERE user_notified = %s && role_id = %s"
             cursor.execute(sql, (req, user_email, role_id))
             mydb.commit()
+        else:
+            sql = "DELETE FROM notifications WHERE user_notified = %s && role_id = %s"
+            cursor.execute(sql, (user_email, role_id))
+            mydb.commit()
+            return 403
         return 200
     except Exception as e:
         print(e)
         return 404
 
 def notify_role_change(user_email, role_id, req):
+    cursor = mydb.cursor()
     sql = "SELECT roles.role_no_needed, roles.roles_filled FROM roles WHERE role_id = %s"
     cursor.execute(sql, (role_id, ))
     row = cursor.fetchone()
     try:
         cursor = mydb.cursor()
-        if req == "add":
+        if req == "add" and int(row[1]) < int(row[0]):
             sql = "DELETE FROM ineligible WHERE user_email = %s"
             cursor.execute(sql, (user_email, ))
             mydb.commit()
-            sql = "UPDATE notifications SET status = %s WHERE role_id = %s"
-            cursor.execute(sql, ("accepted", role_id))
+            sql = "UPDATE notifications SET status = %s WHERE role_id = %s && user_notified = %s"
+            cursor.execute(sql, ("accepted", role_id, user_email))
             mydb.commit()
             sql = "UPDATE roles SET roles_filled = %s WHERE role_id = %s"
             val = int(row[1]) + 1
             cursor.execute(sql, (str(val), role_id))
             mydb.commit()
         elif req == "remove":
+            if int(row[1]) == 0:
+                val = 0
+            else:
+                val = int(row[1]) - 1
+            print(val)
             sql = "INSERT INTO ineligible (user_email, role_id) VALUES (%s, %s)"
             cursor.execute(sql, (user_email, role_id))
             mydb.commit()
-            sql = "UPDATE notifications SET status = %s WHERE role_id = %s"
-            cursor.execute(sql, ("declined", role_id))
+            sql = "UPDATE notifications SET status = %s WHERE role_id = %s && user_notified = %s"
+            cursor.execute(sql, ("declined", role_id, user_email))
             mydb.commit()
-            sql = "UPDATE roles SET role_no_needed = %s WHERE role_id = %s"
-            val = int(row[1]) - 1
+            sql = "UPDATE roles SET roles_filled = %s WHERE role_id = %s"
             cursor.execute(sql, (str(val), role_id))
             mydb.commit()
+            sql = "SELECT roles.role_no_needed, roles.roles_filled FROM roles WHERE role_id = %s"
+            cursor.execute(sql, (role_id, ))
+            total = cursor.fetchone()
+            total_needed = int(total[0]) - int(total[1])
+            if total_needed > 0:
+                sql = "SELECT roles.project_id FROM roles WHERE role_id = %s"
+                cursor.execute(sql, (role_id, ))
+                row = cursor.fetchone()
+                project_id = str(row[0])
+                p1 = Project()
+                p1.get_project(project_id)
+                project_json = p1.get_project_json()
+                candidates = event_match(project_json)
+                if len(candidates) > 0:
+                    create_role_notifications(candidates, project_json)
+                else:
+                    print("No candidates")
+                    # Create notification for project owner that says there are 
+                    # no candidates for the role
         return 200
     except Exception as e:
         print(e)
         return 404
+
+print(notify_role_change("timmy@gmail.com", "00164698", "remove"))

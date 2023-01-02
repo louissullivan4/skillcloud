@@ -7,7 +7,7 @@ import "../../index.css";
 
 const Inbox = () => {
     // let email = localStorage.user;
-    let email = "billy@gmail.com"
+    let email = "louis@gmail.com"
 
     const [inboxData, setInboxData] = useState([]);
     useEffect(() => {
@@ -29,7 +29,7 @@ const Inbox = () => {
                     <div className='row'>
                         {inboxData.map((inboxData, k) => (
                             <div className='col'>
-                                    <Link to={inboxData.status === "pending" ? "/msginvite" : inboxData.status === "accepted" || inboxData.type === "declined" ? "/msgresponse" : "/msg"} state={{ from: inboxData }}>
+                                    <Link to={inboxData.status === "pending" ? "/msginvite" : inboxData.status === "accepted" || inboxData.status === "declined" ? "/msgresponse" : "/msg"} state={{ from: inboxData }}>
                                     <div className='row' key={k}>
                                         <div className='row-header'>{inboxData.project_author}</div>
                                             <div className='row-body'>
