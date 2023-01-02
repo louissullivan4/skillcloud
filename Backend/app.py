@@ -103,9 +103,9 @@ def invitationresponse(email : str, role_id : str, req : str):
     else:
         return json.dumps({"Status Code": 404, "Message": "Error!"}), 404
 
-@app.route('/usereligibility/<string:author>/<string:email>/<string:role_id>/<string:response>')
-def usereligibility(author : str, email : str, role_id : str, response : str):
-    result = notify_role_change(author, email, role_id, response)
+@app.route('/rolechange/<string:email>/<string:role_id>/<string:response>')
+def rolechange(email : str, role_id : str, response : str):
+    result = notify_role_change(email, role_id, response)
     return json.dumps(result)
 
 if __name__ == "__main__":

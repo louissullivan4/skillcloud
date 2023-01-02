@@ -47,7 +47,6 @@ def get_ineligible_users(role_id):
 def fulfill_roles(data):
     data = str(data["roles"]).replace("'", '"')
     json_data = json.loads(data)
-    print(json_data)
     for val in json_data:
         desc = val["role_desc"]
         title = val["role_title"]
