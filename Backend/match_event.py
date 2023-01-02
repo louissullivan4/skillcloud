@@ -45,21 +45,20 @@ def get_ineligible_users(role_id):
     return ineligible_users
 
 def fulfill_roles(data):
-    data = str(data["roles"]).replace("'", '"')
+    data = str(data).replace("'", '"')
     json_data = json.loads(data)
-    for val in json_data:
-        desc = val["role_desc"]
-        title = val["role_title"]
-        job = desc + " " + title
-        role_ineligible_users = get_ineligible_users(val["role_id"])
-        category = val["role_category"].lower()
-        candidates = get_input_users(category)
-        removed_ineligible_candidates = {}
-        for user, val in candidates.items():
-            if user not in role_ineligible_users:
-                removed_ineligible_candidates[user] = val
-        final  = {}
-        final = get_final_candidates_dict(job, removed_ineligible_candidates)
+    desc = json_data["role_desc"]
+    title = json_data["role_title"]
+    job = desc + " " + title
+    role_ineligible_users = get_ineligible_users(json_data["role_id"])
+    category = json_data["role_category"].lower()
+    candidates = get_input_users(category)
+    removed_ineligible_candidates = {}
+    for user, val in candidates.items():
+        if user not in role_ineligible_users:
+            removed_ineligible_candidates[user] = val
+    final  = {}
+    final = get_final_candidates_dict(job, removed_ineligible_candidates)
     return final
 
 def event_match(jsonVals):
@@ -68,26 +67,4 @@ def event_match(jsonVals):
     candidates = fulfill_roles(data)
     return candidates
 
-
-# project_json = {
-#     "id" : "05847316",
-#     "title" : "Tech News Youtube Channel",
-#     "author" : "louis@gmail.com",
-#     "create_date" : "2022-12-29",
-#     "start_date" : "2023-01-01",
-#     "end_date" : "2023-04-30",
-#     "summary" : "Need a host to present tech news on a youtube channel",
-#     "state" : "Open",
-#     "roles" : [
-#         {
-#             "role_category" : "Other",
-#             "role_title" : "Host",
-#             "role_desc" : "Need host with time spent in presenting news on a weekly basis. Degree in journalism preferred but not required. Preferred area in technology but also not required",
-#             "role_no_needed" : "2",
-#             "role_id" : "00550596",
-#             "role_filled" : "0"
-#         }
-#     ]
-# }
-# event_match(project_json)
 

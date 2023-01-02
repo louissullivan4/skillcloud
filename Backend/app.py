@@ -8,7 +8,6 @@ import json
 from project import Project
 from user import User
 from auth_login import auth_user
-from match_event import event_match
 from notification_service import *
 
 app = Flask(__name__)
@@ -21,6 +20,7 @@ def welcome():
         <p>Welcome to SkillCloud's backend server.</p>
         <br>
     """
+    connect_db()
     return homepage
 
 @app.route('/login', methods=['POST'])
@@ -47,7 +47,6 @@ def projectpage(id: str):
     project = Project()
     project.get_project(id)
     project_json = project.get_project_json()
-    print(project_json)
     return json.dumps(project_json)
 
 @app.route('/createproject', methods=['POST'])
@@ -55,8 +54,7 @@ def createproject():
     p1 = Project()
     p1.create_project(request.json)
     projectvals = p1.get_project_json()
-    candidates = event_match(projectvals)
-    notified = create_role_notifications(candidates, projectvals)
+    notified = create_role_notifications(projectvals)
     if notified == 200:
         return json.dumps({"Status Code": 200, "Message": "Success!"})
     else:
