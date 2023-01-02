@@ -37,7 +37,7 @@ const MsgInvite = () => {
                         <div className='header'>You have been invited to a project !</div>
                         <div className="body">This project was created on {from.date_created} by {from.project_author}.
                         For more information, please click the project id below to view the project.
-                        <Link to={projectLink}> Project Id: {from.project_id}</Link>
+                        <Link to={projectLink}> Project Id: {from.project_id + ". "}</Link>
                         On completion of research, please accept or decline the invite.
                         </div>
                     </div>

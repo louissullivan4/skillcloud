@@ -24,7 +24,6 @@ class Project:
             role_title = val['role_title']
             role_desc = val['role_desc']
             role_no_needed = val['role_no_needed']
-            print(val)
             sql = """INSERT INTO roles 
                 (project_id, role_id, role_category, role_title, role_desc, role_no_needed, roles_filled)
                 VALUES (%s,%s,%s,%s,%s,%s,%s)"""

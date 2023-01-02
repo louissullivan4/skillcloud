@@ -7,7 +7,7 @@ import "../../index.css";
 
 const Inbox = () => {
     // let email = localStorage.user;
-    let email = "louis@gmail.com"
+    let email = "jim@gmail.com"
 
     const [inboxData, setInboxData] = useState([]);
     useEffect(() => {
@@ -29,11 +29,11 @@ const Inbox = () => {
                     <div className='row'>
                         {inboxData.map((inboxData, k) => (
                             <div className='col'>
-                                    <Link to={inboxData.status === "pending" ? "/msginvite" : inboxData.status === "accepted" || inboxData.status === "declined" ? "/msgresponse" : "/msg"} state={{ from: inboxData }}>
+                                    <Link to={inboxData.status === "pending" && inboxData.type === "project_invite" ? "/msginvite" : inboxData.type === "project_role_wait" ? "/msgnousers" : inboxData.status === "accepted" || inboxData.status === "declined" ? "/msgresponse" : "/msg"} state={{ from: inboxData }}>
                                     <div className='row' key={k}>
                                         <div className='row-header'>{inboxData.project_author}</div>
                                             <div className='row-body'>
-                                                {inboxData.status === "pending" ? "You have received a project invite!" : inboxData.status === "accepted" || inboxData.type === "declined" ? "You have recived a role update to one of your projects!" : "Click to see more" }
+                                                {inboxData.status === "pending" && inboxData.type === "project_invite" ? "You have received a project invite!" : inboxData.type === "project_role_wait" ? "No users found !" : inboxData.status === "accepted" || inboxData.type === "declined" ? "You have recived a role update to one of your projects!" : "Click to see more" }
                                             </div>
                                         <div className='card-footer'>Status: {inboxData.status}</div>
                                     </div>

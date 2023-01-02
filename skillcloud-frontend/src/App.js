@@ -16,6 +16,7 @@ import Inbox from "./webpages/Inbox/Inbox";
 import MsgDefault from "./webpages/Inbox/MsgDefault";
 import MsgInvite from "./webpages/Inbox/MsgInvite";
 import MsgResponse from "./webpages/Inbox/MsgResponse";
+import MsgNoUsers from "./webpages/Inbox/MsgNoUsers";
 import CompleteRequest from "./webpages/Inbox/CompleteRequest";
 
 
@@ -35,6 +36,7 @@ function App() {
                 <Route path="/msg" element={<MsgDefault />} />
                 <Route path="/msginvite" element={<MsgInvite />} />
                 <Route path="/msgresponse" element={<MsgResponse />} />
+                <Route path="/msgnousers" element={<MsgNoUsers />} />
                 <Route path="/completerequest" element={<CompleteRequest />} />
                 {/* <Route path="/logout" element={<Logout />} /> */}
           </Route>
