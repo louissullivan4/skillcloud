@@ -20,28 +20,30 @@ import CompleteRequest from "./webpages/Inbox/CompleteRequest";
 
 
 import "./index.css";
+import { AuthContextProvider } from "./context/AuthContext";
 
 function App() {
   return (
-      <Routes>
-            {/* Public */} 
-              <Route path="/" element={<Login/>} />
-              <Route path="/createaccount" element={<CreateAccount />} />
-              <Route path="/logout" element={<Logout />} />
+      <AuthContextProvider>
+        <Routes>
+          <Route path="/" element={<Login/>} />
+          <Route path="/createaccount" element={<CreateAccount />} />
+          <Route path="/logout" element={<Logout />} />
 
-              <Route path="/home" element={<Home />} />
-              <Route path="/profile" element={<Profile />} />
+          <Route path="/home" element={<Home />} />
+          <Route path="/profile" element={<Profile />} />
 
-              <Route path="/project/:id" element={<Project />} />
-              <Route path="/createproject" element={<CreateProject />} />
+          <Route path="/project/:id" element={<Project />} />
+          <Route path="/createproject" element={<CreateProject />} />
 
-              <Route path="/inbox" element={<Inbox />} />
-              <Route path="/msg" element={<MsgDefault />} />
-              <Route path="/msginvite" element={<MsgInvite />} />
-              <Route path="/msgresponse" element={<MsgResponse />} />
-              <Route path="/msgnousers" element={<MsgNoUsers />} />
-              <Route path="/completerequest" element={<CompleteRequest />} />
+          <Route path="/inbox" element={<Inbox />} />
+          <Route path="/msg" element={<MsgDefault />} />
+          <Route path="/msginvite" element={<MsgInvite />} />
+          <Route path="/msgresponse" element={<MsgResponse />} />
+          <Route path="/msgnousers" element={<MsgNoUsers />} />
+          <Route path="/completerequest" element={<CompleteRequest />} />
       </Routes>
+    </AuthContextProvider>
   );
 }
 export default App
