@@ -5,7 +5,6 @@ import Sidebar from "../../components/Sidebar"
 import "../../index.css";
 
 const CompleteRequest = () => {
-    // let email = localStorage.user;
     const location = useLocation()
     const { from } = location.state
 
