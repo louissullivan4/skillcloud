@@ -6,7 +6,6 @@ import Sidebar from "../../components/Sidebar"
 import "../../index.css";
 
 const MsgResponse = () => {
-    // let email = localStorage.user;
     const location = useLocation()
     const navigate = useNavigate()
     const { from } = location.state
@@ -15,7 +14,6 @@ const MsgResponse = () => {
     let projectLink = "/project/" + from.project_id
 
     const addUser = async () => {
-        console.log("Invite accepted")
         const resp = await fetch('http://127.0.0.1:5000/rolechange/'+from.user_notified+"/"+from.role_id+"/add")
         const data = await resp.json();
         setCompletion(data.result);
@@ -23,7 +21,6 @@ const MsgResponse = () => {
     };
 
     const removeUser = async () => {
-        console.log(from)
         const resp = await fetch('http://127.0.0.1:5000/rolechange/'+from.user_notified+"/"+from.role_id+"/remove")
         const data = await resp.json();
         setCompletion(data.result);

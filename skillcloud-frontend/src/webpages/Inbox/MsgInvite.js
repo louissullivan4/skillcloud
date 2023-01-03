@@ -7,8 +7,6 @@ import Sidebar from "../../components/Sidebar"
 import "../../index.css";
 
 const MsgInvite = () => {
-    // let email = localStorage.user
-
     const location = useLocation()
     let navigate = useNavigate(); 
 

@@ -19,12 +19,9 @@ const CreateAccount = () => {
             navigate('/home')
         } catch (e) {
             setError(e.message)
-            console.log(e.message)
         }
     }
         
-
-
     return (
         <div>
             <div>

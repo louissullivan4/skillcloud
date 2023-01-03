@@ -6,8 +6,7 @@ import Sidebar from "../../components/Sidebar"
 import "../../index.css";
 
 const Inbox = () => {
-    // let email = localStorage.user;
-    let email = "jim@gmail.com"
+    const email = localStorage.getItem("email")
 
     const [inboxData, setInboxData] = useState([]);
     useEffect(() => {
@@ -15,7 +14,6 @@ const Inbox = () => {
         const resp = await fetch('http://127.0.0.1:5000/inbox/'+email)
         const data = await resp.json();        
             setInboxData(data.result);
-            console.log(data.result)
       };
       fetchData()
     }, []);

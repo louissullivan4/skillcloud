@@ -8,7 +8,6 @@ const MsgNoUsers = () => {
     // let email = localStorage.user;
     const location = useLocation()
     const { from } = location.state
-    console.log(from)
     return (
         <div className="app">
             <Sidebar/>

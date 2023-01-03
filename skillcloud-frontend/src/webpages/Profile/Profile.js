@@ -6,9 +6,7 @@ import ProfileTabs from '../../components/Profile/ProfileTabs';
 import "../../index.css";
 
 const Profile = () => {
-    let email = localStorage.user;
-    let imageName = email.split('@')[0];
-
+    const email = localStorage.getItem("email")
     const [userData, setUserData] = useState([]);
     useEffect(() => {
       const fetchData = async () => {
@@ -19,6 +17,7 @@ const Profile = () => {
       fetchData()
     }, []);
 
+    
     return (
         <div className="app">
             <Sidebar/>
@@ -29,7 +28,7 @@ const Profile = () => {
                             <div className="col">
                                 <div className="card">
                                     <div className="card-body-profile">
-                                        <div className="card-image"> <img src={require(`../../assets/profiles/${imageName}.jpg`)} height="150" width="auto" alt="Profile Pictures"/></div>
+                                        <div className="card-image"><img src={require(`../../assets/profiles/${userData.profilepic}.jpg`)} height="150" width="auto" alt="Profile Pictures"/></div>
                                         <div className="card-text">{userData.fname} {userData.lname}</div>
                                         <div className="card-text">{userData.job_title}</div>
                                         <div className="card-text">{userData.location}</div>

@@ -3,7 +3,6 @@ import Sidebar from "../../components/Sidebar"
 import "../../index.css";
 
 const MsgDefault = () => {
-    // let email = localStorage.user;
     return (
         <div className="app">
             <Sidebar/>
