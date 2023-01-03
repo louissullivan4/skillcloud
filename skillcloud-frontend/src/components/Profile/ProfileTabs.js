@@ -2,11 +2,11 @@ import React, { useEffect, useState, useRef } from 'react'
 import { Link } from 'react-router-dom';
 
 const ProfileTabs = () => {
-    let email = localStorage.user;
-    console.log("email = " + email)
+    const email = localStorage.getItem("email")
 
     const [userData, setUserData] = useState([]);
-    const [userProjects, setUserProjects] = useState([]);
+    const [userCurrentProject, setCurrentProject] = useState([]);
+    const [userPrevProjects, setUserPrevProjects] = useState([]);
     const [userCerts, setUserCerts] = useState([]);
     const [userEducation, setUserEducation] = useState([]);
     const [userWork, setUserWork] = useState([]);
@@ -23,6 +23,9 @@ const ProfileTabs = () => {
 
         const education = data.result[0].education
         setUserEducation(education)
+
+        const current = data.result[0].current_project
+        setCurrentProject(current)
                 
         const work = data.result[0].work_experience
         setUserWork(work)
@@ -32,7 +35,7 @@ const ProfileTabs = () => {
             for (let i = 0; i < ids.length; i++) {
                 const resp = await fetch('http://127.0.0.1:5000/project/'+ids[i])
                 const data = await resp.json();
-                setUserProjects(userProjects => [...userProjects, data.result[0]]);
+                setUserPrevProjects(userPrevProjects => [...userPrevProjects, data]);
             } 
         }
       };
@@ -51,27 +54,44 @@ const ProfileTabs = () => {
             <button className={`tab ${checkActive(2, "active")}`} onClick={() => handleClick(2)}>More Information</button>
         </div>
         <div className={`chosen ${checkActive(1, "active")}`}>
-        <div className="row">
-            <div className="col">
-                <div className="card">
-                    <div className="card-header">Projects</div>
-                        <div className="card-body">
-                        {userProjects.map((userProjects, k) => (
-                        <div className='col' key={k}>
-                            <Link to={`/project/${userProjects.id}`}>
-                            <div className='card'>
-                                <div className='card-header'>{userProjects.title}</div>
-                                <div className='card-body'>
-                                    <div className='card-text'>{userProjects.summary}...</div>
+            <div className="row">
+                <div className="col">
+                    <div className="card">
+                        <div className="card-header">Current Project</div>
+                            <div className="card-body">
+                            <Link to={`/project/${userPrevProjects.id}`}>
+                                <div className='card'>
+                                    <div className='card-header'>{userPrevProjects.title}</div>
+                                    <div className='card-body'>
+                                        <div className='card-text'>{userPrevProjects.summary}...</div>
+                                    </div>
                                 </div>
-                            </div>
                             </Link>
                         </div>
-                        ))}
                     </div>
                 </div>
             </div>
-        </div>
+            <div className="row">
+                <div className="col">
+                    <div className="card">
+                        <div className="card-header">Previous Projects</div>
+                            <div className="card-body">
+                            {userPrevProjects.map((userPrevProjects, k) => (
+                            <div className='col' key={k}>
+                                <Link to={`/project/${userPrevProjects.id}`}>
+                                <div className='card'>
+                                    <div className='card-header'>{userPrevProjects.title}</div>
+                                    <div className='card-body'>
+                                        <div className='card-text'>{userPrevProjects.summary}...</div>
+                                    </div>
+                                </div>
+                                </Link>
+                            </div>
+                            ))}
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
         <div className={`chosen ${checkActive(2, "active")}`}>
         <div className="row">

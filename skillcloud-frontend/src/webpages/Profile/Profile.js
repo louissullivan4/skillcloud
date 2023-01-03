@@ -13,6 +13,7 @@ const Profile = () => {
         const resp = await fetch('http://127.0.0.1:5000/profile/'+email)
         const data = await resp.json();
         setUserData(data.result[0]);
+        // console.log(userData.profilepic)
       };
       fetchData()
     }, []);
@@ -24,7 +25,7 @@ const Profile = () => {
             <div className="page">
                 <div className="page-content">
                     <div className="container-1">
-                        <div className="row">
+                        <div className="row">       
                             <div className="col">
                                 <div className="card">
                                     <div className="card-body-profile">

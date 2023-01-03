@@ -113,6 +113,13 @@ def notify_response_project(user_email, role_id, req):
             sql = "UPDATE users SET availability = %s WHERE email = %s"
             cursor.execute(sql, ("Closed", user_email))
             mydb.commit()
+            sql = "SELECT roles.project_id FROM roles WHERE role_id = %s"
+            cursor.execute(sql, (role_id, ))
+            row = cursor.fetchone()
+            project_id = str(row[0])
+            sql = "UPDATE users SET current_project = %s WHERE email = %s"
+            cursor.execute(sql, (project_id, user_email))
+            mydb.commit()
         elif req == "declined":
             if int(row[1]) == 0 or int(row[1]) < 0:
                 val = 0
@@ -142,6 +149,13 @@ def notify_response_project(user_email, role_id, req):
             mydb.commit()
             sql = "UPDATE users SET availability = %s WHERE email = %s"
             cursor.execute(sql, ("Open", user_email))
+            mydb.commit()
+            sql = "SELECT roles.project_id FROM roles WHERE role_id = %s"
+            cursor.execute(sql, (role_id, ))
+            row = cursor.fetchone()
+            project_id = str(row[0])
+            sql = "UPDATE users SET current_project = %s WHERE email = %s"
+            cursor.execute(sql, (None, user_email))
             mydb.commit()
         else:
             sql = "DELETE FROM notifications WHERE user_notified = %s && role_id = %s"
@@ -177,6 +191,13 @@ def notify_role_change(user_email, role_id, req):
             sql = "UPDATE users SET availability = %s WHERE email = %s"
             cursor.execute(sql, ("Closed", user_email))
             mydb.commit()
+            sql = "SELECT roles.project_id FROM roles WHERE role_id = %s"
+            cursor.execute(sql, (role_id, ))
+            row = cursor.fetchone()
+            project_id = str(row[0])
+            sql = "UPDATE users SET current_project = %s WHERE email = %s"
+            cursor.execute(sql, (project_id, user_email))
+            mydb.commit()
         elif req == "remove":
             if int(row[1]) == 0:
                 val = 0
@@ -193,6 +214,13 @@ def notify_role_change(user_email, role_id, req):
             mydb.commit()
             sql = "UPDATE users SET availability = %s WHERE email = %s"
             cursor.execute(sql, ("Open", user_email))
+            mydb.commit()
+            sql = "SELECT roles.project_id FROM roles WHERE role_id = %s"
+            cursor.execute(sql, (role_id, ))
+            row = cursor.fetchone()
+            project_id = str(row[0])
+            sql = "UPDATE users SET current_project = %s WHERE email = %s"
+            cursor.execute(sql, (None, user_email))
             mydb.commit()
             sql = "SELECT roles.role_no_needed, roles.roles_filled FROM roles WHERE role_id = %s"
             cursor.execute(sql, (role_id, ))

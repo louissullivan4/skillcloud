@@ -16,6 +16,8 @@ class User:
         self.project_ids = ""
         self.certifications = ""
         self.availability = ""
+        self.profilepic = ""
+        self.current_project = ""
 
     def create_experience(self, email, experience):
         cursor = mydb.cursor()
@@ -88,13 +90,15 @@ class User:
         project_ids = requestjson['project_ids']
         certifications = requestjson['certifications']
         availability = requestjson['availability']
+        profilepic = str(requestjson['email']).split('@')[0]
+        current_project = requestjson['current_project']
         cursor.execute("SELECT * FROM users WHERE email = %s", (email, ))
         row = cursor.fetchone()
         if row == None:
             sql = """INSERT INTO users 
-                (email, fname, lname, location, job_title, job_category, job_desc, project_ids, certifications, availability)
-                VALUES (%s,%s,%s,%s,%s,%s,%s,%s,%s,%s)"""
-            val = (email, fname, lname, location, job_title, job_category, job_desc, project_ids, certifications, availability)
+                (email, fname, lname, location, job_title, job_category, job_desc, project_ids, certifications, availability, profilepic, current_project)
+                VALUES (%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s)"""
+            val = (email, fname, lname, location, job_title, job_category, job_desc, project_ids, certifications, availability, profilepic, current_project)
             cursor.execute(sql, val)
             self.email = email
             self.fname = fname
@@ -108,27 +112,14 @@ class User:
             self.project_ids = project_ids
             self.certifications = certifications
             self.availability = availability
+            self.profilepic = profilepic
+            self.current_project = current_project
             mydb.commit()
             return "200"
         elif row != None:
             return "409"
         else:
             return "404"
-
-    def register_user(self, requestjson):
-        cursor = mydb.cursor()
-        email = requestjson['email']
-        pwd = requestjson['pwd']
-        cursor.execute("SELECT * FROM users WHERE email = %s", (email, ))
-        row = cursor.fetchone()
-        if row == None:
-            sql = """INSERT INTO users 
-                (email, pwd)
-                VALUES (%s,%s)"""
-            val = (email, pwd)
-            cursor.execute(sql, val)
-            mydb.commit()
-            return "200"
 
     def get_user(self, email):
         cursor = mydb.cursor()
@@ -149,7 +140,9 @@ class User:
             self.project_ids = row[7]
             self.certifications = row[8]
             self.availability = row[9]
-        return (self.email, self.fname, self.lname, self.location, self.job_title, self.job_category, self.job_desc, self.work_experience, self.education, self.project_ids, self.certifications, self.availability)
+            self.profilepic = row[10]
+            self.current_project = row[11]
+        return (self.email, self.fname, self.lname, self.location, self.job_title, self.job_category, self.job_desc, self.work_experience, self.education, self.project_ids, self.certifications, self.availability, self.profilepic, self.current_project)
 
     def get_user_json(self):
         experience_json = []
@@ -161,7 +154,7 @@ class User:
             newVal = {"edu_type":val[1], "edu_degree":val[2], "edu_school":val[3], "edu_desc":val[4]}
             education_json.append(newVal)
         user = []
-        user_json = {"email" : self.email, "fname" : self.fname, "lname" : self.lname, "location" : self.location, "job_title" : self.job_title, "job_category" : self.job_category, "job_desc" : self.job_desc, "work_experience" : experience_json, "education" : education_json, "project_ids" : self.project_ids, "certifications" : self.certifications, "availability" : self.availability}
+        user_json = {"email" : self.email, "fname" : self.fname, "lname" : self.lname, "location" : self.location, "job_title" : self.job_title, "job_category" : self.job_category, "job_desc" : self.job_desc, "work_experience" : experience_json, "education" : education_json, "project_ids" : self.project_ids, "certifications" : self.certifications, "availability" : self.availability, "profilepic" : self.profilepic, "current_project" : self.current_project}
         user.append(user_json)
         user_json = {"result":user}
         return user_json
