@@ -1,9 +1,8 @@
 import { Routes, Route } from "react-router-dom";
 
-import LoginForm from "./components/Auth/LoginForm";
-// import Logout from "./components/Auth/Logout";
-
-import Layout from "./components/Layout";
+import Login from "./components/Auth/Login";
+import CreateAccount from "./components/Auth/CreateAccount";
+import Logout from "./components/Auth/Logout";
 
 import Home from "./webpages/Home";
 
@@ -25,21 +24,23 @@ import "./index.css";
 function App() {
   return (
       <Routes>
-          <Route path="/" element={<Layout />}>
-              {/* Public */}
-                {/* <Route path="/login" element={<LoginForm />} /> */}
-                <Route path="/" element={<Home />} />
-                <Route path="/profile" element={<Profile />} />
-                <Route path="/project/:id" element={<Project />} />
-                <Route path="/createproject" element={<CreateProject />} />
-                <Route path="/inbox" element={<Inbox />} />
-                <Route path="/msg" element={<MsgDefault />} />
-                <Route path="/msginvite" element={<MsgInvite />} />
-                <Route path="/msgresponse" element={<MsgResponse />} />
-                <Route path="/msgnousers" element={<MsgNoUsers />} />
-                <Route path="/completerequest" element={<CompleteRequest />} />
-                {/* <Route path="/logout" element={<Logout />} /> */}
-          </Route>
+            {/* Public */} 
+              <Route path="/" element={<Login/>} />
+              <Route path="/createaccount" element={<CreateAccount />} />
+              <Route path="/logout" element={<Logout />} />
+
+              <Route path="/home" element={<Home />} />
+              <Route path="/profile" element={<Profile />} />
+
+              <Route path="/project/:id" element={<Project />} />
+              <Route path="/createproject" element={<CreateProject />} />
+
+              <Route path="/inbox" element={<Inbox />} />
+              <Route path="/msg" element={<MsgDefault />} />
+              <Route path="/msginvite" element={<MsgInvite />} />
+              <Route path="/msgresponse" element={<MsgResponse />} />
+              <Route path="/msgnousers" element={<MsgNoUsers />} />
+              <Route path="/completerequest" element={<CompleteRequest />} />
       </Routes>
   );
 }
