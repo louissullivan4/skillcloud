@@ -58,7 +58,8 @@ const ProfileTabs = () => {
                 <div className="col">
                     <div className="card">
                         <div className="card-header">Current Project</div>
-                            <div className="card-body">
+                        {userCurrentProject === null ? <div className="card-body">No active projects 😓</div> :
+                        <div className="card-body">
                             <Link to={`/project/${userPrevProjects.id}`}>
                                 <div className='card'>
                                     <div className='card-header'>{userPrevProjects.title}</div>
@@ -68,6 +69,7 @@ const ProfileTabs = () => {
                                 </div>
                             </Link>
                         </div>
+                        }
                     </div>
                 </div>
             </div>
