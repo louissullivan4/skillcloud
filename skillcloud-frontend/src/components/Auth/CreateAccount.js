@@ -16,7 +16,7 @@ const CreateAccount = () => {
         setError('')
         try {
             await createUser(email, password)
-            navigate('/home')
+            navigate('/basicinfo',{state:{ email: email }}) 
         } catch (e) {
             setError(e.message)
         }
