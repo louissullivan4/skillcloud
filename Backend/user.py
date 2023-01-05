@@ -29,7 +29,7 @@ class User:
             experience_desc = val['experience_desc']
             sql = """INSERT INTO user_experience 
                 (user_email, experience_name, experience_title, experience_start, experience_end, experience_desc)
-                VALUES (%s,%s,%s,%s,%s)"""
+                VALUES (%s,%s,%s,%s,%s,%s)"""
             val = (email, experience_name, experience_title, experience_start, experience_end, experience_desc)
             cursor.execute(sql, val)
             mydb.commit()
@@ -81,22 +81,24 @@ class User:
         email = requestjson['email']
         fname = requestjson['fname']
         lname = requestjson['lname']
-        location = requestjson['location']
-        job_title = requestjson['job_title']
-        job_category = requestjson['job_category']
-        job_desc = requestjson['job_desc']
-        work_experience = requestjson['work_experience']
+        location = requestjson['city'] + ", " + requestjson['country']
+        job_title = requestjson['title']
+        job_category = requestjson['category']
+        job_desc = requestjson['desc']
+        work_experience = requestjson['experience']
         education = requestjson['education']
-        project_ids = requestjson['project_ids']
-        certifications = requestjson['certifications']
-        availability = requestjson['availability']
-        profilepic = str(requestjson['email']).split('@')[0]
-        current_project = requestjson['current_project']
+        project_ids = None
+        certifications = ""
+        for val in requestjson['certs']:
+            certifications += val.get('certName') + ","
+        availability = "Open"
+        profilepic = None
+        current_project = None
         cursor.execute("SELECT * FROM users WHERE email = %s", (email, ))
         row = cursor.fetchone()
         if row == None:
             sql = """INSERT INTO users 
-                (email, fname, lname, location, job_title, job_category, job_desc, project_ids, certifications, availability, profilepic, current_project)
+                (email, fname, lname, location, job_title, job_category, job_desc, project_ids, certifications, availability, profile_pic, current_project)
                 VALUES (%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s)"""
             val = (email, fname, lname, location, job_title, job_category, job_desc, project_ids, certifications, availability, profilepic, current_project)
             cursor.execute(sql, val)
@@ -115,11 +117,11 @@ class User:
             self.profilepic = profilepic
             self.current_project = current_project
             mydb.commit()
-            return "200"
+            return 200
         elif row != None:
-            return "409"
+            return 409
         else:
-            return "404"
+            return 404
 
     def get_user(self, email):
         cursor = mydb.cursor()

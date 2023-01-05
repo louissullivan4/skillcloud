@@ -1,74 +1,59 @@
-# from datetime import date
-# from db_connect import connect_db
-# import json
+from datetime import date
+from db_connect import connect_db
+import json
 
-# from match_event import event_match
-# from project import Project
-# from notification_service import *
-# mydb = connect_db()
+from match_event import event_match
+from user import User
+mydb = connect_db()
 
-# def notify_role_change(user_email, role_id, req):
-#     cursor = mydb.cursor()
-#     sql = "SELECT roles.role_no_needed, roles.roles_filled FROM roles WHERE role_id = %s"
-#     cursor.execute(sql, (role_id, ))
-#     row = cursor.fetchone()
-#     try:
-#         cursor = mydb.cursor()
-#         if req == "add" and int(row[1]) < int(row[0]):
-#             sql = "DELETE FROM ineligible WHERE user_email = %s"
-#             cursor.execute(sql, (user_email, ))
-#             sql = "UPDATE notifications SET status = %s WHERE role_id = %s && user_notified = %s"
-#             cursor.execute(sql, ("accepted", role_id, user_email))
-#             sql = "UPDATE roles SET roles_filled = %s WHERE role_id = %s"
-#             val = int(row[1]) + 1
-#             cursor.execute(sql, (str(val), role_id))
-#         elif req == "remove":
-#             if int(row[1]) == 0:
-#                 val = 0
-#             else:
-#                 val = int(row[1]) - 1
-#             print(val)
-#             sql = "INSERT INTO ineligible (user_email, role_id) VALUES (%s, %s)"
-#             cursor.execute(sql, (user_email, role_id))
-#             sql = "UPDATE notifications SET status = %s WHERE role_id = %s && user_notified = %s"
-#             cursor.execute(sql, ("declined", role_id, user_email))
-#             sql = "UPDATE roles SET roles_filled = %s WHERE role_id = %s"
-#             cursor.execute(sql, (str(val), role_id))
-#             sql = "SELECT roles.role_no_needed, roles.roles_filled FROM roles WHERE role_id = %s"
-#             cursor.execute(sql, (role_id, ))
-#             total = cursor.fetchone()
-#             total_needed = int(total[0]) - int(total[1])
-#             if total_needed > 0:
-#                 sql = "SELECT roles.project_id FROM roles WHERE role_id = %s"
-#                 cursor.execute(sql, (role_id, ))
-#                 row = cursor.fetchone()
-#                 project_id = str(row[0])
-#                 p1 = Project()
-#                 p1.get_project(project_id)
-#                 project_json = p1.get_project_json()
-#                 candidates = event_match(project_json)
-#                 if len(candidates) > 0:
-#                     create_role_notifications(candidates, project_json)
-#                 else:
-#                     print("No candidates")
-#         mydb.commit()
-#         return 200
-#     except Exception as e:
-#         print(e)
-#         return 404
+def createuser(json1):
+    u1 = User()
+    print(json1)
+    created = u1.create_user(json1)
+    print(created)
+    if created == 200:
+        return json.dumps({"Status Code": 200, "Message": "Success!"}), 200
+    elif created == 409:
+        return json.dumps({"Status Code": 409, "Message": "User already exists!"}), 409
+    else:
+        return json.dumps({"Status Code": 404, "Message": "Success!"}), 404
 
-
-# print(notify_role_change("billy@gmail.com", "01334698", "remove"))
-
-# candidates = {'billy@gmail.com': 19.38, 'timmy@gmail.com': 5.866}
-# role = {
-#     "role_category" : "Other",
-#     "role_title" : "Host",
-#     "role_desc" : "Need host with time spent in presenting news on a weekly basis. Degree in journalism preferred but not required. Preferred area in technology but also not required",
-#     "role_no_needed" : "2",
-#     "role_id" : "00550596",
-#     "role_filled" : "1"
-# }
-# project_author = "louis@gmail.com"
-# project_id = "05847316"
-# print(notify_invite_project(candidates, role, project_author, project_id))
+# json1 = {
+#     "fname":"Henry",
+#     "lname":"English",
+#     "city":"London",
+#     "country":"United Kingdom",
+#     "title":"English Teacher",
+#     "category":"Teaching professionals",
+#     "desc":"Dedicated and professional English and modern languages tutor with strong communication skills now seeking a graduate teaching assistant role. I am an Oxford University graduate with a 2:2 in French and Spanish, combined with on-going school experience, demonstrating excellent leadership, organisation and planning skills. Living and teaching in France during the university placement year fostered a love of teaching, making a difference in the lives of those students who may not believe they have the potential to achieve.",
+#     "certs":[
+#        {
+#           "certName":"English Language Assistant ELA"
+#        }
+#     ],
+#     "email":"henry@gmail.com",
+#     "education":[
+#        {
+#           "edu_type":"BA",
+#           "edu_degree":"French and Spanish",
+#           "edu_school":"University of Oxford",
+#           "edu_desc":"Year 4 modules included, advanced language skills (French and Spanish), European culture, French literature"
+#        },
+#        {
+#           "edu_type":"A-levels",
+#           "edu_degree":"English Literature, Spanish, French",
+#           "edu_school":"Queen Mary's College, Cheltenham",
+#           "edu_desc":"English Literature (A) Spanish (A) French (A)"
+#        }
+#     ],
+#     "experience":[
+#        {
+#           "experience_name":"Gloucester Tuition Center",
+#           "experience_title":"English Tutor",
+#           "experience_start":"2018-01-01",
+#           "experience_end":"2023-01-04",
+#           "experience_desc":"Tutoring adults and schoolchildren preparing for GCSE and A-level languages alongside managing a small team has helped me to develop good leadership and management skills. Experience of successfully motivating staff and students to get better results has broadened my knowledge of teaching techniques and strategies to get better results. I was responsible for devising a comprehensive learning programme specifically tailored to the individual requirements of each student, this includes planning lessons, keeping records, assessing and analysing work. The role also entails drawing on strong communication skills to provide tutees with practical and pastoral support throughout their educational or professional careers."
+#        }
+#     ]
+#  }
+# print(createuser(json1))

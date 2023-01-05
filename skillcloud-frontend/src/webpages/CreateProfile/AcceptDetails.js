@@ -9,10 +9,10 @@ const AcceptDetails = () => {
     const state = location.state
     console.log(state)
     const completeProfile = async () => {
-        const resp = await fetch(`http://127.0.0.1:5000/createUser`,{'method':'POST', headers : {'Content-Type':'application/json'}, body: JSON.stringify(state)})
+        const resp = await fetch(`http://127.0.0.1:5000/createuser`,{'method':'POST', headers : {'Content-Type':'application/json'}, body: JSON.stringify(state)})
         if (resp.status === 200) {
             alert("User created successfully. Proceed to login.");
-            navigate('/login');
+            navigate('/');
         } else {
             alert("User creation failed. Please try again.");
         }

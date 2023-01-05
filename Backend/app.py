@@ -67,26 +67,17 @@ def profilepage(email: str):
     user_json = user.get_user_json()
     return json.dumps(user_json)
 
-@app.route('/register', methods=['POST'])
-def register_user():
-    u1 = User()
-    created = u1.register_user(request.json)
-    if created == 200:
-        return json.dumps({"Status Code": 200, "Message": "Success!"})
-    elif created == 409:
-        return json.dumps({"Status Code": 409, "Message": "User already exists!"})
-    else:
-        return json.dumps({"Status Code": 404, "Message": "Error!"})
-
 @app.route('/createuser', methods=['POST'])
 def createuser():
     u1 = User()
+    print(request.json)
     created = u1.create_user(request.json)
-    if created != 200:
-        return json.dumps({"Status Code": 404, "Message": "Error!"})
+    if created == 200:
+        return json.dumps({"Status Code": 200, "Message": "Success!"}), 200
+    elif created == 409:
+        return json.dumps({"Status Code": 409, "Message": "User already exists!"}), 409
     else:
-        return json.dumps({"Status Code": 200, "Message": "Success!"})
-    
+        return json.dumps({"Status Code": 404, "Message": "Success!"}), 404
     
 @app.route('/inbox/<string:user>')
 def inbox(user : str):
