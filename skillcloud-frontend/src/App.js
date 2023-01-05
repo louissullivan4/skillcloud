@@ -21,8 +21,7 @@ import MsgNoUsers from "./webpages/Inbox/MsgNoUsers";
 import CompleteRequest from "./webpages/Inbox/CompleteRequest";
 
 import BasicInfo from "./webpages/CreateProfile/BasicInfo";
-import Education from "./webpages/CreateProfile/Education";
-import PreviousExperience from "./webpages/CreateProfile/PreviousExperience";
+import MoreDetails from "./webpages/CreateProfile/MoreDetails";
 import AcceptDetails from "./webpages/CreateProfile/AcceptDetails";
 
 import "./index.css";
@@ -50,8 +49,7 @@ function App() {
           <Route path="/completerequest" element={<ProtectedRoute><CompleteRequest /></ProtectedRoute>} />
 
           <Route path="/basicinfo" element={<ProtectedRoute><BasicInfo /></ProtectedRoute>} />
-          <Route path="/education" element={<ProtectedRoute><Education /></ProtectedRoute>} />
-          <Route path="/previousexperience" element={<ProtectedRoute><PreviousExperience /></ProtectedRoute>} />
+          <Route path="/moredetails" element={<ProtectedRoute><MoreDetails /></ProtectedRoute>} />
           <Route path="/acceptdetails" element={<ProtectedRoute><AcceptDetails /></ProtectedRoute>} />
       </Routes>
     </AuthContextProvider>

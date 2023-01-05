@@ -13,7 +13,6 @@ const Profile = () => {
         const resp = await fetch('http://127.0.0.1:5000/profile/'+email)
         const data = await resp.json();
         setUserData(data.result[0]);
-        // console.log(userData.profilepic)
       };
       fetchData()
     }, []);
