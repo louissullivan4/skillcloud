@@ -7,7 +7,7 @@ const AcceptDetails = () => {
     const location = useLocation()
     let navigate = useNavigate();
     const state = location.state
-
+    console.log(state)
     const completeProfile = async () => {
         const resp = await fetch(`http://127.0.0.1:5000/createUser`,{'method':'POST', headers : {'Content-Type':'application/json'}, body: JSON.stringify(state)})
         if (resp.status === 200) {
@@ -34,23 +34,23 @@ const AcceptDetails = () => {
                 <div className='text'>Description of profession profile: {state.desc}</div>
                 <div className='text'>Certifications: {state.certs.map((cert) => { return <div>{cert.certName}</div>})}</div>
                 <div className='text'>Education:</div>
-                {state.education.map((edu, index) => (
-                    <div key={index}>
+                {state.education.map((edu) => (
+                    <div key={edu.degree}>
                         <div>{edu.edu_type}</div>
                         <div>{edu.edu_degree}</div>
                         <div>{edu.edu_type}</div>
                         <div>{edu.edu_desc}</div>
                     </div>
-                ))}
-                {state.experience.map((exp, index) => (
-                    <div key={index}>
+                ))};
+                {state.experience.map((exp) => (
+                    <div key={exp.experience_name}>
                         <div>{exp.experience_name}</div>
                         <div>{exp.experience_title}</div>
                         <div>{exp.experience_start}</div>
                         <div>{exp.experience_end}</div>
                         <div>{exp.experience_desc}</div>
                     </div>
-                ))}
+                ))};
                 <button className="backBut" type="button" onClick={goBack}>
                         Back
                 </button>

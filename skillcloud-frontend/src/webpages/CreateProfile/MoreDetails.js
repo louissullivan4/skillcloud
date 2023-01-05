@@ -108,7 +108,7 @@ const MoreDetails = () => {
                         {newExperience.experience.map((_exp, index) => (
                             <div key={index}>
                                 <div className="formVal">
-                                    <label htmlFor="experience_name">Workplace name</label> 0
+                                    <label htmlFor="experience_name">Workplace name</label>
                                     <input onChange={(e) => newExperience.experience[index]["experience_name"] = e.target.value} type="text" placeholder='e.g. BSc'/>
                                     <label htmlFor="experience_title">Your title during the experience</label>
                                     <input onChange={(e) => newExperience.experience[index]["experience_title"] = e.target.value} type="text"/>
