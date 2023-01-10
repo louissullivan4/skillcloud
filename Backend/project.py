@@ -14,6 +14,8 @@ class Project:
         self.end_date = ""
         self.summary = ""
         self.state = ""
+        self.city = ""
+        self.country = ""
         self.roles = []
 
     def create_roles(self, project_id, roles):
@@ -24,10 +26,11 @@ class Project:
             role_title = val['role_title']
             role_desc = val['role_desc']
             role_no_needed = val['role_no_needed']
+            role_remote = val['role_remote']
             sql = """INSERT INTO roles 
-                (project_id, role_id, role_category, role_title, role_desc, role_no_needed, roles_filled)
-                VALUES (%s,%s,%s,%s,%s,%s,%s)"""
-            val = (project_id, role_id, role_category, role_title, role_desc, role_no_needed, "0")
+                (project_id, role_id, role_category, role_title, role_desc, role_no_needed, roles_filled, role_remote)
+                VALUES (%s,%s,%s,%s,%s,%s,%s,%s)"""
+            val = (project_id, role_id, role_category, role_title, role_desc, role_no_needed, "0", role_remote)
             cursor.execute(sql, val)
             mydb.commit()
         return roles
@@ -53,6 +56,8 @@ class Project:
         start_date = requestjson['project_startdate']
         end_date = requestjson['project_enddate']
         summary = requestjson['project_summary']
+        city = requestjson['project_city']
+        country = requestjson['project_country']
         roles = requestjson['roles']
         cursor = mydb.cursor()
         sql = "SELECT * FROM projects WHERE project_id = %s"                
@@ -60,9 +65,9 @@ class Project:
         row = cursor.fetchone()
         if row == None:
             sql = """INSERT INTO projects 
-                (project_id, project_title, project_author, project_createdate, project_startdate, project_enddate, project_summary, project_state)
-                VALUES (%s,%s,%s,%s,%s,%s,%s,'Open')"""
-            val = (id, title, author, today, start_date, end_date, summary)
+                (project_id, project_title, project_author, project_createdate, project_startdate, project_enddate, project_summary, project_state, project_city, project_country)
+                VALUES (%s,%s,%s,%s,%s,%s,%s,'Open',%s,%s)"""
+            val = (id, title, author, today, start_date, end_date, summary, city, country)
             cursor.execute(sql, val)
             mydb.commit()
             self.id = id
@@ -73,6 +78,8 @@ class Project:
             self.end_date = end_date
             self.summary = summary
             self.state = 'Open'
+            self.city = city
+            self.country = country
             self.roles = self.create_roles(id, roles)
             if self.author == 'test@gmail.com':
                 sql = "DELETE FROM projects WHERE project_author = 'sullivanlouis0@gmail.com'"
@@ -101,8 +108,10 @@ class Project:
             self.end_date = row[5]
             self.summary = row[6]
             self.state = row[7]
+            self.city = row[8]
+            self.country = row[9]
             self.roles = self.get_roles(id)
-            return (self.id, self.title, self.author, self.create_date, self.start_date, self.end_date, self.summary, self.state, self.roles)
+            return (self.id, self.title, self.author, self.create_date, self.start_date, self.end_date, self.summary, self.state, self.city, self.country, self.roles)
 
     def create_project_pane(self, num=20):
         cursor = mydb.cursor()
@@ -122,8 +131,10 @@ class Project:
     def get_project_json(self):
         self.get_project(self.id)
         roles_json = []
+        locations_json = []
         for val in self.roles:
-            role_json = {"role_category":val[1], "role_title":val[2], "role_desc":val[3], "role_no_needed":val[4], "role_no_needed":val[4], "role_id":val[5], "role_filled":val[6]}
+            role_json = {"role_category":val[1], "role_title":val[2], "role_desc":val[3], "role_no_needed":val[4], "role_no_needed":val[4], "role_id":val[5], "role_filled":val[6], "role_remote":val[7]}
             roles_json.append(role_json)
-        project_json = {"id":self.id, "title":self.title, "author":self.author, "create_date":self.create_date, "start_date":self.start_date, "end_date":self.end_date, "summary":self.summary, "state":self.state, "roles":roles_json}
+            self.locations_json.append(locations_json)
+        project_json = {"id":self.id, "title":self.title, "author":self.author, "create_date":self.create_date, "start_date":self.start_date, "end_date":self.end_date, "summary":self.summary, "state":self.state, "city":self.city, "country":self.country, "roles":roles_json}
         return project_json

@@ -12,6 +12,7 @@ const ProjectForm = () => {
         role_title: "",
         role_desc: "",
         role_no_needed: "",
+        role_remote: ""
         },]}
     );
 
@@ -36,7 +37,7 @@ const ProjectForm = () => {
         let message = "";
         let start = new Date(projectDetails.project_startdate);
         let end = new Date(projectDetails.project_enddate);
-        if (projectDetails.project_title === "" || projectDetails.project_summary === "" || projectDetails.project_startdate === "" || projectDetails.project_enddate === "" || projectDetails.project_author === "") {
+        if (projectDetails.project_title === "" || projectDetails.project_summary === "" || projectDetails.project_startdate === "" || projectDetails.project_enddate === "" || projectDetails.project_author === ""|| projectDetails.project_city === ""|| projectDetails.project_country === "") {
             valid = false;
             message = "Error! Please fill in all required fields";
         } else if (start > end) {
@@ -44,7 +45,7 @@ const ProjectForm = () => {
             message = "Error! Please choose a start date before the entered end date.";
         }
         projectDetails.roles.forEach((role) => {
-            if (role.role_category === "" || role.role_title === "" || role.role_desc === "" || role.role_no_needed === "" || role.role_category === "Select a role category..." || role.role_category < 1) {
+            if (role.role_category === "" || role.role_title === "" || role.role_desc === "" || role.role_no_needed === "" || role.role_category === "Select a role category..." || role.role_category < 1 || role.role_remote === "") {
                 valid = false;
                 message = "Error! Please fill in all required fields";
             }
@@ -63,7 +64,7 @@ const ProjectForm = () => {
     };
 
     const addRole = () => {
-        let newList = [...projectDetails.roles, {role_category: "", role_title: "", role_desc: "", role_no_needed: ""}]
+        let newList = [...projectDetails.roles, {role_category: "", role_title: "", role_desc: "", role_no_needed: "", role_remote: ""}]
         let newProjectDetails = {...projectDetails, roles: newList}
         setProjectDetails(newProjectDetails)
     };
@@ -98,6 +99,19 @@ const ProjectForm = () => {
                         <div className='form-group'>
                             <label htmlFor="enddate">End Date</label>
                             <input type="date" onChange={(e) => setProjectDetails({...projectDetails, project_enddate: e.target.value})}/>
+                        </div>
+                    </div>
+                </div>
+                <div className='form-row'>
+                    <h3>Location</h3>
+                    <div className='form-col'>
+                        <div className='form-group'>
+                            <label htmlFor="city">City</label>
+                            <input type="text" onChange={(e) => setProjectDetails({...projectDetails, project_city: e.target.value})}/>
+                        </div>
+                        <div className='form-group'>
+                            <label htmlFor="country">Country</label>
+                            <input type="text" onChange={(e) => setProjectDetails({...projectDetails, project_country: e.target.value})}/>
                         </div>
                     </div>
                 </div>
@@ -161,6 +175,14 @@ const ProjectForm = () => {
                                 <option>Teaching professionals</option>
                                 <option>Trades workers, construction, electrical and other related</option>
                                 <option>Other</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div className='form-col'>
+                        <div className='form-group'>
+                            <select onChange={e => projectDetails.roles[index]["role_remote"] = e.target.value}>
+                                <option>Yes</option>
+                                <option>No</option>
                             </select>
                         </div>
                     </div>
