@@ -2,7 +2,6 @@ from flask import Flask, request
 from flask_cors import CORS
 from flask_api import status
 
-
 import json
 
 from project import Project
@@ -51,14 +50,16 @@ def projectpage(id: str):
 
 @app.route('/createproject', methods=['POST'])
 def createproject():
-    p1 = Project()
-    p1.create_project(request.json)
-    projectvals = p1.get_project_json()
-    notified = create_role_notifications(projectvals)
-    if notified == 200:
-        return json.dumps({"Status Code": 200, "Message": "Success!"})
-    else:
-        return json.dumps({"Status Code": 404, "Message": "Error!"})
+    print(request.json)
+    # p1 = Project()
+    # p1.create_project(request.json)
+    # projectvals = p1.get_project_json()
+    # notified = create_role_notifications(projectvals)
+    # if notified == 200:
+    #     return json.dumps({"Status Code": 200, "Message": "Success!"})
+    # else:
+    #     return json.dumps({"Status Code": 404, "Message": "Error!"})
+    return 200
 
 @app.route('/profile/<string:email>')
 def profilepage(email: str):

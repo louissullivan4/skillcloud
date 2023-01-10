@@ -1,4 +1,4 @@
-from match_skills import match_job
+from match_skills import match_skills
 from db_connect import connect_db
 import json
 
@@ -6,7 +6,7 @@ mydb = connect_db()
 
 def get_final_candidates_dict(job, candidates):
     percentages_dict = {}
-    percentages_dict = match_job(job, candidates)
+    percentages_dict = match_skills(job, candidates)
     return dict(sorted(percentages_dict.items(), key=lambda val: val[:1]))
 
 def get_input_users(category):
@@ -61,10 +61,20 @@ def fulfill_roles(data):
     final = get_final_candidates_dict(job, removed_ineligible_candidates)
     return final
 
+def fulfill_projects(data):
+    # get open roles that match the user's category
+    # that should not skip the list of already notified people so we
+    # should check the roles already fulfilled and who is already notified
+    return
+
 def event_match(jsonVals):
     jsonVals = str(jsonVals).replace("'", '"')
     data = json.loads(jsonVals)
     candidates = fulfill_roles(data)
     return candidates
 
-
+def new_user_match(jsonVals):
+    jsonVals = str(jsonVals).replace("'", '"')
+    data = json.loads(jsonVals)
+    candidates = fulfill_projects(data)
+    return candidates
