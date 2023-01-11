@@ -8,6 +8,7 @@ from project import Project
 from user import User
 from auth_login import auth_user
 from notification_service import *
+from match_event import *
 
 app = Flask(__name__)
 CORS(app)
@@ -50,16 +51,14 @@ def projectpage(id: str):
 
 @app.route('/createproject', methods=['POST'])
 def createproject():
-    print(request.json)
-    # p1 = Project()
-    # p1.create_project(request.json)
-    # projectvals = p1.get_project_json()
-    # notified = create_role_notifications(projectvals)
-    # if notified == 200:
-    #     return json.dumps({"Status Code": 200, "Message": "Success!"})
-    # else:
-    #     return json.dumps({"Status Code": 404, "Message": "Error!"})
-    return 200
+    p1 = Project()
+    p1.create_project(request.json)
+    projectvals = p1.get_project_json()
+    notified = create_role_notifications(projectvals)
+    if notified == 200:
+        return json.dumps({"Status Code": 200, "Message": "Success!"})
+    else:
+        return json.dumps({"Status Code": 404, "Message": "Error!"})
 
 @app.route('/profile/<string:email>')
 def profilepage(email: str):
@@ -71,11 +70,11 @@ def profilepage(email: str):
 @app.route('/createuser', methods=['POST'])
 def createuser():
     u1 = User()
-    print(request.json)
     created = u1.create_user(request.json)
-    if created == 200:
+    match_user = event_match_user(request.json)
+    if match_user == 200:
         return json.dumps({"Status Code": 200, "Message": "Success!"}), 200
-    elif created == 409:
+    elif match_user == 409:
         return json.dumps({"Status Code": 409, "Message": "User already exists!"}), 409
     else:
         return json.dumps({"Status Code": 404, "Message": "Success!"}), 404

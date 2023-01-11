@@ -1,5 +1,7 @@
 from match_skills import match_skills
 from db_connect import connect_db
+from notification_service import notify_invite_project
+
 import json
 
 mydb = connect_db()
@@ -61,11 +63,65 @@ def fulfill_roles(data):
     final = get_final_candidates_dict(job, removed_ineligible_candidates)
     return final
 
-def fulfill_projects(data):
-    # get open roles that match the user's category
-    # that should not skip the list of already notified people so we
-    # should check the roles already fulfilled and who is already notified
-    return
+def user_values(data):
+    data = str(data).replace("'", '"')
+    data = json.loads(data)
+    email = data["email"].lower()
+    title = data["title"].lower()
+    category = data["category"].lower()
+    desc = data["desc"].lower()
+    certs = ""
+    for cert in data["certs"]:
+        certs += cert["certName"].lower() + " "
+    education = ""
+    for edu in data["education"]:
+        education += edu["edu_type"].lower() + " " + edu["edu_degree"].lower() + " " + edu["edu_desc"].lower() + " "
+    experience = ""
+    for exp in data["experience"]:
+        experience += exp["experience_name"].lower() + " " + exp["experience_title"].lower() + " " + exp["experience_desc"].lower() + " "
+    profile = title + " " + desc + " " + certs + " " + education + " " + experience
+    return profile, category, email
+
+def fufill_user(jsonVals):
+    percentages_dict = {}
+    job = {}
+    candidates = {}
+    try:
+        jsonVals = str(jsonVals).replace("'", '"')
+        data = json.loads(jsonVals)
+        profile, category, email = user_values(data)
+        cursor = mydb.cursor()
+        sql = "SELECT role_id, role_desc, role_title from roles WHERE roles_filled < role_no_needed && role_category = %s"
+        cursor.execute(sql, (category, ))
+        row = cursor.fetchall()
+        candidates[email] = profile
+        if len(row) > 0:
+            for val in row:
+                job_desc = val[1].lower() + " " + val[2].lower()
+                job[val[0]] = job_desc
+                percentages_dict = match_skills(profile, job)
+        for roleid, percent in percentages_dict.items():
+            if len(percentages_dict) > 0:
+                if percent > 0:
+                    sql = "SELECT * FROM roles WHERE role_id = %s"
+                    cursor.execute(sql, (roleid, ))
+                    role = cursor.fetchone()
+                    if len(role) > 0:
+                        sql = "SELECT project_author FROM projects WHERE project_id = %s"
+                        cursor.execute(sql, (role[0], ))
+                        project_author = cursor.fetchone()
+                        if len(project_author) > 0:
+                            notify_invite_project(candidates, role, project_author, role[0])     
+        return "200" 
+    except Exception as e:
+        print(e)
+        return "400"
+
+def event_match_user(jsonVals):
+    jsonVals = str(jsonVals).replace("'", '"')
+    data = json.loads(jsonVals)
+    complete = fufill_user(data)
+    return complete
 
 def event_match(jsonVals):
     jsonVals = str(jsonVals).replace("'", '"')
@@ -73,8 +129,3 @@ def event_match(jsonVals):
     candidates = fulfill_roles(data)
     return candidates
 
-def new_user_match(jsonVals):
-    jsonVals = str(jsonVals).replace("'", '"')
-    data = json.loads(jsonVals)
-    candidates = fulfill_projects(data)
-    return candidates
