@@ -6,7 +6,6 @@ import json
 
 from project import Project
 from user import User
-from auth_login import auth_user
 from notification_service import *
 from match_event import *
 
@@ -22,19 +21,6 @@ def welcome():
     """
     connect_db()
     return homepage
-
-@app.route('/login', methods=['POST'])
-def login():
-    data = request.get_json()
-    email = data['user']
-    pwd = data['pwd']
-    resp = auth_user(email, pwd)
-    if resp == 200:
-        return "User login details were correct.", status.HTTP_200_OK
-    elif resp == 401:
-        return "User login details were incorrect.", status.HTTP_401_UNAUTHORIZED
-    else:
-        return "Server error has occurred.", status.HTTP_500_INTERNAL_SERVER_ERROR
 
 @app.route('/home')
 def homepage():
@@ -70,11 +56,11 @@ def profilepage(email: str):
 @app.route('/createuser', methods=['POST'])
 def createuser():
     u1 = User()
-    created = u1.create_user(request.json)
-    match_user = event_match_user(request.json)
-    if match_user == 200:
+    created_user = u1.create_user(request.json)
+    if created_user == 200:
+        event_match_user(request.json)
         return json.dumps({"Status Code": 200, "Message": "Success!"}), 200
-    elif match_user == 409:
+    elif created_user == 409:
         return json.dumps({"Status Code": 409, "Message": "User already exists!"}), 409
     else:
         return json.dumps({"Status Code": 404, "Message": "Success!"}), 404

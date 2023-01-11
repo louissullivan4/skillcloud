@@ -82,7 +82,7 @@ def user_values(data):
     profile = title + " " + desc + " " + certs + " " + education + " " + experience
     return profile, category, email
 
-def fufill_user(jsonVals):
+def fulfill_user(jsonVals):
     percentages_dict = {}
     job = {}
     candidates = {}
@@ -120,7 +120,7 @@ def fufill_user(jsonVals):
 def event_match_user(jsonVals):
     jsonVals = str(jsonVals).replace("'", '"')
     data = json.loads(jsonVals)
-    complete = fufill_user(data)
+    complete = fulfill_user(data)
     return complete
 
 def event_match(jsonVals):
