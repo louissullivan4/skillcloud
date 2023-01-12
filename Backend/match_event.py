@@ -1,6 +1,6 @@
-from match_skills import match_skills
+from match_skills import *
 from db_connect import connect_db
-from notification_service import notify_invite_project
+from notification_service import *
 
 import json
 

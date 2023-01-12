@@ -20,6 +20,8 @@ import MsgResponse from "./webpages/Inbox/MsgResponse";
 import MsgNoUsers from "./webpages/Inbox/MsgNoUsers";
 import CompleteRequest from "./webpages/Inbox/CompleteRequest";
 
+import Chat from "./webpages/Chat/Chat";
+
 import BasicInfo from "./webpages/CreateProfile/BasicInfo";
 import MoreDetails from "./webpages/CreateProfile/MoreDetails";
 import AcceptDetails from "./webpages/CreateProfile/AcceptDetails";
@@ -47,6 +49,8 @@ function App() {
           <Route path="/msgresponse" element={<ProtectedRoute><MsgResponse /></ProtectedRoute>} />
           <Route path="/msgnousers" element={<ProtectedRoute><MsgNoUsers /></ProtectedRoute>} />
           <Route path="/completerequest" element={<ProtectedRoute><CompleteRequest /></ProtectedRoute>} />
+
+          <Route path="/chat" element={<ProtectedRoute><Chat /></ProtectedRoute>} />
 
           <Route path="/basicinfo" element={<ProtectedRoute><BasicInfo /></ProtectedRoute>} />
           <Route path="/moredetails" element={<ProtectedRoute><MoreDetails /></ProtectedRoute>} />
