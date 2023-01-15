@@ -92,6 +92,11 @@ def msghistory(sender: str, receiver: str):
     print(msg_json)
     return json.dumps(msg_json)
 
+@app.route('/contacts/<string:email>')
+def contacts(email: str):
+    contacts_json = get_contacts(email)
+    return json.dumps(contacts_json)
+
 @app.route('/updateMsg', methods=['POST'])
 def updateMsg():
     added = add_message(request.json)
