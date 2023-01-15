@@ -35,7 +35,7 @@ const Home = () => {
         <div className="app">
             <Sidebar/>
             <div className="page">
-                <div className="home-page-heading">
+                <div className="page-heading">
                     <h1>Home</h1>
                     <button type="button" onClick={handleClick}>
                         Create Project

@@ -29,7 +29,7 @@
  h1 {
     color: steelblue
  }
-.home-page-heading {
+.page-heading {
     display: flex;
     flex-direction: row;
     flex-wrap: nowrap;
@@ -37,7 +37,7 @@
     margin: 1.5em;
 }
 
-.home-page-heading button {
+.page-heading button {
     background-color: var(--PURPLE);
     color: white;
     border: none;
@@ -106,6 +106,38 @@
 
 .list-group  li a:hover {
     background-color: var(--LIGHTPURPLE);
+}
+
+/* Project Page */
+.project-page {
+    display: flex;
+    flex-direction: column;
+    flex-wrap: nowrap;
+    margin: 1em;
+}
+
+.project-page-heading {
+    display: flex;
+    flex-direction: column;
+    flex-wrap: nowrap;
+    justify-content: center;
+    margin: 1.5em;
+    background-color: var(--MINT);
+    padding: 1em;
+    border-radius: 10px;
+    border : solid 2px rgba(0, 0, 0, 0.08);
+}
+
+.project{
+    display: flex;
+    flex-direction: column;
+    flex-wrap: nowrap;
+    margin: 2.5em;
+}
+
+.project-header {
+    font-size: 1.5em;
+    margin-bottom: 1em;
 }
 
 /* Profile */

@@ -27,7 +27,7 @@ const Login = () => {
                 <h1>Login</h1>
                 <p>
                     Don't have an account yet?{' '}
-                    <Link to='/createaccount'>Create Acount</Link>
+                    <Link to='/createaccount'>Create Account</Link>
                 </p>
                 <form onSubmit={handleSubmit}>
                     <div>
