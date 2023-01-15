@@ -21,36 +21,36 @@ const Profile = () => {
     return (
         <div className="app">
             <Sidebar/>
-            <div className="page">
-                <div className="page-content">
-                    <div className="container-1">
-                        <div className="row">       
-                            <div className="col">
-                                <div className="card">
-                                    <div className="card-body-profile">
-                                        <div className="card-image"><img src={require(`../../assets/profiles/${userData.profilepic}.jpg`)} height="150" width="auto" alt="Profile Pictures"/></div>
-                                        <div className="card-text">{userData.fname} {userData.lname}</div>
-                                        <div className="card-text">{userData.job_title}</div>
-                                        <div className="card-text">{userData.location}</div>
+            <div className="p-page">
+                <div className="p-page-content">
+                    <div className="p-container-1">
+                        <div className="p-row">       
+                            <div className="p-col">
+                                <div className="p-card">
+                                    <div className="p-card-body-profile">
+                                        <div className="p-card-image"><img src={require(`../../assets/profiles/${userData.profilepic}.jpg`)} height="150" width="auto" alt="Profile Pictures"/></div>
+                                        <div className="p-card-text">{userData.fname} {userData.lname}</div>
+                                        <div className="p-card-text">{userData.job_title}</div>
+                                        <div className="p-card-text">{userData.location}</div>
     
                                     </div>
                                 </div>
                             </div>
                         </div>
-                    <div className="row">
-                        <div className="col">
-                            <div className="card">
-                                <div className="card-header">Summary</div>
-                                <div className="card-body">
-                                    <div className="card-text">{userData.job_desc}</div>
+                    <div className="p-row">
+                        <div className="p-col">
+                            <div className="p-card">
+                                <div className="p-card-header">Summary</div>
+                                <div className="p-card-body">
+                                    <div className="p-card-text">{userData.job_desc}</div>
                                     <br></br>
-                                    <div className="card-text">Status: {userData.availability}</div>
+                                    <div className="p-card-text">Status: {userData.availability}</div>
                                 </div>
                             </div>
                         </div>
                     </div>
                     </div>
-                    <div className="container-2">
+                    <div className="p-container-2">
                         <ProfileTabs/>
                     </div>
                 </div>
