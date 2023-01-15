@@ -11,7 +11,7 @@ from sklearn.metrics.pairwise import cosine_similarity
 def load_skill_extractor():
     try:
         nlp = spacy.load("en_core_web_md")
-    except: # If not present, we download
+    except:
         spacy.cli.download("en_core_web_md")
         nlp = spacy.load("en_core_web_md")
     skill_extractor = SkillExtractor(nlp, SKILL_DB, PhraseMatcher)
