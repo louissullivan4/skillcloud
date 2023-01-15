@@ -36,8 +36,18 @@ def get_msg_history(sender, receiver):
     for row in result:
         msg_json.append({"message_id": row[0], "sender": row[1], "receiver": row[2], "date": row[3], "time": row[4], "content": row[5]})
     return {"result": msg_json}
-    
 
+def get_contacts(email):
+    cursor = mydb.cursor()
+    msg_json = []
+    sql = """
+        SELECT DISTINCT `receiver` FROM messages WHERE `sender` = %s
+        """
+    cursor.execute(sql, (email,))
+    result = cursor.fetchall()
+    for row in result:
+        msg_json.append({"contact": row[0]})
+    return {"result": msg_json}
 # json_data = {"new_messages" : [{'sender': 'jim@gmail.com', 'receiver': 'admin@gmail.com', 'date': '2023-01-11', 'time': '20:14:15', 'content': 'Wow my message was added'}]}
 # add_message(json_data)
-get_msg_history("sullivanlouis0@gmail.com", "admin@gmail.com")
+# get_msg_history("sullivanlouis0@gmail.com", "admin@gmail.com")

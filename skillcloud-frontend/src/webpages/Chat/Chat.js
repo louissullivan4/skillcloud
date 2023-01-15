@@ -1,4 +1,5 @@
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useState, } from 'react'
+import { useLocation  } from 'react-router-dom'
 
 import Sidebar from "../../components/Sidebar";
 
@@ -6,9 +7,13 @@ import "../../index.css";
 
 
 const Chat = () => {
+    const location = useLocation()
 
-    let sender = "sullivanlouis0@gmail.com";
-    let receiver = "admin@gmail.com";
+    const sender = location.state.email
+    const receiver = location.state.contact.contact
+
+    console.log(sender)
+    console.log(receiver)
 
     const [chatHistory, setChatHistory] = useState([]);
 
