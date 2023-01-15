@@ -1,29 +1,18 @@
 import React from 'react';
-import { Link, useNavigate } from "react-router-dom";
+import { Link } from "react-router-dom";
 
-import { UserAuth } from '../context/AuthContext';
-
-import { BiHomeAlt, BiUser, BiBox, BiDoorOpen } from "react-icons/bi";
+import { BiHomeAlt, BiUser, BiBox, BiDoorOpen, BiChat } from "react-icons/bi";
 
 const Sidebar = () => {
-    const { logout } = UserAuth()
-    const navigate = useNavigate()
-    const handleLogout = async () => {
-        try {
-            await logout();
-            navigate('/');
-        } catch (e) {
-        }
-    }
+
    return(
-        <div className="sidebar">
-            <ul>
-                <li><Link to="/home"><BiHomeAlt style={{fontSize: '30px'}}/></Link></li>
-                <li><Link to="/profile"><BiUser style={{fontSize: '30px'}}/></Link></li>
-                <li><Link to="/inbox"><BiBox style={{fontSize: '30px'}}/></Link></li>
-                <li><button onClick={handleLogout}><BiDoorOpen style={{fontSize: '30px'}}/></button></li>
-            </ul>
-        </div>
+    <ul className='list-group'>
+        <li><Link to="/home"><BiHomeAlt style={{fontSize: '2em'}}/></Link></li>
+        <li><Link to="/profile"><BiUser style={{fontSize: '2em'}}/></Link></li>
+        <li><Link to="/inbox"><BiBox style={{fontSize: '2em'}}/></Link></li>
+        <li><Link to="/contacts"><BiChat style={{fontSize: '2em'}}/></Link></li>
+        <li><Link to="/logout"><BiDoorOpen style={{fontSize: '2em'}}/></Link></li>
+    </ul>
    )
 }
 export default Sidebar
