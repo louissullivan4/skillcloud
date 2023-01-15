@@ -5,6 +5,7 @@ import { AuthContextProvider } from "./context/AuthContext";
 import Login from "./components/Auth/Login";
 import CreateAccount from "./components/Auth/CreateAccount";
 import ProtectedRoute from "./components/Auth/ProtectedRoute";
+import Logout from "./components/Auth/Logout";
 
 import Home from "./webpages/Home";
 
@@ -35,6 +36,7 @@ function App() {
         {/* Public Routes */}
           <Route path="/" element={<Login/>} />
           <Route path="/createaccount" element={<CreateAccount />} />
+          <Route path="/logout" element={<Logout />} />
 
           {/* Protected Routes */}
           <Route path="/home" element={<ProtectedRoute><Home /></ProtectedRoute>} />
