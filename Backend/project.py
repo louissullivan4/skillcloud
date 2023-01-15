@@ -100,6 +100,7 @@ class Project:
         if row == None:
             return "Error! Project does not exist."
         else:
+            print(row)
             self.id = row[0]
             self.title = row[1]
             self.author = row[2]
@@ -111,6 +112,7 @@ class Project:
             self.city = row[8]
             self.country = row[9]
             self.roles = self.get_roles(id)
+            print(self.roles)
             return (self.id, self.title, self.author, self.create_date, self.start_date, self.end_date, self.summary, self.state, self.city, self.country, self.roles)
 
     def create_project_pane(self, num=20):
@@ -135,6 +137,5 @@ class Project:
         for val in self.roles:
             role_json = {"role_category":val[1], "role_title":val[2], "role_desc":val[3], "role_no_needed":val[4], "role_no_needed":val[4], "role_id":val[5], "role_filled":val[6], "role_remote":val[7]}
             roles_json.append(role_json)
-            self.locations_json.append(locations_json)
         project_json = {"id":self.id, "title":self.title, "author":self.author, "create_date":self.create_date, "start_date":self.start_date, "end_date":self.end_date, "summary":self.summary, "state":self.state, "city":self.city, "country":self.country, "roles":roles_json}
         return project_json

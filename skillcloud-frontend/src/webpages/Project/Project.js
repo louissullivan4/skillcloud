@@ -8,14 +8,10 @@ function Project() {
     const [projectData, setProjectData] = useState([]);
     let navigate = useNavigate();
 
-    const goBack = () =>{
-      let path = `/`; 
-      navigate(path);
-    }
-
     const handleClick = () =>{ 
-        let path = `/`; 
-        navigate(path);
+        // let path = `/`; 
+        // navigate(path);
+        console.log("Apply button clicked")
     } 
     
     useEffect(() => {
@@ -23,6 +19,7 @@ function Project() {
         const resp = await fetch('http://127.0.0.1:5000/project/'+projectId.id)
         const data = await resp.json();
         setProjectData(data);
+        console.log(data)
       };
       fetchData()
     }, []);
@@ -30,49 +27,44 @@ function Project() {
   return (
     <div className="app">
       <Sidebar/>
-        <div className="page">
-          <h1>Project ID - {projectData.id}</h1>
-          <div className="page-content">
-            <div className="container">
-              <div className='row'>
-                <div className='col'>
-                  <div className='card'>
-                  <div className='card-header'>Project - {projectData.title} 
-                    {projectData.state === 'Open' ? <button type="button" className="but-pos" onClick={handleClick}>Apply Here  </button> : <div></div>}</div>
-                      <div className='card-body'>
-                      <div className='card-text'>Project Summary: {projectData.summary}</div>
-                      <div className='card-text'>Start Date: {projectData.start_date}</div>
-                      <div className='card-text'>End Date: {projectData.end_date}</div>
-                      <div className='card-text'>Project Creator: {projectData.author}</div>
-                        <h2>Project Roles</h2>
-                          <table>
-                            <thead>
-                              <tr>
-                                <th>Title</th>
-                                <th>Role Description</th>
-                                <th>No. of People</th>
-                                <th>Role Category</th>
-                              </tr>
-                            </thead>
-                            <tbody>
-                            {projectData.roles?.map(
-                            (roleData, k) => (
-                                <tr key={k}>
-                                  <td>{roleData.role_title}</td>
-                                  <td>{roleData.role_desc}</td>
-                                  <td>{roleData.role_no_needed - roleData.role_filled}</td>
-                                  <td>{roleData.role_category}</td>
-                                </tr>
-                            ))}
-                            </tbody>
-                          </table>
-                        </div>
-                      {projectData.state === 'Open' ? <div className="card-footer">State: {projectData.state}</div> : <div className="card-footer" style={{color: "white", backgroundColor: "red"}}>State: {projectData.state}</div>}
+        <div className="project-page">
+          <div className="project-page-heading">
+          <h1>{projectData.title}</h1>
+          <div>#{projectData.id} </div>
+          <div className="project-page-content">
+            <div className='project'>
+                {projectData.state === 'Open' ? <button type="button" className="but-pos" onClick={handleClick}>Apply Here  </button> : <div></div>}</div>
+                  <div className='project-body'>
+                  <div className='project-text'>Project Summary: {projectData.summary}</div>
+                  <div className='project-text'>Start Date: {projectData.start_date}</div>
+                  <div className='project-text'>End Date: {projectData.end_date}</div>
+                  <div className='project-text'>Project Creator: {projectData.author}</div>
+                    <h2>Project Roles</h2>
+                      <table>
+                        <thead>
+                          <tr>
+                            <th>Title</th>
+                            <th>Role Description</th>
+                            <th>No. of People</th>
+                            <th>Role Category</th>
+                          </tr>
+                        </thead>
+                        <tbody>
+                        {projectData.roles?.map(
+                        (roleData, k) => (
+                            <tr key={k}>
+                              <td>{roleData.role_title}</td>
+                              <td>{roleData.role_desc}</td>
+                              <td>{roleData.role_no_needed - roleData.role_filled}</td>
+                              <td>{roleData.role_category}</td>
+                            </tr>
+                        ))}
+                        </tbody>
+                      </table>
                     </div>
-                  </div>
+                  {projectData.state === 'Open' ? <div className="project-footer">State: {projectData.state}</div> : <div className="card-footer" style={{color: "white", backgroundColor: "red"}}>State: {projectData.state}</div>}
                 </div>
               </div>
-            </div>
           </div>
         </div>
       )
