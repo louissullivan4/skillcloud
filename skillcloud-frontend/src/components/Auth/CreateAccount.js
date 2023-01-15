@@ -23,25 +23,26 @@ const CreateAccount = () => {
     }
         
     return (
-        <div>
-            <div>
+        <div className='login-page'>
+            <div className='login-content'>
                 <h1>Create Account</h1>
                 <p>
-                    Already have an account yet?{' '}
+                    Already have an account?{' '}
                     <Link to='/'>Login</Link>
                 </p>
+                <form onSubmit={handleSubmit}>
+                    <div>
+                        <label htmlFor="email">Email</label>
+                        <input onChange={(e) => setEmail(e.target.value)} type="email"/>
+                    </div>
+                    <div>
+                        <label htmlFor="password">Password</label>
+                        <input onChange={(e) => setPassword(e.target.value)} type="password"/>
+                    </div>
+                    <button>Submit</button>
+                </form>
+                <div className='errmsg'>{error}</div>
             </div>
-            <form onSubmit={handleSubmit}>
-                <div>
-                    <label htmlFor="email">Email</label>
-                    <input onChange={(e) => setEmail(e.target.value)} type="email"/>
-                </div>
-                <div>
-                    <label htmlFor="password">Password</label>
-                    <input onChange={(e) => setPassword(e.target.value)} type="password"/>
-                </div>
-                <button>Create Account</button>
-            </form>
         </div>
     )
     }
