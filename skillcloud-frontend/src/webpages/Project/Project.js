@@ -27,13 +27,15 @@ function Project() {
   return (
     <div className="app">
       <Sidebar/>
-        <div className="project-page">
+      <div className="project-page">
           <div className="project-page-heading">
-          <h1>{projectData.title}</h1>
-          <div>#{projectData.id} </div>
-          <div className="project-page-content">
+            <div className="project-page-title">
+              <h1>{projectData.title}</h1>
+              <div>#{projectData.id}</div>
+            </div>
+            {projectData.state === 'Open' ? <button type="button" onClick={handleClick}>Apply Here  </button> : <div></div>}
+          </div>
             <div className='project'>
-                {projectData.state === 'Open' ? <button type="button" className="but-pos" onClick={handleClick}>Apply Here  </button> : <div></div>}</div>
                   <div className='project-body'>
                   <div className='project-text'>Project Summary: {projectData.summary}</div>
                   <div className='project-text'>Start Date: {projectData.start_date}</div>
@@ -65,8 +67,7 @@ function Project() {
                   {projectData.state === 'Open' ? <div className="project-footer">State: {projectData.state}</div> : <div className="card-footer" style={{color: "white", backgroundColor: "red"}}>State: {projectData.state}</div>}
                 </div>
               </div>
-          </div>
-        </div>
+            </div>
       )
   }
 export default Project;

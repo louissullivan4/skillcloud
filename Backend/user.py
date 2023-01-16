@@ -10,7 +10,8 @@ class User:
         self.job_title = ""
         self.job_category = ""
         self.job_desc= ""
-        self.location = ""
+        self.city = ""
+        self.country = ""
         self.work_experience = []
         self.education = []
         self.project_ids = ""
@@ -81,7 +82,8 @@ class User:
         email = requestjson['email']
         fname = requestjson['fname']
         lname = requestjson['lname']
-        location = requestjson['city'] + ", " + requestjson['country']
+        city = requestjson['city']
+        country = requestjson['country']
         job_title = requestjson['title']
         job_category = requestjson['category']
         job_desc = requestjson['desc']
@@ -98,14 +100,15 @@ class User:
         row = cursor.fetchone()
         if row == None:
             sql = """INSERT INTO users 
-                (email, fname, lname, location, job_title, job_category, job_desc, project_ids, certifications, availability, profile_pic, current_project)
-                VALUES (%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s)"""
-            val = (email, fname, lname, location, job_title, job_category, job_desc, project_ids, certifications, availability, profilepic, current_project)
+                (email, fname, lname, city, country, job_title, job_category, job_desc, project_ids, certifications, availability, profilepic, current_project)
+                VALUES (%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s)"""
+            val = (email, fname, lname, city, country, job_title, job_category, job_desc, project_ids, certifications, availability, profilepic, current_project)
             cursor.execute(sql, val)
             self.email = email
             self.fname = fname
             self.lname = lname
-            self.location = location
+            self.city = city
+            self.country = country
             self.job_title = job_title
             self.job_category = job_category
             self.job_desc= job_desc
@@ -133,18 +136,19 @@ class User:
             self.email = row[0]
             self.fname = row[1]
             self.lname = row[2]
-            self.location = row[3]
-            self.job_title = row[4]
-            self.job_category = row[5]
-            self.job_desc= row[6]
+            self.city = row[3]
+            self.country = row[4]
+            self.job_title = row[5]
+            self.job_category = row[6]
+            self.job_desc= row[7]
+            self.project_ids = row[8]
+            self.certifications = row[9]
+            self.availability = row[10]
+            self.profilepic = row[11]
+            self.current_project = row[12]
             self.work_experience = self.get_experience(email)
             self.education = self.get_education(email)
-            self.project_ids = row[7]
-            self.certifications = row[8]
-            self.availability = row[9]
-            self.profilepic = row[10]
-            self.current_project = row[11]
-        return (self.email, self.fname, self.lname, self.location, self.job_title, self.job_category, self.job_desc, self.work_experience, self.education, self.project_ids, self.certifications, self.availability, self.profilepic, self.current_project)
+        return (self.email, self.fname, self.lname, self.city, self.country, self.job_title, self.job_category, self.job_desc, self.project_ids, self.certifications, self.availability, self.profilepic, self.current_project, self.work_experience, self.education)
 
     def get_user_json(self):
         experience_json = []
@@ -156,7 +160,7 @@ class User:
             newVal = {"edu_type":val[1], "edu_degree":val[2], "edu_school":val[3], "edu_desc":val[4]}
             education_json.append(newVal)
         user = []
-        user_json = {"email" : self.email, "fname" : self.fname, "lname" : self.lname, "location" : self.location, "job_title" : self.job_title, "job_category" : self.job_category, "job_desc" : self.job_desc, "work_experience" : experience_json, "education" : education_json, "project_ids" : self.project_ids, "certifications" : self.certifications, "availability" : self.availability, "profilepic" : self.profilepic, "current_project" : self.current_project}
+        user_json = {"email" : self.email, "fname" : self.fname, "lname" : self.lname, "city" : self.city, "country" : self.country, "job_title" : self.job_title, "job_category" : self.job_category, "job_desc" : self.job_desc, "work_experience" : experience_json, "education" : education_json, "project_ids" : self.project_ids, "certifications" : self.certifications, "availability" : self.availability, "profilepic" : self.profilepic, "current_project" : self.current_project}
         user.append(user_json)
         user_json = {"result":user}
         return user_json

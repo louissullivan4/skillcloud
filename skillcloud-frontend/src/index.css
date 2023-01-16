@@ -116,7 +116,7 @@
     margin: 1em;
 }
 
-.project-page-heading {
+.project-page-title {
     display: flex;
     flex-direction: column;
     flex-wrap: nowrap;
@@ -127,6 +127,24 @@
     border-radius: 10px;
     border : solid 2px rgba(0, 0, 0, 0.08);
 }
+
+.project-page-heading {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: nowrap;
+    align-items: flex-end;
+    
+}
+
+.project-page-heading button {
+    background-color: #5cdb5c;
+    border: solid 2px rgba(0, 0, 0, 0.08);
+    border-radius: 10px;
+    padding: 0.5em 1em;
+    font-size: 1em;
+}
+
+
 
 .project{
     display: flex;

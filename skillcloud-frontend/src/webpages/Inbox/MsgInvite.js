@@ -12,6 +12,8 @@ const MsgInvite = () => {
 
     const { from } = location.state
     let projectLink = "/project/" + from.project_id
+
+    let userProfile = "/profile/" + from.project_author
     
     const AcceptInvite = async () => {
         const resp = await fetch('http://127.0.0.1:5000/invitationresponse/'+from.user_notified+"/"+from.role_id+"/accepted")
@@ -33,9 +35,10 @@ const MsgInvite = () => {
                     <div className='container-1'>
                         <div className='status'>Invite current status: {from.status}</div>
                         <div className='header'>You have been invited to a project !</div>
-                        <div className="body">This project was created on {from.date_created} by {from.project_author}.
+                        <div className="body">This project was created on {from.date_created} by 
+                        <Link to={projectLink}>{from.project_author}</Link>.
                         For more information, please click the project id below to view the project.
-                        <Link to={projectLink}> Project Id: {from.project_id + ". "}</Link>
+                        <Link to={userProfile}> Project Id: {from.project_id + ". "}</Link>
                         On completion of research, please accept or decline the invite.
                         </div>
                     </div>

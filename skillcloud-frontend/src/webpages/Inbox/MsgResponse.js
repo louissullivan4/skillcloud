@@ -12,6 +12,7 @@ const MsgResponse = () => {
     const [completion, setCompletion] = useState([]);
      
     let projectLink = "/project/" + from.project_id
+    let userProfile = "/profile/" + from.user_notified
 
     const addUser = async () => {
         const resp = await fetch('http://127.0.0.1:5000/rolechange/'+from.user_notified+"/"+from.role_id+"/add")
@@ -34,7 +35,8 @@ const MsgResponse = () => {
                     <div className='container-1'>
                         <div className='header'>{from.status === "accepted" ? "Accepted!" : from.status === "declined" ? "Declined" : "Error"}</div>
                         <div className="body">
-                            <div className="para1">The request for project id <Link to={projectLink}>{from.project_id}</Link> has been {from.status} by {from.user_notified}.</div>
+                            <div className="para1">The request for project id <Link to={projectLink}>{from.project_id}</Link> has 
+                            been {from.status} by <Link to={userProfile}>{from.user_notified}</Link>.</div>
                             <div className="para2">Would you like to add or remove them from the project?
                             <br></br>
                             <div className="buttons">{from.status === "accepted" ? 

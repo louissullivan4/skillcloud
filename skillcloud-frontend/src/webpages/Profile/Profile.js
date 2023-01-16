@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react'
+import { useParams } from 'react-router-dom'
 
 import Sidebar from "../../components/Sidebar";
 import ProfileTabs from '../../components/Profile/ProfileTabs';
@@ -6,18 +7,19 @@ import ProfileTabs from '../../components/Profile/ProfileTabs';
 import "../../index.css";
 
 const Profile = () => {
-    const email = localStorage.getItem("email")
+    // const email = localStorage.getItem("email")
+    let email = useParams()
+    
+    
     const [userData, setUserData] = useState([]);
     useEffect(() => {
       const fetchData = async () => {
-        const resp = await fetch('http://127.0.0.1:5000/profile/'+email)
+        const resp = await fetch('http://127.0.0.1:5000/profile/'+email.email)
         const data = await resp.json();
         setUserData(data.result[0]);
       };
       fetchData()
     }, []);
-
-    
     return (
         <div className="app">
             <Sidebar/>
@@ -28,10 +30,10 @@ const Profile = () => {
                             <div className="p-col">
                                 <div className="p-card">
                                     <div className="p-card-body-profile">
-                                        <div className="p-card-image"><img src={require(`../../assets/profiles/${userData.profilepic}.jpg`)} height="150" width="auto" alt="Profile Pictures"/></div>
+                                        <div className="p-card-image">{console.log(userData.profilepic)}{userData.profilepic ? <img src={require(`../../assets/profiles/${userData.profilepic}.jpg`)} height="150" width="auto" alt="Profile Pictures"/> : <img src={require(`../../assets/profiles/undefined.jpg`)} height="150" width="auto" alt="Profile Pictures"/>}</div>
                                         <div className="p-card-text">{userData.fname} {userData.lname}</div>
                                         <div className="p-card-text">{userData.job_title}</div>
-                                        <div className="p-card-text">{userData.location}</div>
+                                        <div className="p-card-text">{userData.city}</div>
     
                                     </div>
                                 </div>
