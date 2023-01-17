@@ -99,6 +99,11 @@ def contacts(email: str):
     contacts_json = get_contacts(email)
     return json.dumps(contacts_json)
 
+@app.route('/searchcontacts/<string:email>')
+def search_contacts(email: str):
+    contacts_json = search_for_contact(email)
+    return json.dumps(contacts_json)
+
 @app.route('/updateMsg', methods=['POST'])
 def updateMsg():
     added = add_message(request.json)

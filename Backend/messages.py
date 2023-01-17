@@ -48,6 +48,20 @@ def get_contacts(email):
     for row in result:
         msg_json.append({"contact": row[0]})
     return {"result": msg_json}
+
+def search_for_contact(email):
+    cursor = mydb.cursor()
+    sql = """
+        SELECT DISTINCT `email` FROM users WHERE `email` != %s
+        """
+    cursor.execute(sql, (email, ))
+    result = cursor.fetchall()
+    contacts = []
+    for row in result:
+        contacts.append(row[0])
+    return {"result": contacts}
+
+# search_for_contact("sullivanlouis0@gmail.com")
 # json_data = {"new_messages" : [{'sender': 'jim@gmail.com', 'receiver': 'admin@gmail.com', 'date': '2023-01-11', 'time': '20:14:15', 'content': 'Wow my message was added'}]}
 # add_message(json_data)
 # get_msg_history("sullivanlouis0@gmail.com", "admin@gmail.com")
