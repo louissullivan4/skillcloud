@@ -9,6 +9,7 @@ const ProfileTabs = () => {
     const [userCerts, setUserCerts] = useState([]);
     const [userEducation, setUserEducation] = useState([]);
     const [userWork, setUserWork] = useState([]);
+    const [ownedProjects, setOwnedProjects] = useState([]);
     const hasFetchedData = useRef(false);
 
     useEffect(() => {
@@ -16,28 +17,24 @@ const ProfileTabs = () => {
         const resp = await fetch('http://127.0.0.1:5000/profile/'+email.email)
         const data = await resp.json();
         setUserData(data.result[0]);
-        console.log(data.result[0])
 
         const certs = data.result[0].certifications
         setUserCerts(certs)
 
         const education = data.result[0].education
         setUserEducation(education)
-
-        const current = data.result[0].current_project
-        setCurrentProject(current)
                 
         const work = data.result[0].work_experience
         setUserWork(work)
 
-        if (data.result[0].project_ids !== "None"){
-            const ids = data.result[0].project_ids.split(',');
-            for (let i = 0; i < ids.length; i++) {
-                const resp = await fetch('http://127.0.0.1:5000/project/'+ids[i])
-                const data = await resp.json();
-                setUserPrevProjects(userPrevProjects => [...userPrevProjects, data]);
-            } 
-        }
+        const resp1 = await fetch('http://127.0.0.1:5000/currentProjects/'+email.email)
+        const data1 = await resp1.json();
+        setCurrentProject(data1.result);
+
+        const resp2 = await fetch('http://127.0.0.1:5000/ownedProjects/'+email.email)
+        const data2 = await resp2.json();
+        setOwnedProjects(data2.result);
+        
       };
       if (hasFetchedData.current === false) {
         fetchData();
@@ -58,18 +55,39 @@ const ProfileTabs = () => {
                 <div className="p-col">
                     <div className="p-card">
                         <div className="p-card-header">Current Project</div>
-                        {userCurrentProject === null ? <div className="p-card-body">No active projects 😓</div> :
-                        <div className="p-card-body">
-                            <Link to={`/project/${userPrevProjects.id}`}>
-                                <div className='p-card'>
-                                    <div className='p-card-header'>{userPrevProjects.title}</div>
-                                    <div className='p-card-body'>
-                                        <div className='p-card-text'>{userPrevProjects.summary}...</div>
+                        {userCurrentProject.length < 1 ? <div className="p-card-body">No active projects 😓</div> : 
+                            userCurrentProject.map((userCurrentProject, k) => (
+                            <div className="p-card-body" key={k}>
+                                <Link to={`/project/${userCurrentProject.project_id}`}>
+                                    <div className='p-card'>
+                                        <div className='p-card-header'>{userCurrentProject.project_title}</div>
+                                        <div className='p-card-body'>
+                                            <div className='p-card-text'>{userCurrentProject.project_summary}...</div>
+                                        </div>
                                     </div>
-                                </div>
-                            </Link>
-                        </div>
-                        }
+                                </Link>
+                            </div>
+                        ))}
+                    </div>
+                </div>
+            </div>
+            <div className="p-row">
+                <div className="p-col">
+                    <div className="p-card">
+                        <div className="p-card-header">Project Owned</div>
+                        {ownedProjects === null ? <div className="p-card-body">No owned projects 😓</div> :
+                            ownedProjects.map((owned, k) => (
+                            <div className="p-card-body" key={k}>
+                                <Link to={`/project/${owned.project_id}`}>
+                                    <div className='p-card'>
+                                        <div className='p-card-header'>{owned.project_title}</div>
+                                        <div className='p-card-body'>
+                                            <div className='p-card-text'>{owned.project_summary}...</div>
+                                        </div>
+                                    </div>
+                                </Link>
+                            </div>
+                        ))}
                     </div>
                 </div>
             </div>

@@ -55,6 +55,18 @@ def profilepage(email: str):
     user_json = user.get_user_json()
     return json.dumps(user_json)
 
+@app.route('/currentProjects/<string:email>')
+def currentProjects(email: str):
+    user = User()
+    user_json = user.get_current_projects(email)
+    return json.dumps(user_json)
+
+@app.route('/ownedProjects/<string:email>')
+def ownedProjects(email: str):
+    user = User()
+    user_json = user.get_owned_projects(email)
+    return json.dumps(user_json)
+
 @app.route('/createuser', methods=['POST'])
 def createuser():
     u1 = User()

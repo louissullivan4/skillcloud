@@ -243,3 +243,42 @@ class User:
         user.append(user_json)
         user_json = {"result":user}
         return user_json
+    
+    def get_current_projects(self, email):    
+        cursor = mydb.cursor()
+        sql = "SELECT project_id FROM notifications WHERE user_notified = %s"
+        val = (email, )
+        cursor.execute(sql, val)
+        row = cursor.fetchall()
+        current_project_ids = []
+        for val in row:
+            current_project_ids.append(val[0])
+        projects = []
+        for ids in current_project_ids:
+            sql = "SELECT * FROM projects WHERE project_id = %s"
+            val = (ids, )
+            cursor.execute(sql, val)
+            row = cursor.fetchone()
+            projects.append(row)
+        projects_json = []
+        for val in projects:
+            newVal = {"project_id": val[0], "project_title": val[1], "project_author": val[2], "project_createdate": val[3], "project_startdate": val[4], "project_enddate": val[5], "project_summary": val[6], "project_state": val[7], "project_city": val[8], "project_country": val[9]}
+            projects_json.append(newVal)
+        projects_json = {"result":projects_json}
+        return projects_json
+    
+    def get_owned_projects(self, email):
+        cursor = mydb.cursor()
+        sql = "SELECT * FROM projects WHERE project_author = %s"
+        val = (email, )
+        cursor.execute(sql, val)
+        row = cursor.fetchall()
+        projects_json = []
+        for val in row:
+            newVal = {"project_id": val[0], "project_title": val[1], "project_author": val[2], "project_createdate": val[3], "project_startdate": val[4], "project_enddate": val[5], "project_summary": val[6], "project_state": val[7], "project_city": val[8], "project_country": val[9]}
+            projects_json.append(newVal)
+        projects_json = {"result":projects_json}
+        return projects_json
+        
+# u1 = User()
+# u1.get_owned_projects("sullivanlouis0@gmail.com")
