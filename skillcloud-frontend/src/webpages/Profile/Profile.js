@@ -10,12 +10,16 @@ const Profile = () => {
     // const email = localStorage.getItem("email")
     let email = useParams()
     let navigate = useNavigate()
-
+    const [userData, setUserData] = useState([]);
 
     const handleClick = () => {
         navigate("/chat", { state: { email: localStorage.getItem("email"), contact: email.email} })
-    }    
-    const [userData, setUserData] = useState([]);
+    }
+
+    const editProfile = () => {
+        navigate("/editprofile", { state: { email: localStorage.getItem("email"), details: userData} })
+    }
+
     useEffect(() => {
       const fetchData = async () => {
         const resp = await fetch('http://127.0.0.1:5000/profile/'+email.email)
@@ -54,7 +58,7 @@ const Profile = () => {
                             </div>
                         </div>
                     </div>  
-                    {email.email !== localStorage.getItem('email') ? <button type="button" onClick={handleClick}>Send Message </button> : <div></div>}
+                    {email.email !== localStorage.getItem('email') ? <button type="button" onClick={handleClick}>Send Message </button> : <button type="button" onClick={editProfile}>Edit Profile </button>}
                     </div>
                     <div className="p-container-2">
                         <ProfileTabs/>

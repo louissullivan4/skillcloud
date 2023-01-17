@@ -18,7 +18,7 @@ const ProfileTabs = () => {
         setUserData(data.result[0]);
         console.log(data.result[0])
 
-        const certs = data.result[0].certifications.split(',');
+        const certs = data.result[0].certifications
         setUserCerts(certs)
 
         const education = data.result[0].education
@@ -139,7 +139,7 @@ const ProfileTabs = () => {
                     <div className='p-col' key={k}>
                     <div className='p-card'>
                         <div className='p-card-body'>
-                            <div className='p-card-text'>{userCerts}</div>
+                            <div className='p-card-text'>{userCerts.certName}</div>
                         </div>
                     </div>
                     </div>

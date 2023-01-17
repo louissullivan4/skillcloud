@@ -68,6 +68,22 @@ def createuser():
     else:
         return json.dumps({"Status Code": 404, "Message": "Success!"}), 404
     
+@app.route('/updateuser', methods=['POST'])
+def updateuser():
+    u1 = User()
+    # data = convert_json(request.json)
+    data = request.json
+    data = str(data).replace("'", '"').replace("True", "true").replace("False", "false").replace("None", "null").replace("'", '\\"')
+    new = json.loads(data)
+    updated_user = u1.update_user(new)
+    if updated_user == 200:
+        event_match_user(data)
+        return json.dumps({"Status Code": 200, "Message": "Success!"}), 200
+    elif updated_user == 409:
+        return json.dumps({"Status Code": 409, "Message": "User didnt update!"}), 409
+    else:
+        return json.dumps({"Status Code": 404, "Message": "Success!"}), 404
+    
 @app.route('/inbox/<string:user>')
 def inbox(user : str):
     result = get_notifications(user)
