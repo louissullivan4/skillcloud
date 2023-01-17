@@ -1,9 +1,8 @@
 import React, { useEffect, useState, useRef } from 'react'
-import { Link } from 'react-router-dom';
+import { Link, useParams } from 'react-router-dom';
 
 const ProfileTabs = () => {
-    const email = localStorage.getItem("email")
-
+    let email = useParams()
     const [userData, setUserData] = useState([]);
     const [userCurrentProject, setCurrentProject] = useState([]);
     const [userPrevProjects, setUserPrevProjects] = useState([]);
@@ -14,9 +13,10 @@ const ProfileTabs = () => {
 
     useEffect(() => {
       const fetchData = async () => {
-        const resp = await fetch('http://127.0.0.1:5000/profile/'+email)
+        const resp = await fetch('http://127.0.0.1:5000/profile/'+email.email)
         const data = await resp.json();
         setUserData(data.result[0]);
+        console.log(data.result[0])
 
         const certs = data.result[0].certifications.split(',');
         setUserCerts(certs)

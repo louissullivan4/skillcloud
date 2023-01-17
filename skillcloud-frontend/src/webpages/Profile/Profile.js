@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react'
-import { useParams } from 'react-router-dom'
+import { useParams, useNavigate } from 'react-router-dom'
 
 import Sidebar from "../../components/Sidebar";
 import ProfileTabs from '../../components/Profile/ProfileTabs';
@@ -9,8 +9,12 @@ import "../../index.css";
 const Profile = () => {
     // const email = localStorage.getItem("email")
     let email = useParams()
-    
-    
+    let navigate = useNavigate()
+
+
+    const handleClick = () => {
+        navigate("/chat", { state: { email: localStorage.getItem("email"), contact: email.email} })
+    }    
     const [userData, setUserData] = useState([]);
     useEffect(() => {
       const fetchData = async () => {
@@ -30,11 +34,10 @@ const Profile = () => {
                             <div className="p-col">
                                 <div className="p-card">
                                     <div className="p-card-body-profile">
-                                        <div className="p-card-image">{console.log(userData.profilepic)}{userData.profilepic ? <img src={require(`../../assets/profiles/${userData.profilepic}.jpg`)} height="150" width="auto" alt="Profile Pictures"/> : <img src={require(`../../assets/profiles/undefined.jpg`)} height="150" width="auto" alt="Profile Pictures"/>}</div>
+                                        <div className="p-card-image">{userData.profilepic ? <img src={require(`../../assets/profiles/${userData.profilepic}.jpg`)} height="150" width="auto" alt="Profile Pictures"/> : <img src={require(`../../assets/profiles/undefined.jpg`)} height="150" width="auto" alt="Profile Pictures"/>}</div>
                                         <div className="p-card-text">{userData.fname} {userData.lname}</div>
                                         <div className="p-card-text">{userData.job_title}</div>
                                         <div className="p-card-text">{userData.city}</div>
-    
                                     </div>
                                 </div>
                             </div>
@@ -50,7 +53,8 @@ const Profile = () => {
                                 </div>
                             </div>
                         </div>
-                    </div>
+                    </div>  
+                    {email.email !== localStorage.getItem('email') ? <button type="button" onClick={handleClick}>Send Message </button> : <div></div>}
                     </div>
                     <div className="p-container-2">
                         <ProfileTabs/>

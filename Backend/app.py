@@ -1,6 +1,7 @@
-from flask import Flask, request
+from flask import Flask, request, Response
 from flask_cors import CORS
 from flask_api import status
+from flask_sse import sse
 
 import json
 
@@ -57,6 +58,7 @@ def profilepage(email: str):
 @app.route('/createuser', methods=['POST'])
 def createuser():
     u1 = User()
+    print(request.json)
     created_user = u1.create_user(request.json)
     if created_user == 200:
         event_match_user(request.json)
@@ -105,8 +107,5 @@ def updateMsg():
     else:
         return json.dumps({"Status Code": 404, "Message": "Error!"}), 404
 
-
-
-
 if __name__ == "__main__":
-    app.run()
+    app.run(threaded=True)

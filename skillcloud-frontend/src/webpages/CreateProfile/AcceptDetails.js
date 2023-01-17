@@ -7,7 +7,6 @@ const AcceptDetails = () => {
     const location = useLocation()
     let navigate = useNavigate();
     const state = location.state
-    console.log(state)
     const completeProfile = async () => {
         const resp = await fetch(`http://127.0.0.1:5000/createuser`,{'method':'POST', headers : {'Content-Type':'application/json'}, body: JSON.stringify(state)})
         if (resp.status === 200) {

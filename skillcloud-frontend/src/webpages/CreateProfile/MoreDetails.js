@@ -25,7 +25,6 @@ const MoreDetails = () => {
             experience_desc: "",
         },]
     });
-    console.log(state)
     const submitHandler = (e) => {
         e.preventDefault()
         let finalInfo = {...state, education: newEducation.education, experience: newExperience.experience}

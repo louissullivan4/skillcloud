@@ -5,22 +5,22 @@ import json
 
 mydb = connect_db()
 
-def add_message(new_msg):
+def add_message(jsonVals):
     cursor = mydb.cursor()
     try:
-        for row in new_msg["new_messages"]:
-            msg_id = check_id(mydb)
-            sender = row['sender']
-            receiver = row['receiver']
-            date = row['date']
-            time = row['time']
-            content = row['content']
-            sql = "INSERT INTO messages (message_id, sender, receiver, date, time, content) VALUES (%s, %s, %s, %s, %s, %s)"
-            cursor.execute(sql, (msg_id, sender, receiver, date, time, content))
-            mydb.commit()
+        jsonVals = str(jsonVals).replace("'", '"')
+        new_msg = json.loads(jsonVals)
+        msg_id = check_id(mydb)
+        sender = new_msg["sender"]
+        receiver = new_msg["receiver"]
+        date = new_msg["date"]
+        time = new_msg["time"]
+        content = new_msg["content"]
+        sql = "INSERT INTO messages (message_id, sender, receiver, date, time, content) VALUES (%s, %s, %s, %s, %s, %s)"
+        cursor.execute(sql, (msg_id, sender, receiver, date, time, content))
+        mydb.commit()
         return 200
     except Exception as e:
-        print(e)
         return 404
     
 

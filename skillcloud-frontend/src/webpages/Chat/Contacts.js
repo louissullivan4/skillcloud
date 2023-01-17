@@ -15,7 +15,6 @@ const Contacts = () => {
         const resp = await fetch('http://127.0.0.1:5000/contacts/'+ email)
         const data = await resp.json();
         setContacts(data.result);
-        console.log(data.result);
       };
       fetchData()
     }, []);
@@ -27,7 +26,7 @@ const Contacts = () => {
                 <div className="page-content"> 
                     <div className='row'>
                         {contacts.map((contact, k) => (
-                            <Link to="/chat" state={{ email: email, contact: contact }} style={{textDecoration: "none"}}>
+                            <Link to="/chat" state={{ email: email, contact: contact.contact }} style={{textDecoration: "none"}}>
                                 <div className='row' key={k}>
                                     <div className='row-header'>{contact.contact}</div>
                                 </div>
