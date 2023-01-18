@@ -40,7 +40,6 @@ def projectpage(id: str):
 @app.route('/updateproject', methods=['POST'])
 def updateproject():
     p1 = Project()
-    print(request.json)
     p1.update_project(request.json)
     projectvals = p1.get_project_json()
     notified = create_role_notifications(projectvals)
@@ -82,7 +81,6 @@ def ownedProjects(email: str):
 @app.route('/createuser', methods=['POST'])
 def createuser():
     u1 = User()
-    print(request.json)
     created_user = u1.create_user(request.json)
     if created_user == 200:
         event_match_user(request.json)
@@ -131,7 +129,6 @@ def rolechange(email : str, role_id : str, response : str):
 @app.route('/chat/<string:sender>/<string:receiver>')
 def msghistory(sender: str, receiver: str):
     msg_json = get_msg_history(sender, receiver)
-    print(msg_json)
     return json.dumps(msg_json)
 
 @app.route('/contacts/<string:email>')

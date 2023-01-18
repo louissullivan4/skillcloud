@@ -136,7 +136,6 @@ class Project:
         if row == None:
             return "Error! Project does not exist."
         else:
-            print(row)
             self.id = row[0]
             self.title = row[1]
             self.author = row[2]
@@ -148,7 +147,6 @@ class Project:
             self.city = row[8]
             self.country = row[9]
             self.roles = self.get_roles(id)
-            print(self.roles)
             return (self.id, self.title, self.author, self.create_date, self.start_date, self.end_date, self.summary, self.state, self.city, self.country, self.roles)
 
     def create_project_pane(self, num=20):

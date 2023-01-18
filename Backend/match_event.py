@@ -114,7 +114,6 @@ def fulfill_user(jsonVals):
                             notify_invite_project(candidates, role, project_author, role[0])     
         return "200" 
     except Exception as e:
-        print(e)
         return "400"
 
 def event_match_user(jsonVals):

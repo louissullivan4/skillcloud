@@ -11,7 +11,7 @@ const EditProfile = () => {
     let project_id = location.state.id
     const [projectData, setProjectData] = useState(location.state.details);
     const [roles, setRoles] = useState(location.state.details.roles);      
-
+    console.log(roles)
     const handleSubmit = async (e) => {
         e.preventDefault()
         if (projectData.author === localStorage.getItem('email')) {

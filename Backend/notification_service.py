@@ -40,7 +40,6 @@ def no_candidates_notifications(project, role):
     try :
         project = str(project).replace("'", '"')
         project = json.loads(project)
-        print(project)
         role = str(role).replace("'", '"')
         role = json.loads(role)
         cursor = mydb.cursor()
@@ -53,7 +52,6 @@ def no_candidates_notifications(project, role):
             mydb.commit()
         return 200
     except Exception as e:
-        print(e)
         return 404
 
 def create_role_notifications(project):
@@ -66,7 +64,6 @@ def create_role_notifications(project):
         cursor.execute(sql, (role["role_id"], ))
         mydb.commit()
         candidates = event_match(role)
-        print(candidates)
         if len(candidates) < 1:
             no_candidates_notifications(project, role)
         else:
@@ -94,7 +91,6 @@ def notify_invite_project(candidates, role, project_author, project_id):
                 mydb.commit()
         return 200
     except Exception as e:
-        print(e)
         return 404
 
 def notify_response_project(user_email, role_id, req):
@@ -171,7 +167,6 @@ def notify_response_project(user_email, role_id, req):
             return 403
         return 200
     except Exception as e:
-        print(e)
         return 404
 
 def notify_role_change(user_email, role_id, req):
@@ -241,7 +236,6 @@ def notify_role_change(user_email, role_id, req):
                 create_role_notifications(project_json)
         return 200
     except Exception as e:
-        print(e)
         return 404
 
 # project_json = {
