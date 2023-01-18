@@ -16,6 +16,7 @@ const EditProfile = () => {
         e.preventDefault()
         if (projectData.author === localStorage.getItem('email')) {
             let finalInfo = {...projectData, roles: roles}
+
             console.log(finalInfo)
             const resp = await fetch(`http://127.0.0.1:5000/updateproject`,{'method':'POST', headers : {'Content-Type':'application/json'}, body: JSON.stringify(finalInfo)})
             if (resp.status === 200) {
@@ -68,13 +69,13 @@ const EditProfile = () => {
                         {roles.map((role, index) => (
                             <div key={index}>
                                 <div>
-                                    <input type="text" onChange={e => setRoles.role_title[index] = e.target.value} placeholder={role.role_title} defaultValue={role.role_title}/>
+                                    <input type="text" onChange={e => roles[index].role_title = e.target.value} placeholder={role.role_title} defaultValue={role.role_title}/>
                                 </div>
                                 <div>
-                                    <input type="text" onChange={e => setRoles.role_desc[index] = e.target.value} placeholder={role.role_desc} defaultValue={role.role_desc}/>
+                                    <input type="text" onChange={e => roles[index].role_desc = e.target.value} placeholder={role.role_desc} defaultValue={role.role_desc}/>
                                 </div>
                                 <div>
-                                    <select onChange={e => setRoles.role_category[index] = e.target.value}>
+                                    <select onChange={e => roles[index] .role_category= e.target.value}>
                                         <option>Select a role category...</option>
                                         <option>Acting, Music and other Creative Arts</option>
                                         <option>Agricultural, forestry and fishery labourers</option>
@@ -94,13 +95,13 @@ const EditProfile = () => {
                                     </select>
                                 </div>
                                 <div>
-                                    <select onChange={e => setRoles.role_remote[index] = e.target.value}>
+                                    <select onChange={e => roles[index].role_remote = e.target.value}>
                                         <option>Yes</option>
                                         <option>No</option>
                                     </select>
                                 </div>
                                 <div>
-                                    <input type="number" onChange={e => setRoles.role_no_needed[index] = e.target.value} placeholder={role.role_no_needed} min="1" max="100" defaultValue={role.role_no_needed}/>
+                                    <input type="number" onChange={e => roles[index].role_no_needed = e.target.value} placeholder={role.role_no_needed} min="1" max="100" defaultValue={role.role_no_needed}/>
                                 </div>
                             </div>
                         ))} 

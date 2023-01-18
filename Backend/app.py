@@ -42,8 +42,9 @@ def updateproject():
     p1 = Project()
     p1.update_project(request.json)
     projectvals = p1.get_project_json()
+    print(projectvals)
     notified = create_role_notifications(projectvals)
-    if notified == "200":
+    if notified == 200:
         return json.dumps({"Status Code": 200, "Message": "Success!"}), 200
     else:
         return json.dumps({"Status Code": 404, "Message": "Error!"}), 404
@@ -51,7 +52,7 @@ def updateproject():
 @app.route('/createproject', methods=['POST'])
 def createproject():
     p1 = Project()
-    p1.update_projects(request.json)
+    p1.create_project(request.json)
     projectvals = p1.get_project_json()
     notified = create_role_notifications(projectvals)
     if notified == 200:

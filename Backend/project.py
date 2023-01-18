@@ -34,7 +34,7 @@ class Project:
             cursor.execute(sql, val)
             mydb.commit()
         return roles
-    
+
     def update_roles(self, project_id, roles):
         cursor = mydb.cursor()
         for val in roles:
@@ -44,9 +44,9 @@ class Project:
             role_desc = val['role_desc']
             role_no_needed = val['role_no_needed']
             role_remote = val['role_remote']
-            sql = """Update roles SET project_id = %s role_category = %s, role_title = %s, role_desc = %s, role_filled = %s role_no_needed = %s, role_remote = %s WHERE role_id = %s"""
-            val = (project_id, role_category, role_title, role_desc, "0", role_no_needed, role_remote, role_id)
-            cursor.execute(sql, val)
+            sql = """Update roles SET project_id = %s, role_category = %s, role_title = %s, role_desc = %s, roles_filled = %s, role_no_needed = %s, role_remote = %s WHERE role_id = %s"""
+            values = (project_id, role_category, role_title, role_desc, "0", role_no_needed, role_remote, role_id)
+            cursor.execute(sql, values)
             mydb.commit()
         return roles
 
@@ -123,9 +123,18 @@ class Project:
             val = (title, author, start_date, end_date, summary, city, country, pid)
             cursor.execute(sql, val)
             mydb.commit()
+            self.id = pid
+            self.author = author
+            self.title = title
+            self.start_date = start_date
+            self.end_date = end_date
+            self.summary = summary
+            self.city = city
+            self.country = country
             self.roles = self.update_roles(pid, roles)
             return "200"
-        except:
+        except Exception as e:
+            print(e)
             return "404"
             
     def get_project(self, id):
@@ -168,7 +177,8 @@ class Project:
         self.get_project(self.id)
         roles_json = []
         for val in self.roles:
-            role_json = {"role_category":val[1], "role_title":val[2], "role_desc":val[3], "role_no_needed":val[4], "role_no_needed":val[4], "role_id":val[5], "role_filled":val[6], "role_remote":val[7]}
-            roles_json.append(role_json)
+            newval = {"project_id":val[0], "role_category":val[1], "role_title":val[2], "role_desc":val[3], "role_no_needed":val[4], "role_id":val[5], "roles_filled":val[6], "role_remote":val[7]}
+            roles_json.append(newval)
         project_json = {"id":self.id, "title":self.title, "author":self.author, "create_date":self.create_date, "start_date":self.start_date, "end_date":self.end_date, "summary":self.summary, "state":self.state, "city":self.city, "country":self.country, "roles":roles_json}
         return project_json
+

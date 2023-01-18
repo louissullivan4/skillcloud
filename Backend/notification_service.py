@@ -56,7 +56,8 @@ def no_candidates_notifications(project, role):
 
 def create_role_notifications(project):
     cursor = mydb.cursor()
-    project = str(project).replace("'", '"')
+    project = str(project).replace("'", '"').replace("True", "true").replace("False", "false").replace("None", "null").replace("'", '\\"')
+    print(project)
     new = json.loads(project)
     roles = new["roles"]
     for role in roles:

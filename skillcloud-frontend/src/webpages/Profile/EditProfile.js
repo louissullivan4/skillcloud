@@ -112,7 +112,7 @@ const EditProfile = () => {
                         <label htmlFor="certifications">Certifications</label>
                             {certs.map((cert, index) => (
                                 <div key={index}>
-                                    <input type="text" onChange={e => setCerts.certs[index] = e.target.value} placeholder={cert.certName} defaultValue={cert.certName}/>
+                                    <input type="text" onChange={e => certs[index].certName = e.target.value} placeholder={cert.certName} defaultValue={cert.certName}/>
                                 </div>
                             ))} 
                             <button type="button" onClick={addCert}>
@@ -129,16 +129,20 @@ const EditProfile = () => {
                             {education.map((edu, index) => (
                                 <div key={index}>
                                     <div>
-                                        <input type="text" onChange={e => setEducation.edu_type[index] = e.target.value} placeholder={edu.edu_type} defaultValue={edu.edu_type}/>
+                                        <label htmlFor="edu_type">Education Type</label>
+                                        <input type="text" onChange={e => education[index].edu_type = e.target.value} placeholder={edu.edu_type} defaultValue={edu.edu_type}/>
                                     </div>
                                     <div>
-                                        <input type="text" onChange={e => setEducation.edu_degree[index] = e.target.value} placeholder={edu.edu_degree} defaultValue={edu.edu_degree}/>
+                                        <label htmlFor="edu_degree">Degree</label>
+                                        <input type="text" onChange={e => education[index].edu_degree = e.target.value} placeholder={edu.edu_degree} defaultValue={edu.edu_degree}/>
                                     </div>
                                     <div>
-                                        <input type="text" onChange={e => setEducation.edu_school[index] = e.target.value} placeholder={edu.edu_school} defaultValue={edu.edu_school}/>
+                                        <label htmlFor="edu_school">College</label>
+                                        <input type="text" onChange={e => education[index].edu_school = e.target.value} placeholder={edu.edu_school} defaultValue={edu.edu_school}/>
                                     </div>
                                     <div>
-                                        <input type="text" onChange={e => setEducation.edu_desc[index] = e.target.value} placeholder={edu.edu_desc} defaultValue={edu.edu_desc}/>
+                                        <label htmlFor="edu_desc">Description of College modules</label>
+                                        <input type="text" onChange={e => education[index].edu_desc = e.target.value} placeholder={edu.edu_desc} defaultValue={edu.edu_desc}/>
                                     </div>
                                 </div>
                             ))} 
@@ -156,19 +160,24 @@ const EditProfile = () => {
                             {experience.map((exp, index) => (
                                 <div key={index}>
                                     <div>
-                                        <input type="text" onChange={e => setExperience.experience_name[index] = e.target.value} placeholder={exp.experience_name} defaultValue={exp.experience_name}/>
+                                        <label htmlFor="experience_name">Company Name</label>
+                                        <input type="text" onChange={e => experience[index].experience_name= e.target.value} placeholder={exp.experience_name} defaultValue={exp.experience_name}/>
                                     </div>
                                     <div>
-                                        <input type="text" onChange={e => setExperience.experience_title[index] = e.target.value} placeholder={exp.experience_title} defaultValue={exp.experience_title}/>
+                                        <label htmlFor="experience_title">Job Title</label>
+                                        <input type="text" onChange={e => experience[index].experience_title = e.target.value} placeholder={exp.experience_title} defaultValue={exp.experience_title}/>
                                     </div>
                                     <div>
-                                        <input type="date" onChange={e => setExperience.experience_start[index] = e.target.value} placeholder={exp.experience_start} defaultValue={exp.experience_start}/>
+                                        <label htmlFor="experience_start">Experience Start Date</label>
+                                        <input type="date" onChange={e => experience[index].experience_start= e.target.value} placeholder={exp.experience_start} defaultValue={exp.experience_start}/>
                                     </div>
                                     <div>
-                                        <input type="date" onChange={e => setExperience.experience_end[index] = e.target.value} placeholder={exp.experience_end} defaultValue={exp.experience_end}/>
+                                        <label htmlFor="experience_end">Experience End Date</label>
+                                        <input type="date" onChange={e => experience[index].experience_end = e.target.value} placeholder={exp.experience_end} defaultValue={exp.experience_end}/>
                                     </div>
                                     <div>
-                                        <input type="text" onChange={e => setExperience.experience_desc[index] = e.target.value} placeholder={exp.experience_desc} defaultValue={exp.experience_desc}/>
+                                        <label htmlFor="experience_desc">Description of Job</label> 
+                                        <input type="text" onChange={e => experience[index].experience_desc = e.target.value} placeholder={exp.experience_desc} defaultValue={exp.experience_desc}/>
                                     </div>
                                 </div>
                             ))} 

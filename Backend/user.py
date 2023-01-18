@@ -202,22 +202,9 @@ class User:
         sql = """UPDATE users SET fname = %s, lname = %s, city = %s, country = %s, job_title = %s, job_category = %s, job_desc = %s, project_ids = %s, certifications = %s, availability = %s, profilepic = %s, current_project = %s WHERE email = %s"""
         val = (fname, lname, city, country, job_title, job_category, job_desc, project_ids, certifications, availability, profilepic, current_project, email)
         cursor.execute(sql, val)
-        self.email = email
-        self.fname = fname
-        self.lname = lname
-        self.city = city
-        self.country = country
-        self.job_title = job_title
-        self.job_category = job_category
-        self.job_desc= job_desc
-        self.work_experience = self.update_experience(email, work_experience)
-        self.education = self.update_education(email, education)
-        self.project_ids = project_ids
-        self.certifications = certifications
-        self.availability = availability
-        self.profilepic = profilepic
-        self.current_project = current_project
         mydb.commit()
+        self.update_education(email, education)
+        self.update_experience(email, work_experience)
         return 200
         # except:
         #     return 404
@@ -237,7 +224,6 @@ class User:
         newcerts = self.certifications.split(",")
         for val in newcerts:
             newVal = {"certName": val}
-            print(newVal)
             certs.append(newVal)
         user_json = {"email" : self.email, "fname" : self.fname, "lname" : self.lname, "city" : self.city, "country" : self.country, "job_title" : self.job_title, "job_category" : self.job_category, "job_desc" : self.job_desc, "work_experience" : experience_json, "education" : education_json, "project_ids" : self.project_ids, "certifications" : certs, "availability" : self.availability, "profilepic" : self.profilepic, "current_project" : self.current_project}
         user.append(user_json)

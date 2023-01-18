@@ -55,6 +55,7 @@ function Project() {
                             <th>Role Description</th>
                             <th>No. of People</th>
                             <th>Role Category</th>
+                            <th>Role Remote ?</th>
                           </tr>
                         </thead>
                         <tbody>
@@ -63,8 +64,9 @@ function Project() {
                             <tr key={k}>
                               <td>{roleData.role_title}</td>
                               <td>{roleData.role_desc}</td>
-                              <td>{roleData.role_no_needed - roleData.role_filled}</td>
+                              <td>{roleData.role_no_needed - roleData.roles_filled}</td>
                               <td>{roleData.role_category}</td>
+                              <td>{roleData.role_remote}</td>
                             </tr>
                         ))}
                         </tbody>
