@@ -34,6 +34,21 @@ class Project:
             cursor.execute(sql, val)
             mydb.commit()
         return roles
+    
+    def update_roles(self, project_id, roles):
+        cursor = mydb.cursor()
+        for val in roles:
+            role_id = val['role_id']
+            role_category = val['role_category']
+            role_title = val['role_title']
+            role_desc = val['role_desc']
+            role_no_needed = val['role_no_needed']
+            role_remote = val['role_remote']
+            sql = """Update roles SET project_id = %s role_category = %s, role_title = %s, role_desc = %s, role_filled = %s role_no_needed = %s, role_remote = %s WHERE role_id = %s"""
+            val = (project_id, role_category, role_title, role_desc, "0", role_no_needed, role_remote, role_id)
+            cursor.execute(sql, val)
+            mydb.commit()
+        return roles
 
     def get_roles(self, id):
         roles = []
@@ -91,6 +106,27 @@ class Project:
             return "200"
         else:
             return "Error! Project already exists."
+        
+    def update_project(self, requestjson):
+        try:
+            pid = requestjson['id']
+            title = requestjson['title']
+            author = requestjson['author']
+            start_date = requestjson['start_date']
+            end_date = requestjson['end_date']
+            summary = requestjson['summary']
+            city = requestjson['city']
+            country = requestjson['country']
+            roles = requestjson['roles']
+            cursor = mydb.cursor()
+            sql = """UPDATE projects SET project_title = %s, project_author = %s, project_startdate = %s, project_enddate = %s, project_summary = %s, project_city = %s, project_country = %s WHERE project_id = %s"""
+            val = (title, author, start_date, end_date, summary, city, country, pid)
+            cursor.execute(sql, val)
+            mydb.commit()
+            self.roles = self.update_roles(pid, roles)
+            return "200"
+        except:
+            return "404"
             
     def get_project(self, id):
         cursor = mydb.cursor()
@@ -133,7 +169,6 @@ class Project:
     def get_project_json(self):
         self.get_project(self.id)
         roles_json = []
-        locations_json = []
         for val in self.roles:
             role_json = {"role_category":val[1], "role_title":val[2], "role_desc":val[3], "role_no_needed":val[4], "role_no_needed":val[4], "role_id":val[5], "role_filled":val[6], "role_remote":val[7]}
             roles_json.append(role_json)

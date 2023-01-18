@@ -37,17 +37,29 @@ def projectpage(id: str):
     project_json = project.get_project_json()
     return json.dumps(project_json)
 
+@app.route('/updateproject', methods=['POST'])
+def updateproject():
+    p1 = Project()
+    print(request.json)
+    p1.update_project(request.json)
+    projectvals = p1.get_project_json()
+    notified = create_role_notifications(projectvals)
+    if notified == "200":
+        return json.dumps({"Status Code": 200, "Message": "Success!"}), 200
+    else:
+        return json.dumps({"Status Code": 404, "Message": "Error!"}), 404
+
 @app.route('/createproject', methods=['POST'])
 def createproject():
     p1 = Project()
-    p1.create_project(request.json)
+    p1.update_projects(request.json)
     projectvals = p1.get_project_json()
     notified = create_role_notifications(projectvals)
     if notified == 200:
         return json.dumps({"Status Code": 200, "Message": "Success!"})
     else:
         return json.dumps({"Status Code": 404, "Message": "Error!"})
-
+    
 @app.route('/profile/<string:email>')
 def profilepage(email: str):
     user = User()

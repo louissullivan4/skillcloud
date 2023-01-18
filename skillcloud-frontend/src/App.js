@@ -14,6 +14,7 @@ import EditProfile from "./webpages/Profile/EditProfile";
 
 import Project from "./webpages/Project/Project";
 import CreateProject from "./webpages/Project/CreateProject";
+import EditProject from "./webpages/Project/EditProject";
 
 import Inbox from "./webpages/Inbox/Inbox";
 import MsgDefault from "./webpages/Inbox/MsgDefault";
@@ -47,6 +48,7 @@ function App() {
 
           <Route path="/project/:id" element={<ProtectedRoute><Project /></ProtectedRoute>} />
           <Route path="/createproject" element={<ProtectedRoute><CreateProject /></ProtectedRoute>} />
+          <Route path="/editproject" element={<ProtectedRoute><EditProject /></ProtectedRoute>} />
 
           <Route path="/inbox" element={<ProtectedRoute><Inbox /></ProtectedRoute>} />
           <Route path="/msg" element={<ProtectedRoute><MsgDefault /></ProtectedRoute>} />

@@ -57,10 +57,14 @@ def no_candidates_notifications(project, role):
         return 404
 
 def create_role_notifications(project):
+    cursor = mydb.cursor()
     project = str(project).replace("'", '"')
     new = json.loads(project)
     roles = new["roles"]
     for role in roles:
+        sql = """DELETE FROM notifications WHERE role_id = %s"""
+        cursor.execute(sql, (role["role_id"], ))
+        mydb.commit()
         candidates = event_match(role)
         print(candidates)
         if len(candidates) < 1:

@@ -13,6 +13,12 @@ function Project() {
         // navigate(path);
         console.log("Apply button clicked")
     } 
+
+    const handleEdit = () =>{
+      if (window.confirm("You are about to edit this project. All previous roles fufilled by users will be deleted. Are you sure you want to continue?")) {
+        navigate("/editproject", { state: { id: projectId.id, details: projectData} })
+      }
+    }
     
     useEffect(() => {
       const fetchData = async () => {
@@ -33,6 +39,7 @@ function Project() {
               <div>#{projectData.id}</div>
             </div>
             {projectData.state === 'Open' ? <button type="button" onClick={handleClick}>Apply Here  </button> : <div></div>}
+            {localStorage.getItem("email") === projectData.author ? <button type="button" onClick={handleEdit}>Edit Project  </button> : <div></div>}
           </div>
             <div className='project'>
                   <div className='project-body'>
