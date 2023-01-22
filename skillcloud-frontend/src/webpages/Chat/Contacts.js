@@ -1,73 +1,79 @@
-import React, { useEffect, useState } from 'react'
-import { Link } from 'react-router-dom'
+import React, { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
+
+import { collection, query, where, getDocs } from "firebase/firestore";
+import { db } from "../../firebase";
 
 import Sidebar from "../../components/Sidebar";
-
 import "../../index.css";
 
 const Contacts = () => {
-    const email = localStorage.getItem("email")
+    const navigate = useNavigate()
+    const [username, setUsername] = useState("");
+    const [user, setUser] = useState({});
+    const [currentUser, setCurrentUser] = useState("");
+    const [err, setErr] = useState(false);
 
-    const [contacts, setContacts] = useState([]);
-    const [searchContacts, setSearchContacts] = useState([]);
-
-    const [newSearch, setNewSearch] = useState([]);
-    const [charEnter, setCharEnter] = useState("");
-
-    const handleSearch = (event) => {
-        const searchWord = event.target.value;
-        setCharEnter(searchWord);
-        const search = searchContacts.filter((value) => {
-            return value.toLowerCase().includes(searchWord.toLowerCase());
-        });
-        if (searchWord === "") {
-            setNewSearch([]);
-        } else {
-            setNewSearch(search);
-        }
-    };
-
+    let email = localStorage.getItem("email")
     useEffect(() => {
-      const fetchData = async () => {
-        const resp = await fetch('http://127.0.0.1:5000/contacts/'+ email)
-        const data = await resp.json();
-        setContacts(data.result);
-        const newresp = await fetch('http://127.0.0.1:5000/searchcontacts/'+ email)
-        const newdata = await newresp.json();
-        setSearchContacts(newdata.result);
-      };
-      fetchData()
+        async function getUid() {
+            const q = query(
+            collection(db, "users"),
+            where("email", "==", email)
+            );
+            try {
+                const querySnapshot = await getDocs(q);
+                querySnapshot.forEach((doc) => {
+                    setCurrentUser(doc.data());
+                });
+            } catch (err) {
+                setErr(true);
+            }
+        } getUid()
     }, []);
 
+
+    const handleSearch = async () => {
+        const q = query(collection(db, "users"),where("email", "==", username));
+        const querySnapshot = await getDocs(q);
+        querySnapshot.forEach((doc) => {
+            setUser(doc.data());
+        });
+    };
+
+    const handleKey = (e) => {
+        e.code === "Enter" && handleSearch();
+    };
+
+    const handleSelect = async () => {
+        const combinedId = user.uid + currentUser.uid;
+        navigate(`/chat/${combinedId.toString()}/${username}`)
+        setUser(null);
+        setUsername("")
+    };
+
     return (
-        <div className="app">
-            <Sidebar/>
-            <div className="page">
-                <div className="search-box">
-                    <input type="text" value={charEnter} onChange={handleSearch} placeholder={"Enter a user email..."} />
+            <div className="app">
+                <Sidebar/>
+                <div>
+                    <input
+                    type="text"
+                    placeholder="Search for a user's email..."
+                    onKeyDown={handleKey}
+                    onChange={(e) => setUsername(e.target.value)}
+                    value={username}
+                    /> 
                 </div>
-                <div className='search-values-body'>
-                    {newSearch.slice(0, 15).map((value, key) => {
-                        return (
-                            <Link to="/chat" state={{ email: email, contact: value.contact }}>
-                                <div className="dataItem" key={key}>
-                                <p>{value}</p>
-                                </div>
-                            </Link>
-                        );
-                    })}
-                </div>
-                <div className='row'>
-                    {contacts.map((contact, k) => (
-                        <Link to="/chat" state={{ email: email, contact: contact.contact }} style={{textDecoration: "none"}}>
-                            <div className='row' key={k}>
-                                <div className='row-header'>{contact.contact}</div>
+                {err && <span>User not found!</span>}
+                    {user && (
+                        <div onClick={handleSelect}>
+                            <div>
+                                <span>{user.email}</span>
                             </div>
-                        </Link>
-                    ))}
-                </div>
-            </div>  
-        </div>
-    );
-}
+                        </div>
+                    )}
+            </div>
+        );
+    };
+
 export default Contacts;

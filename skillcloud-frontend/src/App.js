@@ -58,7 +58,7 @@ function App() {
           <Route path="/completerequest" element={<ProtectedRoute><CompleteRequest /></ProtectedRoute>} />
 
           <Route path="/contacts" element={<ProtectedRoute><Contacts /></ProtectedRoute>} />
-          <Route path="/chat" element={<ProtectedRoute><Chat /></ProtectedRoute>} />
+          <Route path="/chat/:id/:email" element={<ProtectedRoute><Chat /></ProtectedRoute>} />
 
           <Route path="/basicinfo" element={<ProtectedRoute><BasicInfo /></ProtectedRoute>} />
           <Route path="/moredetails" element={<ProtectedRoute><MoreDetails /></ProtectedRoute>} />

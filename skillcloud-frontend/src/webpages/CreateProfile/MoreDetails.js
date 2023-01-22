@@ -7,7 +7,7 @@ const MoreDetails = () => {
     const location = useLocation()
     let navigate = useNavigate();
     const state = location.state
-    
+
     const [newEducation, setNewEducation] = useState({
         education: [{
             edu_type: "",

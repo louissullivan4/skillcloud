@@ -1,78 +1,88 @@
-import React, { useEffect, useState, } from 'react'
-import { useLocation  } from 'react-router-dom'
+import React, { useEffect, useState } from 'react'
+import { useParams  } from 'react-router-dom'
+
+import { setDoc, doc, getDocs, updateDoc, getDoc, onSnapshot, arrayUnion, Timestamp, collection, query, where } from "firebase/firestore";
+import { db } from '../../firebase'
 
 import Sidebar from "../../components/Sidebar";
-
 import "../../index.css";
 
 
 const Chat = () => {
-    // window.setTimeout(function(){ document.location.reload(true); }, 5000);
-    const location = useLocation()
-
-    const sender = location.state.email
-    const receiver = location.state.contact
-
+    let email = localStorage.getItem("email")
+    let chatId = useParams();
     const [chatHistory, setChatHistory] = useState([]);
-    const [newChat, setNewChat] = useState([]);
-  
-    useEffect(() => {
-      const fetchData = async () => {
-        const resp = await fetch('http://127.0.0.1:5000/chat/'+ sender + "/" + receiver)
-        const data = await resp.json();
-        setChatHistory(data.result);
-      };
-      fetchData()
-    }, []);
-    
-    const sendMessage = async (e) => {
-        e.preventDefault();
-        newChat.sender = sender
-        newChat.receiver = receiver
-        let today = new Date();
-        let time = today.getHours() + ":" + today.getMinutes() + ":" + today.getSeconds();
-        let date = today.getFullYear()+'-'+(today.getMonth()+1)+'-'+today.getDate();
-        newChat.time = time.toString()
-        newChat.date = date.toString()
-        let updateChat = [...chatHistory, newChat]
-        setChatHistory(updateChat)
-        const resp = await fetch(`http://127.0.0.1:5000/updateMsg`, {'method':'POST', headers : {'Content-Type':'application/json'}, body: JSON.stringify(newChat)})
-        if (resp.status !== 200) {
-            alert("Errorr in sending message. Please try again.");
-            window.location.reload(false);
-        }
+    const [newChat, setNewChat] = useState("");
+    const [name , setName] = useState("")
+
+    const getName = async () => {
+        const q = query(collection(db, "users"),where("email", "==", email));
+        const querySnapshot = await getDocs(q);
+        querySnapshot.forEach((doc) => {
+            setName(doc.data().name);
+        });
     }
 
+    useEffect(() => {
+        async function getData() {
+            await getName()
+            const res = await getDoc(doc(db, "messages", chatId.id));
+            if (!res.exists()) {
+                await setDoc(doc(db, "messages", chatId.id), { messages: [] });
+            }
+            const unSub = onSnapshot(doc(db, "messages", chatId.id), (doc) => {
+                setChatHistory(doc.data().messages);
+            });
+            return () => {
+                unSub();
+            };
+            
+        }
+        getData();
+    }, []);
+          
+    async function sendMessage(e) {
+        e.preventDefault();
+        await updateDoc(doc(db, "messages", chatId.id), {
+            messages: arrayUnion({
+              text: newChat,
+              sender: name,
+              date: Timestamp.now()
+            }),
+          });
+        setNewChat("")
+    }
+        
     return (
-        <div className="app">
-            <Sidebar/>
-            <div className="page">
-                <div className="page-content">
-                    <div className="container-1">
-                    <div className='row'>
-                        {chatHistory.map((chat, k) => (
-                            <div className='col'>
-                                <div className='row' key={k}>
-                                    <div className='row-header'>{chat.sender}</div>
-                                        <div className='row-body'>
-                                            {chat.content}
+            <div className="app">
+                <Sidebar/>
+                <div className="page">
+                    <div className="page-content">
+                        <div className="container-1">
+                            {(chatHistory.length > 0) ?
+                                chatHistory.map(({ id, text, sender }) => (
+                                    <div>
+                                        <div key={id}>
+                                            <h5>{sender}</h5>
+                                            <p>{text}</p>
                                         </div>
-                                </div>
-                            </div>
-                        ))}
-                        <div className="container-2">
-                            <div className="row">
-                                <form>
-                                    <input type="text" placeholder="Type a message" onChange={(e) => setNewChat({content: e.target.value})}/>
-                                    <button type="submit" onClick={sendMessage}>Send</button>
-                                </form>
-                            </div>
-                        </div>
-                        </div>
-                    </div>  
+                                    </div>
+                                ))
+                                : <div>
+                                    <div>
+                                        <p>Looks very quiet in this chat...</p>
+                                    </div>
+                                </div>}
+                            <form >
+                                <input type="text" placeholder="Type a message" onChange={e => setNewChat(e.target.value)} value={newChat}/>
+                                <button type="submit" onClick={sendMessage}>Send</button>
+                            </form>
+                        </div>  
+                    </div>
                 </div>
             </div>
-        </div>
-    );
-}
+            
+        );
+    }
+
 export default Chat;

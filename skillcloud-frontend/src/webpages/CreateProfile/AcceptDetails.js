@@ -1,5 +1,12 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { useNavigate, useLocation } from 'react-router-dom'
+
+import {
+    setDoc,
+    doc,
+  } from "firebase/firestore";
+
+import { db, auth } from "../../firebase";
 
 import "../../index.css";
 
@@ -7,7 +14,17 @@ const AcceptDetails = () => {
     const location = useLocation()
     let navigate = useNavigate();
     const state = location.state
+
+    const addUser = async () => {
+        await setDoc(doc(db, "users", auth.currentUser.uid), {
+            email: auth.currentUser.email,
+            uid : auth.currentUser.uid,
+            name: state.fname + " " + state.lname,
+        });
+    };
+
     const completeProfile = async () => {
+        addUser();
         const resp = await fetch(`http://127.0.0.1:5000/createuser`,{'method':'POST', headers : {'Content-Type':'application/json'}, body: JSON.stringify(state)})
         if (resp.status === 200) {
             alert("User created successfully. Proceed to login.");
@@ -20,6 +37,7 @@ const AcceptDetails = () => {
     const goBack = () => {
         navigate(-1)
     }
+
     
     return (
         <div className="flex justify-center items-center h-screen bg-indigo-100">

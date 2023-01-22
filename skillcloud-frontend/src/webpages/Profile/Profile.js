@@ -1,20 +1,36 @@
 import React, { useEffect, useState } from 'react'
 import { useParams, useNavigate } from 'react-router-dom'
 
+import { collection, query, where, getDocs } from "firebase/firestore";
+import { db } from "../../firebase";
+
 import Sidebar from "../../components/Sidebar";
 import ProfileTabs from '../../components/Profile/ProfileTabs';
 
 import "../../index.css";
 
 const Profile = () => {
-    // const email = localStorage.getItem("email")
+    let currentEmail = localStorage.getItem("email")
     let email = useParams()
     let navigate = useNavigate()
-    const [userData, setUserData] = useState([]);
+    const [userData, setUserData] = useState("");
+    const [user, setUser] = useState({});
+    const [currentUser, setCurrentUser] = useState("");
 
-    const handleClick = () => {
-        navigate("/chat", { state: { email: localStorage.getItem("email"), contact: email.email} })
-    }
+    const handleClick = async () => {
+        const q = query(collection(db, "users"),where("email", "==", email.email));
+        const querySnapshot = await getDocs(q);
+        querySnapshot.forEach((doc) => {
+            setUser(doc.data().uid);
+        });
+        const q1 = query(collection(db, "users"),where("email", "==", currentEmail));
+        const querySnapshot1 = await getDocs(q1);
+        querySnapshot1.forEach((doc) => {
+            setCurrentUser(doc.data().uid);
+        });
+        const combinedId = user + currentUser;
+        navigate(`/chat/${combinedId.toString()}/${email.email}`)
+    };
 
     const editProfile = () => {
         navigate("/editprofile", { state: { email: localStorage.getItem("email"), details: userData} })
