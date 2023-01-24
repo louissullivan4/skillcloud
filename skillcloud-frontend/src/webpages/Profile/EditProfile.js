@@ -69,25 +69,27 @@ const EditProfile = () => {
     return (
         <div className="app">
             <Sidebar/>
-            <div className="page">
-                <div className="page-header">
-                    <h1 className="page-title">Edit Profile</h1>
+            <div className="project">
+                <div className="project-heading">
+                    <h1 className="project-heading-title">Edit Profile</h1>
                 </div>
-                <div className="page-content">
+                <div className="project-body">
                     <form>
-                        <div className="form-group">
+                        <div className="create-project">
                             <label htmlFor="fname">First Name</label>
                             <input type="text"  id="fname" placeholder={userData.fname} defaultValue={userData.fname} onChange={(e) => setUserData({...userData, fname: e.target.value})}/>
                             <label htmlFor="lname">Last Name</label>
                             <input type="text"  id="lname" placeholder={userData.lname} defaultValue={userData.lname} onChange={(e) => setUserData({...userData, lname: e.target.value})}/>
-                            <label htmlFor="city">City</label>
-                            <input type="text"  id="city" placeholder={userData.city} defaultValue={userData.city} onChange={(e) => setUserData({...userData, city: e.target.value})}/>
-                            <label htmlFor="country">Country</label>
-                            <input type="text"  id="country" placeholder={userData.country} defaultValue={userData.country} onChange={(e) => setUserData({...userData, country: e.target.value})}/>
+                            <div className='inline-create'>
+                                <label htmlFor="city">City</label>
+                                <input type="text"  id="city" placeholder={userData.city} defaultValue={userData.city} onChange={(e) => setUserData({...userData, city: e.target.value})}/>
+                                <label htmlFor="country">Country</label>
+                                <input type="text"  id="country" placeholder={userData.country} defaultValue={userData.country} onChange={(e) => setUserData({...userData, country: e.target.value})}/>
+                            </div>
                             <label htmlFor="job_title">Job Title</label>
                             <input type="text"  id="job_title" placeholder={userData.job_title} defaultValue={userData.job_title} onChange={(e) => setUserData({...userData, job_title: e.target.value})}/>
                             <label htmlFor="job_desc">Job Description</label>
-                            <input type="text"  id="job_desc" placeholder={userData.job_desc} defaultValue={userData.job_desc} onChange={(e) => setUserData({...userData, job_desc: e.target.value})}/>
+                            <textarea rows="5" cols="33"  id="job_desc" placeholder={userData.job_desc} defaultValue={userData.job_desc} onChange={(e) => setUserData({...userData, job_desc: e.target.value})}/>
                             <label htmlFor="category">Job Category</label>
                             <select id="job_category" onChange={(e) => setUserData({...userData, job_category: e.target.value})}>
                                 <option>Select a role category...</option>
@@ -108,93 +110,83 @@ const EditProfile = () => {
                                 <option>Other</option>
                             </select>
                         </div>
-                        <div className="form-group">
-                        <label htmlFor="certifications">Certifications</label>
+                        <div className="create-body-roles">
+                        <h2 style={{"margin-bottom": "0.4em"}}>Certifications</h2>
+                            <div className='create-body-roles-body'>
                             {certs.map((cert, index) => (
                                 <div key={index}>
-                                    <input type="text" onChange={e => certs[index].certName = e.target.value} placeholder={cert.certName} defaultValue={cert.certName}/>
+                                    <input type="text" style={{"fontSize": "1em"}} onChange={e => certs[index].certName = e.target.value} placeholder={cert.certName} defaultValue={cert.certName}/>
                                 </div>
                             ))} 
-                            <button type="button" onClick={addCert}>
-                                Add another certification +
-                            </button>
-                            {certs.length > 1 && (
-                                <button type="button" onClick={removeCert}>
-                                    Remove certification - 
+                            <div className="buttons-add-remove">
+                                <button type="button" onClick={addCert} style={{"backgroundColor": "green"}}>
+                                    Add another certification +
                                 </button>
-                            )}
+                                {certs.length > 1 && (
+                                    <button type="button" onClick={removeCert} style={{"backgroundColor": "red"}}>
+                                        Remove certification - 
+                                    </button>
+                                )}
+                            </div>
+                            </div>
                         </div>
-                        <div className="form-group">
-                        <label htmlFor="education">Education</label>
+                        <div className="create-body-roles">
+                        <h2 style={{"margin-bottom": "0.4em"}}>Education</h2>
                             {education.map((edu, index) => (
-                                <div key={index}>
-                                    <div>
+                                <div key={index} className="education-edit">
                                         <label htmlFor="edu_type">Education Type</label>
                                         <input type="text" onChange={e => education[index].edu_type = e.target.value} placeholder={edu.edu_type} defaultValue={edu.edu_type}/>
-                                    </div>
-                                    <div>
                                         <label htmlFor="edu_degree">Degree</label>
                                         <input type="text" onChange={e => education[index].edu_degree = e.target.value} placeholder={edu.edu_degree} defaultValue={edu.edu_degree}/>
-                                    </div>
-                                    <div>
                                         <label htmlFor="edu_school">College</label>
                                         <input type="text" onChange={e => education[index].edu_school = e.target.value} placeholder={edu.edu_school} defaultValue={edu.edu_school}/>
-                                    </div>
-                                    <div>
                                         <label htmlFor="edu_desc">Description of College modules</label>
-                                        <input type="text" onChange={e => education[index].edu_desc = e.target.value} placeholder={edu.edu_desc} defaultValue={edu.edu_desc}/>
-                                    </div>
+                                        <textarea rows="5" cols="33" type="text" onChange={e => education[index].edu_desc = e.target.value} placeholder={edu.edu_desc} defaultValue={edu.edu_desc}/>
                                 </div>
-                            ))} 
-                            <button type="button" onClick={addEducation}>
-                                Add another education +
-                            </button>
-                            {education.length > 1 && (
-                                <button type="button" onClick={removeEducation}>
-                                    Remove education - 
+                            ))}
+                            <div className="buttons-add-remove">
+                                <button type="button" onClick={addEducation} style={{"backgroundColor": "green"}}>
+                                    Add another education +
                                 </button>
-                            )}
+                                {education.length > 1 && (
+                                    <button type="button" onClick={removeEducation} style={{"backgroundColor": "red"}}>
+                                        Remove education - 
+                                    </button>
+                                )}        
+                            </div>
                         </div>
-                        <div className="form-group">
-                        <label htmlFor="work_experience">Work Experience</label>
+                        <div className="create-body-roles">
+                        <h2 style={{"margin-bottom": "0.4em"}}>Work Experience</h2>
                             {experience.map((exp, index) => (
-                                <div key={index}>
-                                    <div>
-                                        <label htmlFor="experience_name">Company Name</label>
-                                        <input type="text" onChange={e => experience[index].experience_name= e.target.value} placeholder={exp.experience_name} defaultValue={exp.experience_name}/>
-                                    </div>
-                                    <div>
-                                        <label htmlFor="experience_title">Job Title</label>
-                                        <input type="text" onChange={e => experience[index].experience_title = e.target.value} placeholder={exp.experience_title} defaultValue={exp.experience_title}/>
-                                    </div>
-                                    <div>
-                                        <label htmlFor="experience_start">Experience Start Date</label>
+                                <div key={index} className="education-edit">
+                                    <label htmlFor="experience_name">Company Name</label>
+                                    <input type="text" onChange={e => experience[index].experience_name= e.target.value} placeholder={exp.experience_name} defaultValue={exp.experience_name}/>
+                                    <label htmlFor="experience_title">Job Title</label>
+                                    <input type="text" onChange={e => experience[index].experience_title = e.target.value} placeholder={exp.experience_title} defaultValue={exp.experience_title}/>
+                                    <div className='inline-create'>
+                                        <label htmlFor="experience_start">Start Date</label>
                                         <input type="date" onChange={e => experience[index].experience_start= e.target.value} placeholder={exp.experience_start} defaultValue={exp.experience_start}/>
-                                    </div>
-                                    <div>
-                                        <label htmlFor="experience_end">Experience End Date</label>
+                                        <label htmlFor="experience_end">End Date</label>
                                         <input type="date" onChange={e => experience[index].experience_end = e.target.value} placeholder={exp.experience_end} defaultValue={exp.experience_end}/>
                                     </div>
-                                    <div>
-                                        <label htmlFor="experience_desc">Description of Job</label> 
-                                        <input type="text" onChange={e => experience[index].experience_desc = e.target.value} placeholder={exp.experience_desc} defaultValue={exp.experience_desc}/>
-                                    </div>
+                                    <label htmlFor="experience_desc">Description of Job</label> 
+                                    <textarea rows="5" cols="33" type="text" onChange={e => experience[index].experience_desc = e.target.value} placeholder={exp.experience_desc} defaultValue={exp.experience_desc}/>
                                 </div>
                             ))} 
-                            <button type="button" onClick={addExp}>
-                                Add another work experience +
-                            </button>
-                            {experience.length > 1 && (
-                                <button type="button" onClick={removeExp}>
-                                    Remove work experience - 
+                            <div className="buttons-add-remove">
+                                <button type="button" onClick={addExp} style={{"backgroundColor": "green"}}>
+                                    Add another work experience +
                                 </button>
-                            )}
+                                {experience.length > 1 && (
+                                    <button type="button" onClick={removeExp} style={{"backgroundColor": "red"}}>
+                                        Remove work experience - 
+                                    </button>
+                                )}
+                            </div>
                         </div>
-                        <div className="form-group">
-                            <button type="submit" onClick={handleSubmit}>
-                                Submit
-                            </button>
-                        </div>
+                        <button type="submit" onClick={handleSubmit} style={{"margin": "0.5em"}}>
+                            Submit
+                        </button>
                     </form>
                 </div>
             </div>

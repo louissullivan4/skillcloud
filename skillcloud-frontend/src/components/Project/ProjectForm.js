@@ -152,7 +152,6 @@ const ProjectForm = () => {
                             onChange={e => projectDetails.roles[index]["role_no_needed"] = e.target.value}/>
                         </div>
                     ))}
-                </div>
             </div>
             <div className="buttons-add-remove">
                 <button type="button" onClick={addRole} style={{"backgroundColor": "green"}}>
@@ -163,6 +162,7 @@ const ProjectForm = () => {
                         Remove role - 
                     </button>
                 )}
+            </div>
             </div>
             <button type="submit" style={{"margin": "0.5em"}}>
                 Create

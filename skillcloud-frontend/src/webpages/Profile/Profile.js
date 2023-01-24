@@ -73,8 +73,10 @@ const Profile = () => {
                                 </div>
                             </div>
                         </div>
-                    </div>  
-                    {email.email !== localStorage.getItem('email') ? <button type="button" onClick={handleClick}>Send Message </button> : <button type="button" onClick={editProfile}>Edit Profile </button>}
+                    </div>
+                    <div className="profile-button">
+                        {email.email !== localStorage.getItem('email') ? <button type="button" onClick={handleClick}>Send Message </button> : <button type="button" onClick={editProfile}>Edit Profile </button>}
+                    </div>
                     </div>
                     <div className="p-container-2">
                         <ProfileTabs/>
