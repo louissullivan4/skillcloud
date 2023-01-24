@@ -14,14 +14,13 @@ function Home() {
     return (
         <div className="app">
             <Sidebar/>
-            <div className="page">
-                <div className="page-heading">
-                    <h1>Create Project</h1>
-                    <button type="button" className="butNeg" onClick={handleClick}>
-                        Back to Home
-                    </button>
+            <div className="project">
+                <div className="project-heading">
+                    <div className="project-heading-title">
+                        <h1>Create Project</h1>
+                    </div>
                 </div>
-                <div className="page-content">
+                <div className="project-body">
                     <ProjectForm/>
                 </div>
             </div>

@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { useParams, useNavigate } from "react-router-dom";
+import { useParams, useNavigate, Link } from "react-router-dom";
 
 import Sidebar from "../../components/Sidebar";
 
@@ -32,50 +32,52 @@ function Project() {
   return (
     <div className="app">
       <Sidebar/>
-      <div className="project-page">
-          <div className="project-page-heading">
-            <div className="project-page-title">
-              <h1>{projectData.title}</h1>
-              <div>#{projectData.id}</div>
-            </div>
-            {projectData.state === 'Open' ? <button type="button" onClick={handleClick}>Apply Here  </button> : <div></div>}
-            {localStorage.getItem("email") === projectData.author ? <button type="button" onClick={handleEdit}>Edit Project  </button> : <div></div>}
+      <div className="project">
+        <div className="project-heading">
+          <div className="project-heading-title">
+            <h1>{projectData.title}</h1>
+            <div>#{projectData.id}</div>
+            {projectData.state === 'Open' ? <div style={{color: "green"}}>State: {projectData.state}</div> : <div style={{color: "red"}}>State: {projectData.state}</div>}
           </div>
-            <div className='project'>
-                  <div className='project-body'>
-                  <div className='project-text'>Project Summary: {projectData.summary}</div>
-                  <div className='project-text'>Start Date: {projectData.start_date}</div>
-                  <div className='project-text'>End Date: {projectData.end_date}</div>
-                  <div className='project-text'>Project Creator: {projectData.author}</div>
-                    <h2>Project Roles</h2>
-                      <table>
-                        <thead>
-                          <tr>
-                            <th>Title</th>
-                            <th>Role Description</th>
-                            <th>No. of People</th>
-                            <th>Role Category</th>
-                            <th>Role Remote ?</th>
-                          </tr>
-                        </thead>
-                        <tbody>
-                        {projectData.roles?.map(
-                        (roleData, k) => (
-                            <tr key={k}>
-                              <td>{roleData.role_title}</td>
-                              <td>{roleData.role_desc}</td>
-                              <td>{roleData.role_no_needed - roleData.roles_filled}</td>
-                              <td>{roleData.role_category}</td>
-                              <td>{roleData.role_remote}</td>
-                            </tr>
-                        ))}
-                        </tbody>
-                      </table>
-                    </div>
-                  {projectData.state === 'Open' ? <div className="project-footer">State: {projectData.state}</div> : <div className="card-footer" style={{color: "white", backgroundColor: "red"}}>State: {projectData.state}</div>}
-                </div>
-              </div>
-            </div>
-      )
+        </div>
+        <div className="project-body">
+          <div className="project-body-details">
+            <div><b>Project Summary</b>: {projectData.summary}</div>
+            <div><b>Start Date</b>: {projectData.start_date}</div>
+            <div><b>End Date</b>: {projectData.end_date}</div>
+            <div><b>Project Creator</b>:<Link to={`/profile/${projectData.author}`} style={{textDecoration: "none"}}> {projectData.author}</Link></div>
+          </div>
+          <div className="project-body-roles">
+            <h2>Project Roles</h2>
+              <table>
+                <thead>
+                  <tr>
+                    <th width="20%">Title</th>
+                    <th width="40%">Role Description</th>
+                    <th width="10%">No. of People</th>
+                    <th width="20%">Role Category</th>
+                    <th width="10%">Role Remote</th>
+                  </tr>
+                </thead>
+                <tbody>
+                {projectData.roles?.map(
+                (roleData, k) => (
+                    <tr key={k}>
+                      <td width="20%">{roleData.role_title}</td>
+                      <td width="40%" className="role_desc">{roleData.role_desc}</td>
+                      <td width="10%">{roleData.role_no_needed - roleData.roles_filled}</td>
+                      <td width="20%">{roleData.role_category}</td>
+                      <td width="10%">{roleData.role_remote}</td>
+                    </tr>
+                ))}
+                </tbody>
+              </table>
+          </div>
+          {projectData.state === 'Open' ? <button type="button" onClick={handleClick}>Apply Here  </button> : <div></div>}
+          {localStorage.getItem("email") === projectData.author ? <button type="button" onClick={handleEdit}>Edit Project  </button> : <div></div>}
+          </div>
+        </div>
+      </div>
+    )
   }
 export default Project;

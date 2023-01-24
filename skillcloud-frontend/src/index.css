@@ -1,10 +1,4 @@
 :root {
-    --PURPLE: #8338EC;
-    --LIGHTPURPLE: #A663CC;
-    --SOFTPURPLE: #583786;
-    --LILAC: #B298DC;
-    --BLUE: #B8D0EB;
-    --MINT: #B9FAF8;
 }
 
 * {
@@ -13,22 +7,20 @@
     font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
 
 }
-
-.App {
-    background-color: white;
-    }
  
 .app {
     display: flex;
     flex-direction: row;
     flex-wrap: nowrap;
-
+    background-color: #f2f2f2;
 }
 
 /* Home / Project Tiles */
  h1 {
-    color: steelblue
+    color: steelblue;
+    font-size: 2.5em;
  }
+
 .page-heading {
     display: flex;
     flex-direction: row;
@@ -38,7 +30,7 @@
 }
 
 .page-heading button {
-    background-color: var(--PURPLE);
+    background-color: #0049e6;
     color: white;
     border: none;
     padding: 0.5em 1em;
@@ -48,8 +40,8 @@
     font-size: 1.25em;
 }
 
-.home-page-heading button:hover {
-    background-color: var(--LIGHTPURPLE);
+.page-heading button:hover {
+    background-color: #6696ff;
 }
 
 .card-wrapper {
@@ -66,6 +58,7 @@
     padding: 1em;
     border: solid 2px rgba(0, 0, 0, 0.08);
     border-radius: 10px;
+    background-color: white;
 }
 
 .card-header {
@@ -92,7 +85,7 @@
     list-style-type: none;
     left: 0;
     top: 0;
-    background-color: var(--SOFTPURPLE);
+    background-color: #00184d;
     height: 100vh;
 }
 
@@ -105,58 +98,208 @@
 }
 
 .list-group  li a:hover {
-    background-color: var(--LIGHTPURPLE);
+    background-color: #002880;
 }
 
 /* Project Page */
-.project-page {
+.project {
     display: flex;
     flex-direction: column;
     flex-wrap: nowrap;
-    margin: 1em;
-}
-
-.project-page-title {
-    display: flex;
-    flex-direction: column;
-    flex-wrap: nowrap;
-    justify-content: center;
     margin: 1.5em;
-    background-color: var(--MINT);
-    padding: 1em;
-    border-radius: 10px;
-    border : solid 2px rgba(0, 0, 0, 0.08);
 }
 
-.project-page-heading {
+.project-heading{
     display: flex;
     flex-direction: row;
     flex-wrap: nowrap;
-    align-items: flex-end;
-    
+    justify-content: space-between;
 }
 
-.project-page-heading button {
-    background-color: #5cdb5c;
-    border: solid 2px rgba(0, 0, 0, 0.08);
-    border-radius: 10px;
+.project-body button {
+    background-color: #0049e6;
+    color: white;
+    border: none;
     padding: 0.5em 1em;
+    border-radius: 10px;
+    cursor: pointer;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+    font-size: 1em;
+    margin-top: 2em;
+}
+
+.project-body button:hover {
+    background-color: #6696ff;
+}
+
+.project-body {
+    margin: 1em;
+}
+
+.project-body-details {
+    background-color: white;
+    max-width: 50%;
+    border: none;
+    padding: 0.5em 1em;
+    border-radius: 10px;
+    cursor: pointer;
     font-size: 1em;
 }
 
+.project-body-details div {
+    margin: 0.5em;
+}
 
+.project-body-roles {
+    margin-top: 1.5em;
+    max-width: 50%;
+    /* padding: 0.5em 1em; */
+}
 
-.project{
+.project-body-roles h2{
+    color: steelblue;
+}
+
+table {
+    background-color: white;
+    text-align: left;
+    border-collapse: collapse;
+    box-shadow: 0 5px 10px #e1e5ee;
+    margin-top: 1.5em;
+    border-radius: 25px;
+}
+
+thead {
+    box-shadow: 0 5px 10px #e1e5ee;
+}
+
+th {
+    padding: 1rem 2rem;
+}
+  
+td {
+    padding: 1rem 2rem;
+}
+
+.role_number {
+    font-size: 1.25em;
+    padding-left: 2.25em;
+}
+
+tr:nth-child(even) {
+    background-color: #f4f6fb;
+}
+
+@media screen and (max-width: 800px) {
+    tr { 
+      display: flex; 
+      flex-direction: row;
+      flex-wrap: wrap;
+      margin: 0.5em 0;
+    }
+    td, th {
+      flex: 1 1 150px;
+    }
+  }
+
+/* Create Project Page */
+
+.create-project {
     display: flex;
     flex-direction: column;
-    flex-wrap: nowrap;
-    margin: 2.5em;
+    flex-wrap: wrap;
+    margin: 1em;
+    background-color: white;
+    padding: 1em;
+    border-radius: 25px;
 }
 
-.project-header {
-    font-size: 1.5em;
+.create-project input, .create-project textarea {
+    margin: 0.5em;
+    padding: 0.5em;
+    border-radius: 10px;
+    border: none;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+}
+
+.inline-create {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: nowrap;
+    align-items: baseline;
     margin-bottom: 1em;
 }
+
+.inline-create input{
+    flex-grow : 1;
+    width : 30%;
+    margin-right: 2.5em;
+}
+
+.create-project label{
+    width : 25%;
+    margin-bottom: 0.5em;
+    font-size: large;
+}
+
+.create-body-roles {
+    background-color: white;
+    margin: 1em;
+    padding: 1em;
+    border-radius: 25px;
+}
+
+.create-body-roles-header{
+    display: flex;
+    flex-direction: row;
+    flex-wrap: nowrap;
+    justify-content: space-around;
+    margin-top: 1.25em;
+    padding: 0.5em;
+}
+
+.create-body-roles-body input, .create-body-roles-body select{
+    padding: 0.5em;
+    margin: 0.25em;
+    border-radius: 10px;
+    border: none;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+}
+
+.input-role-title {
+    width: 20%;
+}
+
+.input-role-desc {
+    width: 35%;
+}
+
+.input-role-category {
+    width: 20%;
+}
+
+.input-role-remote {
+    width: 10%;
+}
+
+.input-role-no {
+    width: 5%;
+}
+
+.buttons-add-remove {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: nowrap;
+}
+
+.buttons-add-remove button {
+    margin: 0.5em;
+    padding: 0.5em;
+    border-radius: 10px;
+    border: none;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+}
+
 
 /* Profile */
 .p-page-content {
@@ -237,7 +380,7 @@
     align-items: center;
     justify-content: center;
     flex-direction: column; 
-    background-color: var(--BLUE);
+    background-color: #002880;
 }
 
 .login-content {

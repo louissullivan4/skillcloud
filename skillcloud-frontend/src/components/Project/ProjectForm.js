@@ -79,87 +79,49 @@ const ProjectForm = () => {
         setProjectDetails(newProjectDetails)
         }
     };
-
     return (
         <form onSubmit={submitHandler}>
-            <div className='form-inner'>
-                <div className='form-row'>
-                    <div className='form-col'>
-                        <div className='form-group'>
-                            <label htmlFor="title">Project Title</label>
-                            <input type="text" maxLength={"25"} placeholder="Enter project title..." onChange={(e) => setProjectDetails({...projectDetails, project_title: e.target.value})}/>
-                        </div>
-                    </div>
-                    <div className='form-col'>
-                        <div className='form-group'>
-                            <label htmlFor="startdate">Start Date</label>
-                            <input type="date" onChange={(e) => setProjectDetails({...projectDetails, project_startdate: e.target.value})}/>
-                        </div>
-                    </div>
-                    <div className='form-col'>
-                        <div className='form-group'>
-                            <label htmlFor="enddate">End Date</label>
-                            <input type="date" onChange={(e) => setProjectDetails({...projectDetails, project_enddate: e.target.value})}/>
-                        </div>
-                    </div>
+            <div className="create-project">
+                <label htmlFor="title">Project Title</label>
+                <input type="text" maxLength={"25"} placeholder="Enter project title..." onChange={(e) => setProjectDetails({...projectDetails, project_title: e.target.value})}/>
+                <div className='inline-create'>
+                    <label htmlFor="startdate">Start Date</label>
+                    <input type="date" onChange={(e) => setProjectDetails({...projectDetails, project_startdate: e.target.value})}/>
+                    <label htmlFor="enddate">End Date</label>
+                    <input type="date" onChange={(e) => setProjectDetails({...projectDetails, project_enddate: e.target.value})}/>
                 </div>
-                <div className='form-row'>
-                    <h3>Location</h3>
-                    <div className='form-col'>
-                        <div className='form-group'>
-                            <label htmlFor="city">City</label>
-                            <input type="text" onChange={(e) => setProjectDetails({...projectDetails, project_city: e.target.value})}/>
-                        </div>
-                        <div className='form-group'>
-                            <label htmlFor="country">Country</label>
-                            <input type="text" onChange={(e) => setProjectDetails({...projectDetails, project_country: e.target.value})}/>
-                        </div>
-                    </div>
+                <div className='inline-create'>
+                    <label htmlFor="city">City</label>
+                    <input type="text" onChange={(e) => setProjectDetails({...projectDetails, project_city: e.target.value})}/>
+                    <label htmlFor="country">Country</label>
+                    <input type="text" onChange={(e) => setProjectDetails({...projectDetails, project_country: e.target.value})}/>
                 </div>
-                <div className='form-row'>
-                    <div className='form-col'>
-                        <div className='form-group'>
-                            <label htmlFor="projectsum">Project Summary</label>
-                            <input type="text" placeholder="Enter project summary..." onChange={(e) => setProjectDetails({...projectDetails, project_summary: e.target.value})}/>
-                        </div>
-                    </div>
+                <label htmlFor="projectsum">Project Summary</label>
+                <textarea type="text" rows="5" cols="33" placeholder="Enter project summary..." onChange={(e) => setProjectDetails({...projectDetails, project_summary: e.target.value})}/>
+            </div>
+            <div className="create-body-roles">
+                <h2>Roles Needed</h2>
+                <div className="create-body-roles-header">
+                    <label className='input-role-title'>Role Title</label>
+                    <label className='input-role-desc'>Role Description</label>
+                    <label className='input-role-category'>Role Category</label>
+                    <label className='input-role-remote'>Is the role remote?</label>
+                    <label className='input-role-no'>Number Needed</label>
                 </div>
-                <h3>Roles Needed</h3>
-                <div className='form-row'>
-                    <div className='form-col'>
-                        <label>Role Title</label>
-                    </div>
-                    <div className='form-col'>
-                        <label>Role Description</label>
-                    </div>
-                    <div className='form-col'>
-                        <label>Role Category</label>
-                    </div>
-                    <div className='form-col'>
-                        <label>Role Count</label>
-                    </div>
-                </div>
-                {projectDetails.roles.map((_role, index) => (
-                <div className='form-row' key={index}>
-                    <div className='form-col'>
-                        <div className='form-group'>
+                <div className='create-body-roles-body'>
+                    {projectDetails.roles.map((_role, index) => (
+                        <div key={index}>
                             <input
+                                className='input-role-title'
                                 type="text" 
                                 placeholder="Enter role title"
                                 onChange={e => projectDetails.roles[index]["role_title"] = e.target.value}/>
-                        </div>
-                    </div>
-                    <div className='form-col'>
-                        <div className='form-group'>
                             <input
+                                className='input-role-desc'
                                 type="text" 
                                 placeholder="Enter a detailed role description" 
                                 onChange={e => projectDetails.roles[index]["role_desc"] = e.target.value}/>
-                        </div>
-                    </div>
-                    <div className='form-col'>
-                        <div className='form-group'>
-                            <select onChange={e => projectDetails.roles[index]["role_category"] = e.target.value}>
+                            <select className="input-role-category" onChange={e => projectDetails.roles[index]["role_category"] = e.target.value}>
                                 <option>Select a role category...</option>
                                 <option>Acting, Music and other Creative Arts</option>
                                 <option>Agricultural, forestry and fishery labourers</option>
@@ -177,50 +139,34 @@ const ProjectForm = () => {
                                 <option>Trades workers, construction, electrical and other related</option>
                                 <option>Other</option>
                             </select>
-                        </div>
-                    </div>
-                    <div className='form-col'>
-                        <div className='form-group'>
-                            <select onChange={e => projectDetails.roles[index]["role_remote"] = e.target.value}>
+                            <select className="input-role-remote" onChange={e => projectDetails.roles[index]["role_remote"] = e.target.value}>
                                 <option>Yes</option>
                                 <option>No</option>
                             </select>
-                        </div>
-                    </div>
-                    <div className='form-col'>
-                        <div className='form-group'>
                             <input
+                            className="input-role-no"
                             type="number" 
                             placeholder="1" 
                             min='1'
                             max='100'   
                             onChange={e => projectDetails.roles[index]["role_no_needed"] = e.target.value}/>
                         </div>
-                    </div>
-                </div>
-                ))}
-                <div className='form-row'>
-                    <div className='form-col'>
-                        <button type="button" className="but-pos" onClick={addRole}>
-                            Add another role +
-                        </button>
-                    </div>
-                    {projectDetails.roles.length > 1 && (
-                        <div className='form-col'>
-                            <button type="button" className="but-neg" onClick={removeRole}>
-                                Remove role - 
-                            </button>
-                        </div>
-                    )}
-                </div>
-                <div className='form-row'>
-                    <div className='form-col'>
-                        <button className="but-submit"  type="submit" >
-                            Create
-                        </button> 
-                    </div>
+                    ))}
                 </div>
             </div>
+            <div className="buttons-add-remove">
+                <button type="button" onClick={addRole} style={{"backgroundColor": "green"}}>
+                    Add another role +
+                </button>
+                {projectDetails.roles.length > 1 && (
+                    <button type="button" onClick={removeRole} style={{"backgroundColor": "red"}}>
+                        Remove role - 
+                    </button>
+                )}
+            </div>
+            <button type="submit" style={{"margin": "0.5em"}}>
+                Create
+            </button> 
         </form>
     );
 }
