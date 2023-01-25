@@ -8,7 +8,6 @@ from project import Project
 from user import User
 from notification_service import *
 from match_event import *
-from messages import *
 
 app = Flask(__name__)
 CORS(app)
@@ -41,7 +40,6 @@ def updateproject():
     p1 = Project()
     p1.update_project(request.json)
     projectvals = p1.get_project_json()
-    print(projectvals)
     notified = create_role_notifications(projectvals)
     if notified == 200:
         return json.dumps({"Status Code": 200, "Message": "Success!"}), 200
@@ -125,29 +123,6 @@ def invitationresponse(email : str, role_id : str, req : str):
 def rolechange(email : str, role_id : str, response : str):
     result = notify_role_change(email, role_id, response)
     return json.dumps(result)
-
-@app.route('/chat/<string:sender>/<string:receiver>')
-def msghistory(sender: str, receiver: str):
-    msg_json = get_msg_history(sender, receiver)
-    return json.dumps(msg_json)
-
-@app.route('/contacts/<string:email>')
-def contacts(email: str):
-    contacts_json = get_contacts(email)
-    return json.dumps(contacts_json)
-
-@app.route('/searchcontacts/<string:email>')
-def search_contacts(email: str):
-    contacts_json = search_for_contact(email)
-    return json.dumps(contacts_json)
-
-@app.route('/updateMsg', methods=['POST'])
-def updateMsg():
-    added = add_message(request.json)
-    if added == 200:
-        return json.dumps({"Status Code": 200, "Message": "Success!"}), 200
-    else:
-        return json.dumps({"Status Code": 404, "Message": "Error!"}), 404
 
 if __name__ == "__main__":
     app.run(threaded=True)

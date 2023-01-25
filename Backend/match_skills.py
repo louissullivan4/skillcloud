@@ -33,7 +33,6 @@ def match_skills(job_desc, candidates):
     for name, profile in candidates.items():
         candidate_skills = skill_identifier(profile, skill_extractor)
         Match_Test=[job_skills, candidate_skills]
-        print(candidate_skills)
         count_vect = CountVectorizer()
         count_vect.fit(Match_Test)
         distance = count_vect.transform(Match_Test)

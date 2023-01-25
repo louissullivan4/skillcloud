@@ -20,3 +20,15 @@ def connect_db():
     password="admin",
     database="skillcloud")
     return mydb
+
+def clear_dbs(mydb):
+    cursor = mydb.cursor()
+    sql = "DELETE FROM projects"
+    cursor.execute(sql)
+    mydb.commit()
+    sql = "DELETE FROM roles"
+    cursor.execute(sql)
+    mydb.commit()
+    sql = "DELETE FROM notifications"
+    cursor.execute(sql)
+    mydb.commit()
