@@ -1,20 +1,28 @@
 import random
 
-def check_id(mydb):
-        id = generate_id()
+def check_id(mydb, table):
+        uid = generate_id()
         cursor = mydb.cursor()    
-        cursor.execute("SELECT * FROM projects WHERE project_id = %s", (id, ))
+        if table == "projects":
+            sql = 'SELECT * FROM projects WHERE project_id = %s'
+        elif table == "roles":
+            sql = 'SELECT * FROM roles WHERE role_id = %s'
+        cursor.execute(sql, (uid, ))
         row = cursor.fetchone()
         while row != None:
-            id = generate_id()
-            cursor.execute("SELECT * FROM projects WHERE project_id = %s", (id, ))
-            row = cursor.fetchone()
-        return id
+            uid = generate_id()
+            if table == "projects":
+                sql = 'SELECT * FROM projects WHERE project_id = %s'
+            elif table == "roles":
+                sql = 'SELECT * FROM roles WHERE role_id = %s'
+        cursor.execute(sql, (uid, ))
+        row = cursor.fetchone()
+        return uid
 
 def generate_id():
-    id = "0"
+    uid = "0"
     i = 0
     while i < 7:
-        id += str(random.randint(0,9))
+        uid += str(random.randint(0,9))
         i += 1
-    return id
+    return uid

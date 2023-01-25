@@ -43,8 +43,8 @@ def no_candidates_notifications(project, role):
         role = str(role).replace("'", '"')
         role = json.loads(role)
         cursor = mydb.cursor()
-        sql = "SELECT * FROM notifications WHERE project_author = %s && type = 'project_role_wait'"
-        cursor.execute(sql, (project["author"], ))
+        sql = "SELECT * FROM notifications WHERE role_id = %s && type = 'project_role_wait'"
+        cursor.execute(sql, (role["role_id"], ))
         row = cursor.fetchall()
         if len(row) < 1:
             sql = "INSERT INTO notifications (type, project_author, user_notified, project_id, date_created, status, role_id) VALUES (%s, %s, %s, %s, %s, %s, %s)"
@@ -57,7 +57,6 @@ def no_candidates_notifications(project, role):
 def create_role_notifications(project):
     cursor = mydb.cursor()
     project = str(project).replace("'", '"').replace("True", "true").replace("False", "false").replace("None", "null").replace("'", '\\"')
-    print(project)
     new = json.loads(project)
     roles = new["roles"]
     for role in roles:
@@ -238,26 +237,3 @@ def notify_role_change(user_email, role_id, req):
         return 200
     except Exception as e:
         return 404
-
-# project_json = {
-#     "id" : "11111111",
-#     "title" : "Tech News Youtube Channel",
-#     "author" : "louis@gmail.com",
-#     "create_date" : "2022-12-29",
-#     "start_date" : "2023-01-01",
-#     "end_date" : "2023-04-30",
-#     "summary" : "Need a host to present tech news on a youtube channel",
-#     "state" : "Open",
-#     "roles" : [
-#         {
-#             "role_category" : "Food preparation",
-#             "role_title" : "Host",
-#             "role_desc" : "Need host with time spent in presenting news on a weekly basis. Degree in journalism preferred but not required. Preferred area in technology but also not required",
-#             "role_no_needed" : "1",
-#             "role_id" : "1231231",
-#             "role_filled" : "0"
-#         }
-#     ]
-# }
-
-# print(create_role_notifications(project_json))

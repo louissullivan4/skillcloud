@@ -11,10 +11,14 @@ def get_final_candidates_dict(job, candidates):
     percentages_dict = match_skills(job, candidates)
     return dict(sorted(percentages_dict.items(), key=lambda val: val[:1]))
 
-def get_input_users(category):
+def get_input_users(category, project_id):
     cursor = mydb.cursor()
-    sql = "SELECT email, job_title, job_desc, certifications FROM users WHERE job_category = %s && availability = 'Open'"
-    cursor.execute(sql, (category, ))     
+    sql = "SELECT project_author FROM projects WHERE project_id = %s"
+    cursor.execute(sql, (project_id, ))
+    row = cursor.fetchall()
+    project_author = row[0][0]
+    sql = "SELECT email, job_title, job_desc, certifications FROM users WHERE job_category = %s && availability = 'Open' && email != %s"
+    cursor.execute(sql, (category, project_author))     
     row = cursor.fetchall()
     candidates = {}    
     for person in row:
@@ -54,7 +58,8 @@ def fulfill_roles(data):
     job = desc + " " + title
     role_ineligible_users = get_ineligible_users(json_data["role_id"])
     category = json_data["role_category"].lower()
-    candidates = get_input_users(category)
+    project_id = json_data["project_id"]
+    candidates = get_input_users(category, project_id)
     removed_ineligible_candidates = {}
     for user, val in candidates.items():
         if user not in role_ineligible_users:

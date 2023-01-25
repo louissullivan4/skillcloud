@@ -21,7 +21,7 @@ class Project:
     def create_roles(self, project_id, roles):
         cursor = mydb.cursor()
         for val in roles:
-            role_id = check_id(mydb)
+            role_id = check_id(mydb, "roles")
             role_category = val['role_category']
             role_title = val['role_title']
             role_desc = val['role_desc']
@@ -65,7 +65,7 @@ class Project:
 
     def create_project(self, requestjson):
         today = str(date.today())
-        id = check_id(mydb)
+        id = check_id(mydb, "projects")
         title = requestjson['project_title']
         author = requestjson['project_author']
         start_date = requestjson['project_startdate']
@@ -134,7 +134,6 @@ class Project:
             self.roles = self.update_roles(pid, roles)
             return "200"
         except Exception as e:
-            print(e)
             return "404"
             
     def get_project(self, id):

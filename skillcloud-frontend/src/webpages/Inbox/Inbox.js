@@ -22,38 +22,36 @@ const Inbox = () => {
     return (
         <div className="app">
             <Sidebar/>
-            <div className="project">
-                <div className="project-heading">
-                    <div className="project-heading-title">
-                        <h1>Inbox</h1>
-                    </div>
+            <div className="inbox">
+                <div className="inbox-heading">
+                    <h1>Inbox</h1>
                 </div>
-                <div className='inbox'>
-                    <table>
-                        <thead>
-                            <tr>
-                                <th>User</th>
-                                <th>Message</th>
-                                <th>Status</th>
-                            </tr>
-                        </thead>
-                        <tbody>
+                <div className='inbox-body'>
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Sender</th>
+                            <th>Message</th>
+                            <th>Status</th>
+                        </tr>
+                    </thead>
+                    <tbody>
                         {inboxData.map((inboxData, k) => (
-                            <Link to={inboxData.status === "pending" && inboxData.type === "project_invite" ? "/msginvite" : inboxData.type === "project_role_wait" ? "/msgnousers" : inboxData.status === "accepted" || inboxData.status === "declined" ? "/msgresponse" : "/msg"} state={{ from: inboxData }}>
+                            <Link style={{"textDecoration": "none"}} to={inboxData.status === "pending" && inboxData.type === "project_invite" ? "/msginvite" : inboxData.type === "project_role_wait" ? "/msgnousers" : inboxData.status === "accepted" || inboxData.status === "declined" ? "/msgresponse" : "/msg"} state={{ from: inboxData }}>
                                 <tr key={k}>
                                     <td>{inboxData.project_author}</td>
-                                    <td>
-                                        {inboxData.status === "pending" && inboxData.type === "project_invite" ? "You have received a project invite!" : inboxData.type === "project_role_wait" ? "No users found !" : inboxData.status === "accepted" || inboxData.type === "declined" ? "You have received a role update to one of your projects!" : "Click to see more" }
-                                    </td>
+                                        <td>
+                                            {inboxData.status === "pending" && inboxData.type === "project_invite" ? "You have received a project invite!" : inboxData.type === "project_role_wait" ? "No users found !" : inboxData.status === "accepted" || inboxData.type === "declined" ? "You have received a project role update!" : "Click to see more..." }
+                                        </td>
                                     <td>{inboxData.status === "pending" ? "Pending" : inboxData.status === "accepted" ? "Accepted" : inboxData.status === "declined" ? "Declined" : ""}</td>
                                 </tr>
                             </Link>
                         ))}
-                        </tbody>
-                    </table>
-                </div>
+                    </tbody>
+                </table>
             </div>
-        </div>
+         </div>
+    </div>
     );
 }
 export default Inbox;
