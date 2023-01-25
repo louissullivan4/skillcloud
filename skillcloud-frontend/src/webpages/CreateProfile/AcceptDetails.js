@@ -7,6 +7,7 @@ import {
   } from "firebase/firestore";
 
 import { db, auth } from "../../firebase";
+import { UserAuth } from '../../context/AuthContext'
 
 import "../../index.css";
 
@@ -14,13 +15,17 @@ const AcceptDetails = () => {
     const location = useLocation()
     let navigate = useNavigate();
     const state = location.state
+    
+    const { createUser } = UserAuth()
 
     const addUser = async () => {
+        await createUser(state.email, state.password)
         await setDoc(doc(db, "users", auth.currentUser.uid), {
             email: auth.currentUser.email,
             uid : auth.currentUser.uid,
             name: state.fname + " " + state.lname,
         });
+
     };
 
     const completeProfile = async () => {
@@ -40,40 +45,41 @@ const AcceptDetails = () => {
 
     
     return (
-        <div className="flex justify-center items-center h-screen bg-indigo-100">
-            <div className="bg-white rounded shadow-2xl w-11/12 md:w-9/12 lg:w-1/2">
-            <div className='header'>Create Profile</div>
-                <div className='header2'>Are these details correct?</div>
+        <div className='create-profile-page'>
+            <div className='create-profile-heading'>
+                <div>Create Profile</div>
+            </div>
+            <div className='create-profile-title'>Are these details correct?</div>
+            <div className='create-profile-final'>
                 <div className='text'>Name: {state.fname} {state.lname}</div>
                 <div className='text'>Location: {state.city}, {state.country}</div>
                 <div className='text'>Profession: {state.title}</div>
                 <div className='text'>Profession Category: {state.category}</div>
-                <div className='text'>Description of profession profile: {state.desc}</div>
+                <div className='text'>Professional profile: {state.desc}</div>
                 <div className='text'>Certifications: {state.certs.map((cert) => { return <div>{cert.certName}</div>})}</div>
                 <div className='text'>Education:</div>
                 {state.education.map((edu) => (
                     <div key={edu.degree}>
-                        <div>{edu.edu_type}</div>
-                        <div>{edu.edu_degree}</div>
-                        <div>{edu.edu_type}</div>
-                        <div>{edu.edu_desc}</div>
+                        <div className='text'>{edu.edu_type} {edu.edu_degree}</div>
+                        <div className='text'>{edu.edu_school}</div>
+                        <div className='text'>{edu.edu_desc}</div>
                     </div>
                 ))};
                 {state.experience.map((exp) => (
                     <div key={exp.experience_name}>
-                        <div>{exp.experience_name}</div>
-                        <div>{exp.experience_title}</div>
-                        <div>{exp.experience_start}</div>
-                        <div>{exp.experience_end}</div>
+                        <div>{exp.experience_title} at {exp.experience_name}</div>
+                        <div>{exp.experience_start} - {exp.experience_end}</div>
                         <div>{exp.experience_desc}</div>
                     </div>
                 ))};
-                <button className="backBut" type="button" onClick={goBack}>
-                        Back
-                </button>
-                <button className="completeBut" type="button" onClick={completeProfile}>
-                        Complete
-                </button>
+                <div className='button-group'>
+                    <button type="button" onClick={goBack} style={{"backgroundColor": "darkblue"}}>
+                            Back
+                    </button>
+                    <button type="button" onClick={completeProfile}>
+                            Complete
+                    </button>
+                </div>
             </div>
         </div>
     );

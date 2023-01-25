@@ -40,7 +40,7 @@ const BasicInfo = () => {
         const [validated, message] = validateForm()
         if (validated === true) {
             let finalInfo = {...basicCert, email: state.email}
-            navigate('/moredetails', {state:{ ...finalInfo}})
+            navigate('/moredetails', {state:{ ...finalInfo, email: state.email,  password: state.password}})
         } else {
             alert(message)
         }
@@ -55,44 +55,41 @@ const BasicInfo = () => {
     const removeCert = () => {
         let newList = [...certDetails.certs]
         let end = newList.length
-        if (end > 1){
+        if (end > 0){
             newList.pop();
             let newCertDetails = {...certDetails, certs: newList}
             setCertDetails(newCertDetails)
         }
     };
 
+    const goBack = () => {
+        navigate("/createaccount")
+    }
+
     return (
-        <div className="flex justify-center items-center h-screen bg-indigo-100">
-            <div className="bg-white rounded shadow-2xl w-11/12 md:w-9/12 lg:w-1/2">
-                {/* create profitle in center top with large text and diffrent font*/}
-                <div className="text-center pt-6">Create Profile</div>
-    
-                <div className='header2'>Basic Info</div>
-                <div className='body'>
-                    <form onSubmit={submitHandler}>
-                        <div className="formVal">
+        <div className='create-profile-page'>
+            <div className='create-profile-heading'>
+                <div>Create Profile</div>
+            </div>
+            <div className='create-profile-body'>
+            <div className='create-profile-title'>Basic Info</div>
+                <form>
+                    <div className='create-profile-form'>
+                        <div className='inline-create'>
                             <label htmlFor="fname">First name</label>
                             <input onChange={(e) => setBasicInfo({...basicInfo, fname: e.target.value})} type="text"/>
-                        </div>
-                        <div className="formVal">
                             <label htmlFor="lname">Last name</label>
                             <input onChange={(e) => setBasicInfo({...basicInfo, lname: e.target.value})} type="text"/>
                         </div>
-                        <p>Location</p>
-                        <div className="formVal">
+                        <div className='inline-create'>
                             <label htmlFor="city">City</label>
                             <input onChange={(e) => setBasicInfo({...basicInfo, city: e.target.value})} type="text"/>
-                        </div>
-                        <div className="formVal">
                             <label htmlFor="country">Country</label>
                             <input onChange={(e) => setBasicInfo({...basicInfo, country: e.target.value})} type="text"/>
                         </div>
-                        <div className="formVal">
+                        <div className='inline-create'>
                             <label htmlFor="title">Profession</label>
                             <input onChange={(e) => setBasicInfo({...basicInfo, title: e.target.value})} type="text"/>
-                        </div>
-                        <div className="formVal">
                             <label htmlFor="category">Job Category</label>
                             <select onChange={(e) => setBasicInfo({...basicInfo, category: e.target.value})}>
                                 <option>Select a role category...</option>
@@ -113,36 +110,33 @@ const BasicInfo = () => {
                                 <option>Other</option>
                             </select>
                         </div>
-                        <div className="formVal">
+                        <div className='inline-create'>
                             <label htmlFor="desc">Describe your professional profile</label>
-                            <input onChange={(e) => setBasicInfo({...basicInfo, desc: e.target.value})} max='150' type="text"/>
+                            <textarea rows="7" cols="80" onChange={(e) => setBasicInfo({...basicInfo, desc: e.target.value})} max='150' type="text"/>
                         </div>
-                        <div className="formVal">
-                            <label htmlFor="certifications">Certifications</label>
-                            {certDetails.certs.map((_cert, index) => (
-                                <div key={index}>
-                                    <input type="text" onChange={e => certDetails.certs[index]["certName"] = e.target.value}/>
-                                </div>
-                            ))}
-                        </div>
-                        <div className='formVal'>
-                            <button type="button" className="but-pos" onClick={addCert}>
+                        <label htmlFor="certifications">Certifications</label>
+                        {certDetails.certs.map((_cert, index) => (
+                            <div key={index}>
+                                <input type="text" onChange={e => certDetails.certs[index]["certName"] = e.target.value}/>
+                            </div>
+                        ))}
+                        <div className='button-group'>
+                            <button type="button" onClick={addCert} style={{"backgroundColor": "green"}}>
                                 Add another certification +
                             </button>
-                        {certDetails.certs.length > 1 && (
-                            <button type="button" className="but-neg" onClick={removeCert}>
-                                Remove certification - 
-                            </button>
-                        
-                        )}
+                            {certDetails.certs.length > 0 && (
+                                <button type="button" onClick={removeCert} style={{"backgroundColor": "red"}}>
+                                    Remove certification - 
+                                </button>
+                            
+                            )}
                         </div>
-                        <div className="formVal">
-                            <button className="nextBut"  type="submit" >
-                                Next
-                            </button>
-                        </div>
-                    </form>
-                </div>
+                        <button onClick={goBack}>Back</button>
+                        <button type="submit" onClick={submitHandler} >
+                            Next
+                        </button>
+                    </div>
+                </form>
             </div>
         </div> 
     );

@@ -5,7 +5,7 @@ import "../../index.css";
 
 const ProjectForm = () => {
     const navigate = useNavigate();
-    const user = "louis@gmail.com";
+    const user = localStorage.getItem('email');
     const [projectDetails, setProjectDetails] = useState(
         {roles: [{ 
         role_category: "",
@@ -38,6 +38,7 @@ const ProjectForm = () => {
         let message = "";
         let start = new Date(projectDetails.project_startdate);
         let end = new Date(projectDetails.project_enddate);
+        console.log(projectDetails)
         if (projectDetails.project_title === "" || projectDetails.project_summary === "" || projectDetails.project_startdate === "" || projectDetails.project_enddate === "" || projectDetails.project_author === ""|| projectDetails.project_city === ""|| projectDetails.project_country === "") {
             valid = false;
             message = "Error! Please fill in all required fields";
@@ -140,6 +141,7 @@ const ProjectForm = () => {
                                 <option>Other</option>
                             </select>
                             <select className="input-role-remote" onChange={e => projectDetails.roles[index]["role_remote"] = e.target.value}>
+                                <option>Select...</option>
                                 <option>Yes</option>
                                 <option>No</option>
                             </select>

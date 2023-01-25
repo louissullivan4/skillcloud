@@ -73,8 +73,7 @@ function Project() {
                 </tbody>
               </table>
           </div>
-          {projectData.state === 'Open' ? <button type="button" onClick={handleClick}>Apply Here  </button> : <div></div>}
-          {localStorage.getItem("email") === projectData.author ? <button type="button" onClick={handleEdit}>Edit Project  </button> : <div></div>}
+          {localStorage.getItem("email") === projectData.author ? <button type="button" onClick={handleEdit}>Edit Project  </button> : projectData.state === 'Open' ? <button type="button" onClick={handleClick}>Apply Here  </button>: <div></div>}
           </div>
         </div>
       </div>

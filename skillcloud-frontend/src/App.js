@@ -40,6 +40,9 @@ function App() {
           <Route path="/" element={<Login/>} />
           <Route path="/createaccount" element={<CreateAccount />} />
           <Route path="/logout" element={<Logout />} />
+          <Route path="/basicinfo" element={<BasicInfo />} />
+          <Route path="/moredetails" element={<MoreDetails />} />
+          <Route path="/acceptdetails" element={<AcceptDetails />} />
 
           {/* Protected Routes */}
           <Route path="/home" element={<ProtectedRoute><Home /></ProtectedRoute>} />
@@ -59,10 +62,6 @@ function App() {
 
           <Route path="/contacts" element={<ProtectedRoute><Contacts /></ProtectedRoute>} />
           <Route path="/chat/:id/:email" element={<ProtectedRoute><Chat /></ProtectedRoute>} />
-
-          <Route path="/basicinfo" element={<ProtectedRoute><BasicInfo /></ProtectedRoute>} />
-          <Route path="/moredetails" element={<ProtectedRoute><MoreDetails /></ProtectedRoute>} />
-          <Route path="/acceptdetails" element={<ProtectedRoute><AcceptDetails /></ProtectedRoute>} />
       </Routes>
     </AuthContextProvider>
   );

@@ -27,8 +27,31 @@ const MoreDetails = () => {
     });
     const submitHandler = (e) => {
         e.preventDefault()
-        let finalInfo = {...state, education: newEducation.education, experience: newExperience.experience}
-        navigate('/acceptdetails', {state:{ ...finalInfo}})
+        if (!validated()){
+            alert("Please fill in all fields")
+        } else {
+            let finalInfo = {...state, education: newEducation.education, experience: newExperience.experience}
+            navigate('/acceptdetails', {state:{ ...finalInfo, email: state.email,  password: state.password}})
+        }
+    }
+
+    const validated = () => {  
+        let valid = true
+        if (newEducation.education.length > 0){
+            newEducation.education.forEach((edu) => {
+                if (edu.edu_degree === "" || edu.edu_school === "" || edu.edu_desc === ""){
+                    valid = false
+                }
+            })
+        }
+        if (newExperience.experience.length > 0){
+            newExperience.experience.forEach((exp) => {
+                if (exp.experience_name === "" || exp.experience_title === "" || exp.experience_desc === "" || exp.experience_start === "" || exp.experience_end === ""){
+                    valid = false
+                }
+            })
+        }
+        return valid
     }
 
     const addEdu= () => {
@@ -40,7 +63,7 @@ const MoreDetails = () => {
     const removeEdu = () => {
     let newList = [...newEducation.education]
     let end = newList.length
-    if (end > 1){
+    if (end > 0){
         newList.pop();
         let newEduDetails= {...newEducation, education: newList}
         setNewEducation(newEduDetails)
@@ -56,7 +79,7 @@ const MoreDetails = () => {
     const removeExp = () => {
     let newList = [...newExperience.experience]
     let end = newList.length
-    if (end > 1){
+    if (end > 0){
         newList.pop();
         let newExpDetails= {...newExperience, experience: newList}
         setNewExperience(newExpDetails)
@@ -69,80 +92,88 @@ const MoreDetails = () => {
     
 
     return (
-        <div className="flex justify-center items-center h-screen bg-indigo-100">
-            <div className="bg-white rounded shadow-2xl w-11/12 md:w-9/12 lg:w-1/2">
-                <div className="text-center pt-6">Create Profile</div>
-                <div className='header2'>More Details</div>
-                <div className='body'>
-                    <form onSubmit={submitHandler}>
-                        <div className='header3'>Education</div>
-                        {newEducation.education.map((_edu, index) => (
-                            <div key={index}>
-                                <div className="formVal">
-                                    <label htmlFor="edu_type">Academic Degree</label>
-                                    <input onChange={(e) => newEducation.education[index]["edu_type"] = e.target.value} type="text" placeholder='e.g. BSc'/>
-                                    <label htmlFor="edu_degree">Degree Name</label>
-                                    <input onChange={(e) => newEducation.education[index]["edu_degree"] = e.target.value} type="text"/>
-                                    <label htmlFor="edu_school">School/College</label>
-                                    <input onChange={(e) => newEducation.education[index]["edu_school"] = e.target.value} type="text"/>
-                                    <label htmlFor="edu_school">Brief description of course</label>
-                                    <input onChange={(e) => newEducation.education[index]["edu_desc"] = e.target.value} type="text" max='300'/>
+        <div className='create-profile-page'>
+            <div className='create-profile-heading'>
+                <div>Create Profile</div>
+            </div>
+            <div className='create-profile-body'>
+            <div className='create-profile-title'>More Details</div>
+                <form onSubmit={submitHandler}>
+                    <div className='create-profile-form'>
+                        <div className='create-profile-title'>Education</div>
+                            <div className='create-profile-section'>
+                            {newEducation.education.map((_edu, index) => (
+                                <div key={index}>
+                                    <div className='inline-create'>
+                                        <label htmlFor="edu_type">Level</label>
+                                        <input onChange={(e) => newEducation.education[index]["edu_type"] = e.target.value} type="text" placeholder='e.g. BSc'/>
+                                        <label htmlFor="edu_degree">Degree Name</label>
+                                        <input onChange={(e) => newEducation.education[index]["edu_degree"] = e.target.value} type="text"/>
+                                    </div>
+                                    <div className='inline-create'>
+                                        <label htmlFor="edu_school">School/College</label>
+                                        <input onChange={(e) => newEducation.education[index]["edu_school"] = e.target.value} type="text"/>
+                                    </div>
+                                    <div className='inline-create'>
+                                        <label htmlFor="edu_school">Brief description of course</label>
+                                        <textarea rows="7" cols="80" onChange={(e) => newEducation.education[index]["edu_desc"] = e.target.value} type="text" max='300'/>
+                                    </div>
                                 </div>
-                            </div>
-                        )
-                    )}
-                    <div className='form-row'>
-                        <button type="button" className="but-pos" onClick={addEdu}>
-                            Add another education +
-                        </button>
-                    </div>
-                    {newEducation.education.length > 1 && (
-                        <div className='form-row'>
-                            <button type="button" className="but-neg" onClick={removeEdu}>
+                            ))}
+                        <div className='button-group'>
+                            <button type="button" onClick={addEdu} style={{"backgroundColor": "green"}}>
+                                Add another education +
+                            </button>
+                            {newEducation.education.length > 0 && (
+                            <button type="button" className="but-neg" onClick={removeEdu} style={{"backgroundColor": "red"}}>
                                 Remove education - 
                             </button>
+                            )}
                         </div>
-                    )}
-                    <div className='header4'>Previous Work Experience</div>
-                        {newExperience.experience.map((_exp, index) => (
-                            <div key={index}>
-                                <div className="formVal">
-                                    <label htmlFor="experience_name">Workplace name</label>
-                                    <input onChange={(e) => newExperience.experience[index]["experience_name"] = e.target.value} type="text" />
-                                    <label htmlFor="experience_title">Your title during the experience</label>
-                                    <input onChange={(e) => newExperience.experience[index]["experience_title"] = e.target.value} type="text"/>
-                                    <label htmlFor="experience_start">Start date</label>
-                                    <input onChange={(e) => newExperience.experience[index]["experience_start"] = e.target.value} type="date"/>
-                                    <label htmlFor="experience_end">End date</label>
-                                    <input onChange={(e) => newExperience.experience[index]["experience_end"] = e.target.value} type="date"/>
-                                    <label htmlFor="experience_desc">Brief description of work done during experience</label>
-                                    <input onChange={(e) => newExperience.experience[index]["experience_desc"] = e.target.value} type="text" max="500"/>
-                                </div>
-                            </div>
-                        )
-                    )}
-                    <div className='form-row'>
-                        <button type="button" className="but-pos" onClick={addExp}>
-                            Add another work experience +
-                        </button>
                     </div>
-                    {newExperience.experience.length > 1 && (
-                        <div className='form-row'>
-                            <button type="button" className="but-neg" onClick={removeExp}>
-                                Remove work experience - 
-                            </button>
+                    <div className='create-profile-title'>Previous Work Experience</div>
+                        <div className='create-profile-section'>
+                            {newExperience.experience.map((_exp, index) => (
+                                <div key={index}>
+                                    <div className='inline-create'>
+                                        <label htmlFor="experience_name">Company</label>
+                                        <input onChange={(e) => newExperience.experience[index]["experience_name"] = e.target.value} type="text" />
+                                        <label htmlFor="experience_title">Your title</label>
+                                        <input onChange={(e) => newExperience.experience[index]["experience_title"] = e.target.value} type="text"/>
+                                    </div>
+                                    <div className='inline-create'>
+                                        <label htmlFor="experience_start">Start date</label>
+                                        <input onChange={(e) => newExperience.experience[index]["experience_start"] = e.target.value} type="date"/>
+                                        <label htmlFor="experience_end">End date</label>
+                                        <input onChange={(e) => newExperience.experience[index]["experience_end"] = e.target.value} type="date"/>
+                                    </div>
+                                    <div className='inline-create'>
+                                        <label htmlFor="experience_desc">Brief description of work done during experience</label>
+                                        <textarea rows="7" cols="80" onChange={(e) => newExperience.experience[index]["experience_desc"] = e.target.value} type="text" max="500"/>
+                                    </div>
+                                </div>
+                            ))}
+                            <div className='button-group'>
+                                <button type="button" className="but-pos" onClick={addExp} style={{"backgroundColor": "green"}}>
+                                    Add another work experience +
+                                </button>
+                                {newExperience.experience.length > 0 && (
+                                    <button type="button" className="but-neg" onClick={removeExp} style={{"backgroundColor": "red"}}>
+                                        Remove work experience - 
+                                    </button>
+                                )}
+                            </div>
                         </div>
-                    )}
-                    <div className="formVal">
-                            <button className="nextBut"  type="submit" >
+                        <div className='button-group'>
+                            <button type="button" onClick={goBack} style={{"backgroundColor": "darkblue"}}>
+                                Back
+                            </button>
+                            <button type="submit" >
                                 Next
                             </button>
                         </div>
-                    </form>
-                    <button className="backBut" type="button" onClick={goBack}>
-                                Back
-                    </button>
-                </div>
+                    </div>
+                </form>
             </div>
         </div>
     );

@@ -6,11 +6,6 @@ import ProjectForm from "../../components/Project/ProjectForm";
 import "../../index.css";
 
 function Home() {
-    let navigate = useNavigate(); 
-    const handleClick = () =>{ 
-        let path = `/`; 
-        navigate(path);
-    }
     return (
         <div className="app">
             <Sidebar/>

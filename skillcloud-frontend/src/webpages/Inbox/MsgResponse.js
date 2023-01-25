@@ -30,16 +30,16 @@ const MsgResponse = () => {
     return (
         <div className="app">
             <Sidebar/>
-            <div className="page">
-                <div className="page-content">
-                    <div className='container-1'>
-                        <div className='header'>{from.status === "accepted" ? "Accepted!" : from.status === "declined" ? "Declined" : "Error"}</div>
-                        <div className="body">
-                            <div className="para1">The request for project id <Link to={projectLink}>{from.project_id}</Link> has 
+            <div className="msg-page">
+                <div className="msg-page-content">
+                    <div className='msg-container'>
+                        <div className='msg-header'>{from.status === "accepted" ? "Accepted!" : from.status === "declined" ? "Declined" : "Error"}</div>
+                        <div className="msg-body">
+                            <div className="msg-para1">The request for project id <Link to={projectLink}>{from.project_id}</Link> has 
                             been {from.status} by <Link to={userProfile}>{from.user_notified}</Link>.</div>
-                            <div className="para2">Would you like to add or remove them from the project?
+                            <div className="msg-para2">Would you like to add or remove them from the project?
                             <br></br>
-                            <div className="buttons">{from.status === "accepted" ? 
+                            <div className="msg-buttons">{from.status === "accepted" ? 
                                 <button type="button" className="but-neg" onClick={removeUser}>
                                     Remove
                                 </button>

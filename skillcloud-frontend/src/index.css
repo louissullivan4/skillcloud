@@ -70,7 +70,9 @@
 .card-body {
     font-size: 1em;
     color: rgb(0, 0, 0);
-    height: 80px;
+    height: 75px;
+    overflow: hidden;
+    margin-bottom: 1em;
 }
 
 .card-footer {
@@ -138,7 +140,6 @@
 
 .project-body-details {
     background-color: white;
-    max-width: 50%;
     border: none;
     padding: 0.5em 1em;
     border-radius: 10px;
@@ -152,7 +153,6 @@
 
 .project-body-roles {
     margin-top: 1.5em;
-    max-width: 50%;
     /* padding: 0.5em 1em; */
 }
 
@@ -161,15 +161,27 @@
 }
 
 table {
-    background-color: white;
-    text-align: left;
+    display: flex;
+    flex-direction: column;
+    flex-wrap: nowrap;
     border-collapse: collapse;
-    box-shadow: 0 5px 10px #e1e5ee;
-    margin-top: 1.5em;
-    border-radius: 25px;
+    border: 1px solid #e1e5ee;
+    border-radius: 10px;
+    overflow: hidden;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+    margin: 1em;
+    background-color: white;
+}
+
+tr {
+    display: table;
+    width: 100%;
+    table-layout: fixed;
+    border-bottom: 1px solid #e1e5ee;
 }
 
 thead {
+    text-align: left;
     box-shadow: 0 5px 10px #e1e5ee;
 }
 
@@ -179,6 +191,8 @@ th {
   
 td {
     padding: 1rem 2rem;
+    text-decoration: none;
+    color: #4b4f56;
 }
 
 .role_number {
@@ -189,18 +203,6 @@ td {
 tr:nth-child(even) {
     background-color: #f4f6fb;
 }
-
-@media screen and (max-width: 800px) {
-    tr { 
-      display: flex; 
-      flex-direction: row;
-      flex-wrap: wrap;
-      margin: 0.5em 0;
-    }
-    td, th {
-      flex: 1 1 150px;
-    }
-  }
 
 /* Create Project Page */
 
@@ -288,6 +290,7 @@ tr:nth-child(even) {
 
 .input-role-desc {
     width: 35%;
+    
 }
 
 .input-role-category {
@@ -403,16 +406,38 @@ tr:nth-child(even) {
 
 }
 
-/*Inbox*/
+/* Notifs Messages*/
 
-.inbox tr {
-    display: grid;
-    grid-template-columns: 25% 1fr 1fr;
-    text-align: left;
-    padding: 0.5em;
-
+.msg-page {
+    margin: 2em;
+    max-width: 600px;
 }
 
+.msg-header {
+    font-size: 2em;
+    margin-bottom: 1em;
+    color: steelblue;
+}
+
+.msg-body{
+    background-color: white;
+    padding: 1em;
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+    font-size: 1.25em;
+}
+
+.msg-footer button {
+    background-color: #0049e6;
+    color: white;
+    border: none;
+    padding: 0.5em 1em;
+    border-radius: 10px;
+    cursor: pointer;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+    font-size: 1em;
+    margin-top: 2em;
+}
 
 /* Login/Create Account */
 
@@ -506,4 +531,109 @@ tr:nth-child(even) {
     font-size: 20px;
     text-decoration: none;
     color: black;
+}
+
+/* Create Account */
+
+.create-profile-page {
+    margin: 2em;
+}
+
+.create-profile-heading {
+    font-size: 2em;
+    margin-bottom: 1em;
+    color: steelblue;
+}
+
+.create-profile-body {
+    background-color: white;
+    padding: 1em;
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+    font-size: 1.25em;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.create-profile-title {
+    font-size: 1.5em;
+    margin-bottom: 1em;
+    color: steelblue;
+}
+
+.create-profile-body .column-create {
+    display: flex;
+    flex-direction: column;
+}
+
+.create-profile-body label {
+   width : 15%;
+}
+
+.create-profile-body label {
+    width : 15%;
+ }
+
+ .create-profile-section label {
+    width : 15%;
+ }
+
+.create-profile-body select {
+    width : 37%;
+    margin-bottom: 1em;
+    padding: 0.5em;
+    border-radius: 10px;
+    border: none;
+    background-color: #f2f2f2;
+    font-size: 1em;
+}
+.create-profile-body input {
+    margin-bottom: 1em;
+    padding: 0.5em;
+    border-radius: 10px;
+    border: none;
+    background-color: #f2f2f2;
+    font-size: 1em;
+}
+
+.create-profile-body textarea {
+    padding: 12px 20px;
+    box-sizing: border-box;
+    border: 2px solid #ccc;
+    border-radius: 4px;
+    background-color: #f8f8f8;
+    resize: none;
+}
+
+.create-profile-body button, .create-profile-final button{
+    background-color: #0049e6;
+    color: white;
+    border: none;
+    padding: 0.5em 1em;
+    border-radius: 10px;
+    cursor: pointer;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+    margin-bottom: 1em;
+    margin-right: 1em;
+    font-size: 0.75em;
+}
+
+.create-profile-section {
+    margin-bottom: 1.5em;
+    padding: 1em;
+}
+
+.create-profile-final {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    border : 1px solid #ccc;
+    padding: 1em;
+    border-radius: 25px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+}
+
+.create-profile-final .text {
+    margin-bottom: 1em;
 }
