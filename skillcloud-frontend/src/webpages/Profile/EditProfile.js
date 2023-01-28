@@ -1,5 +1,7 @@
-import React, { useEffect, useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import { useLocation, useNavigate } from 'react-router-dom'
+import { getStorage, ref, getDownloadURL } from "firebase/storage";
+import { UserAuth } from "../../context/AuthContext";
 
 import Sidebar from "../../components/Sidebar";
 
@@ -13,9 +15,25 @@ const EditProfile = () => {
     const [experience, setExperience] = useState(location.state.details.work_experience);
     const [certs, setCerts] = useState(location.state.details.certifications);      
 
+    const { updateProfilePic, user } = UserAuth()
+    const [photo, setPhoto] = useState("")
+
+    function handleChange(e) {
+        if (e.target.files[0]) {
+          setPhoto(e.target.files[0])
+        }
+    }
+
+    const getProfilePic = async () => {
+        const storage = getStorage();
+        const url = await getDownloadURL(ref(storage, `profile/${user.uid}`));
+        setPhoto(url);
+    }
+    // getProfilePic();
+
     const handleSubmit = async (e) => {
         e.preventDefault()
-
+        await updateProfilePic(photo)
         if (userData.email === localStorage.getItem('email')) {
             let finalInfo = {...userData, education: education, work_experience: experience, certifications: certs, email: userData.email}
             const resp = await fetch(`http://127.0.0.1:5000/updateuser`,{'method':'POST', headers : {'Content-Type':'application/json'}, body: JSON.stringify(finalInfo)})
@@ -76,6 +94,11 @@ const EditProfile = () => {
                 <div className="project-body">
                     <form>
                         <div className="create-project">
+                            <div className="edit-profile">
+                                <label htmlFor="file">Profile Image</label>
+                                <img src={photo} style={{"height": "130px", "width": "100px", "marginRight":"1.5em"}}/>
+                                <input type="file" onChange={handleChange}/>
+                            </div>
                             <label htmlFor="fname">First Name</label>
                             <input type="text"  id="fname" placeholder={userData.fname} defaultValue={userData.fname} onChange={(e) => setUserData({...userData, fname: e.target.value})}/>
                             <label htmlFor="lname">Last Name</label>
@@ -111,7 +134,7 @@ const EditProfile = () => {
                             </select>
                         </div>
                         <div className="create-body-roles">
-                        <h2 style={{"margin-bottom": "0.4em"}}>Certifications</h2>
+                        <h2 style={{"marginBottom": "0.4em"}}>Certifications</h2>
                             <div className='create-body-roles-body'>
                             {certs.map((cert, index) => (
                                 <div key={index}>
@@ -131,7 +154,7 @@ const EditProfile = () => {
                             </div>
                         </div>
                         <div className="create-body-roles">
-                        <h2 style={{"margin-bottom": "0.4em"}}>Education</h2>
+                        <h2 style={{"marginBottom": "0.4em"}}>Education</h2>
                             {education.map((edu, index) => (
                                 <div key={index} className="education-edit">
                                         <label htmlFor="edu_type">Education Type</label>
@@ -156,7 +179,7 @@ const EditProfile = () => {
                             </div>
                         </div>
                         <div className="create-body-roles">
-                        <h2 style={{"margin-bottom": "0.4em"}}>Work Experience</h2>
+                        <h2 style={{"marginBottom": "0.4em"}}>Work Experience</h2>
                             {experience.map((exp, index) => (
                                 <div key={index} className="education-edit">
                                     <label htmlFor="experience_name">Company Name</label>

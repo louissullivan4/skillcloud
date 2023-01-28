@@ -29,10 +29,12 @@ const ProfileTabs = () => {
 
         const resp1 = await fetch('http://127.0.0.1:5000/currentProjects/'+email.email)
         const data1 = await resp1.json();
+        console.log(data1.result)
         setCurrentProject(data1.result);
 
         const resp2 = await fetch('http://127.0.0.1:5000/ownedProjects/'+email.email)
         const data2 = await resp2.json();
+        console.log(data2.result)
         setOwnedProjects(data2.result);
         
       };

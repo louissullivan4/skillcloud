@@ -3,9 +3,11 @@ import { createUserWithEmailAndPassword,
         signInWithEmailAndPassword,
         signOut,
         onAuthStateChanged,
-        deleteUser
+        deleteUser,
+        updateProfile
 } from "firebase/auth";
 import { auth } from '../firebase';
+import { getDownloadURL, getStorage, ref, uploadBytes } from "firebase/storage";
 
 const UserContext = createContext();
 
@@ -33,6 +35,25 @@ export const AuthContextProvider = ({ children }) => {
         return signOut(auth)
     }
 
+    const updateProfilePic = async (file) => {
+        const storage = getStorage();
+        const storageRef = ref(storage, `profile/${user.uid}`);
+        uploadBytes(storageRef, file).then( () => {
+            console.log('Uploaded a blob or file!');
+            const url = getDownloadURL(storageRef);
+            updateProfile(user, {
+                photoURL: url,
+            }).then(() => {
+                console.log("Profile Updated")
+            }
+            ).catch((error) => {
+                console.log(error)
+            }
+            )
+        })
+    }
+        
+
     useEffect( () => {
         const unsubscribe = onAuthStateChanged(auth, (currentUser) => {
             setUser(currentUser)
@@ -48,7 +69,7 @@ export const AuthContextProvider = ({ children }) => {
 
 
     return (
-        <UserContext.Provider value={{ createUser, user, login, logout, deleteAUser }}>
+        <UserContext.Provider value={{ createUser, user, login, logout, deleteAUser, updateProfilePic }}>
             {children}
         </UserContext.Provider>
     )

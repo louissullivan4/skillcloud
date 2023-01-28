@@ -3,6 +3,9 @@ import { useParams, useNavigate } from 'react-router-dom'
 
 import { collection, query, where, getDocs } from "firebase/firestore";
 import { db } from "../../firebase";
+import { UserAuth } from '../../context/AuthContext';
+import { getStorage, ref, getDownloadURL } from "firebase/storage";
+
 
 import Sidebar from "../../components/Sidebar";
 import ProfileTabs from '../../components/Profile/ProfileTabs';
@@ -12,23 +15,33 @@ import "../../index.css";
 const Profile = () => {
     let currentEmail = localStorage.getItem("email")
     let email = useParams()
-    let navigate = useNavigate()
+    let navigate = useNavigate()    
     const [userData, setUserData] = useState("");
-    const [user, setUser] = useState({});
+    const [emailUser, setEmailUser] = useState({});
     const [currentUser, setCurrentUser] = useState("");
 
+    const { user } = UserAuth();
+    const [photo, setPhoto] = useState();
+
+    const getProfilePic = async () => {
+        const storage = getStorage();
+        const url = await getDownloadURL(ref(storage, `profile/${user.uid}`));
+        setPhoto(url);
+    }
+    getProfilePic();
+           
     const handleClick = async () => {
         const q = query(collection(db, "users"),where("email", "==", email.email));
         const querySnapshot = await getDocs(q);
         querySnapshot.forEach((doc) => {
-            setUser(doc.data().uid);
+            setEmailUser(doc.data().uid);
         });
         const q1 = query(collection(db, "users"),where("email", "==", currentEmail));
         const querySnapshot1 = await getDocs(q1);
         querySnapshot1.forEach((doc) => {
             setCurrentUser(doc.data().uid);
         });
-        const combinedId = user + currentUser;
+        const combinedId = emailUser + currentUser;
         navigate(`/chat/${combinedId.toString()}/${email.email}`)
     };
 
@@ -43,7 +56,9 @@ const Profile = () => {
         setUserData(data.result[0]);
       };
       fetchData()
-    }, []);
+    }, [email.email]);
+      
+    
     return (
         <div className="app">
             <Sidebar/>
@@ -54,7 +69,7 @@ const Profile = () => {
                             <div className="p-col">
                                 <div className="p-card">
                                     <div className="p-card-body-profile">
-                                        <div className="p-card-image">{userData.profilepic ? <img src={require(`../../assets/profiles/${userData.profilepic}.jpg`)} height="150" width="auto" alt="Profile Pictures"/> : <img src={require(`../../assets/profiles/undefined.jpg`)} height="150" width="auto" alt="Profile Pictures"/>}</div>
+                                        <div className="p-card-image"><img src={photo} height="150" width="auto" alt="Profile Pictures"/></div>
                                         <div className="p-card-text">{userData.fname} {userData.lname}</div>
                                         <div className="p-card-text">{userData.job_title}</div>
                                         <div className="p-card-text">{userData.city}</div>
