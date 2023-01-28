@@ -122,7 +122,7 @@ class User:
             certifications += val.get('certName') + ","
         certifications = certifications[:-1]
         availability = "Open"
-        profilepic = None
+        profilepic = requestjson['profilepic']
         current_project = None
         cursor.execute("SELECT * FROM users WHERE email = %s", (email, ))
         row = cursor.fetchone()
@@ -197,7 +197,7 @@ class User:
             certifications += val.get('certName') + ","
         certifications = certifications[:-1]
         availability = "Open"
-        profilepic = None
+        profilepic = requestjson['profilepic']
         current_project = None
         sql = """UPDATE users SET fname = %s, lname = %s, city = %s, country = %s, job_title = %s, job_category = %s, job_desc = %s, project_ids = %s, certifications = %s, availability = %s, profilepic = %s, current_project = %s WHERE email = %s"""
         val = (fname, lname, city, country, job_title, job_category, job_desc, project_ids, certifications, availability, profilepic, current_project, email)
@@ -209,7 +209,6 @@ class User:
         # except:
         #     return 404
 
-        
     def get_user_json(self):
         experience_json = []
         for val in self.work_experience:
@@ -255,10 +254,11 @@ class User:
     
     def get_owned_projects(self, email):
         cursor = mydb.cursor()
+        print(email)
         sql = "SELECT * FROM projects WHERE project_author = %s"
-        val = (email, )
-        cursor.execute(sql, val)
+        cursor.execute(sql, (email, ))
         row = cursor.fetchall()
+        print(row)
         projects_json = []
         for val in row:
             newVal = {"project_id": val[0], "project_title": val[1], "project_author": val[2], "project_createdate": val[3], "project_startdate": val[4], "project_enddate": val[5], "project_summary": val[6], "project_state": val[7], "project_city": val[8], "project_country": val[9]}

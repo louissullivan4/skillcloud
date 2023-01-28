@@ -18,10 +18,8 @@ const CreateAccount = () => {
         setError('')
         try {
             await createUser(email, password)
-            console.log(auth)
-            console.log(auth.currentUser.uid)
             await deleteAUser(auth.currentUser)
-            navigate('/basicinfo',{state:{ email: email }}) 
+            navigate('/basicinfo',{state:{ email: email, password: password}}) 
         } catch (e) {
             setError(e.message)
         }

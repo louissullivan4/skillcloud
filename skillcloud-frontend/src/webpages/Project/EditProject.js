@@ -11,13 +11,10 @@ const EditProfile = () => {
     let project_id = location.state.id
     const [projectData, setProjectData] = useState(location.state.details);
     const [roles, setRoles] = useState(location.state.details.roles);      
-    console.log(roles)
     const handleSubmit = async (e) => {
         e.preventDefault()
         if (projectData.author === localStorage.getItem('email')) {
             let finalInfo = {...projectData, roles: roles}
-
-            console.log(finalInfo)
             const resp = await fetch(`http://127.0.0.1:5000/updateproject`,{'method':'POST', headers : {'Content-Type':'application/json'}, body: JSON.stringify(finalInfo)})
             if (resp.status === 200) {
                 alert("Project updated successfully");

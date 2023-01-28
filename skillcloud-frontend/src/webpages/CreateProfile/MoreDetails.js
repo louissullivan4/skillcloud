@@ -7,7 +7,6 @@ const MoreDetails = () => {
     const location = useLocation()
     let navigate = useNavigate();
     const state = location.state
-
     const [newEducation, setNewEducation] = useState({
         education: [{
             edu_type: "",
@@ -46,6 +45,7 @@ const MoreDetails = () => {
         }
         if (newExperience.experience.length > 0){
             newExperience.experience.forEach((exp) => {
+                exp.experience_desc = exp.experience_desc.replace(/(\r\n|\n|\r)/gm, "")
                 if (exp.experience_name === "" || exp.experience_title === "" || exp.experience_desc === "" || exp.experience_start === "" || exp.experience_end === ""){
                     valid = false
                 }

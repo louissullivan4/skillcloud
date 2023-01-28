@@ -67,6 +67,7 @@ def profilepage(email: str):
 @app.route('/currentProjects/<string:email>')
 def currentProjects(email: str):
     user = User()
+    u1 = user.get_user(email)
     user_json = user.get_current_projects(email)
     return json.dumps(user_json)
 
@@ -91,7 +92,6 @@ def createuser():
 @app.route('/updateuser', methods=['POST'])
 def updateuser():
     u1 = User()
-    # data = convert_json(request.json)
     data = request.json
     data = str(data).replace("'", '"').replace("True", "true").replace("False", "false").replace("None", "null").replace("'", '\\"')
     new = json.loads(data)

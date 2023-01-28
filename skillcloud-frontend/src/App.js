@@ -22,6 +22,8 @@ import MsgInvite from "./webpages/Inbox/MsgInvite";
 import MsgResponse from "./webpages/Inbox/MsgResponse";
 import MsgNoUsers from "./webpages/Inbox/MsgNoUsers";
 import CompleteRequest from "./webpages/Inbox/CompleteRequest";
+import MsgApplication from "./webpages/Inbox/MsgApplication";
+
 
 import Contacts from "./webpages/Chat/Contacts";
 import Chat from "./webpages/Chat/Chat";
@@ -59,9 +61,10 @@ function App() {
           <Route path="/msgresponse" element={<ProtectedRoute><MsgResponse /></ProtectedRoute>} />
           <Route path="/msgnousers" element={<ProtectedRoute><MsgNoUsers /></ProtectedRoute>} />
           <Route path="/completerequest" element={<ProtectedRoute><CompleteRequest /></ProtectedRoute>} />
+          <Route path="/msgapplication" element={<ProtectedRoute><MsgApplication /></ProtectedRoute>} />
 
           <Route path="/contacts" element={<ProtectedRoute><Contacts /></ProtectedRoute>} />
-          <Route path="/chat/:id/:email" element={<ProtectedRoute><Chat /></ProtectedRoute>} />
+          <Route path="/chat/:senderid/:recieverid" element={<ProtectedRoute><Chat /></ProtectedRoute>} />
       </Routes>
     </AuthContextProvider>
   );

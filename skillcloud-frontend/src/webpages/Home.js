@@ -56,10 +56,12 @@ const Home = () => {
                             ))}
                         </div>
                     </div>
-                <Pagination
-                nPages={nPages}
-                currentPage={currentPage}
-                setCurrentPage={setCurrentPage}/>
+
+            </div>
+            <div className="home-pagination">
+                {tileData.length > 12 ?
+                <Pagination nPages={nPages} currentPage={currentPage} setCurrentPage={setCurrentPage}/> : null
+                }
             </div>
         </div>
     );

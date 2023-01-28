@@ -18,14 +18,16 @@ const AcceptDetails = () => {
     
     const { createUser } = UserAuth()
 
+    console.log(state.experience)
     const addUser = async () => {
+        console.log(state.email, state.password)
         await createUser(state.email, state.password)
         await setDoc(doc(db, "users", auth.currentUser.uid), {
             email: auth.currentUser.email,
             uid : auth.currentUser.uid,
             name: state.fname + " " + state.lname,
         });
-
+        
     };
 
     const completeProfile = async () => {
@@ -60,9 +62,8 @@ const AcceptDetails = () => {
                 <div className='text'>Education:</div>
                 {state.education.map((edu) => (
                     <div key={edu.degree}>
-                        <div className='text'>{edu.edu_type} {edu.edu_degree}</div>
-                        <div className='text'>{edu.edu_school}</div>
-                        <div className='text'>{edu.edu_desc}</div>
+                        <div className='text'>{edu.edu_type} {edu.edu_degree} at {edu.edu_school}</div>
+                        <div>{edu.edu_desc}</div>
                     </div>
                 ))};
                 {state.experience.map((exp) => (

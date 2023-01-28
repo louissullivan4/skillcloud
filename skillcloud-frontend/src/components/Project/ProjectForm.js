@@ -38,7 +38,6 @@ const ProjectForm = () => {
         let message = "";
         let start = new Date(projectDetails.project_startdate);
         let end = new Date(projectDetails.project_enddate);
-        console.log(projectDetails)
         if (projectDetails.project_title === "" || projectDetails.project_summary === "" || projectDetails.project_startdate === "" || projectDetails.project_enddate === "" || projectDetails.project_author === ""|| projectDetails.project_city === ""|| projectDetails.project_country === "") {
             valid = false;
             message = "Error! Please fill in all required fields";

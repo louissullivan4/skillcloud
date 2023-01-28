@@ -9,9 +9,8 @@ function Project() {
     let navigate = useNavigate();
 
     const handleClick = () =>{ 
-        // let path = `/`; 
-        // navigate(path);
-        console.log("Apply button clicked")
+        // make a poppup appear
+        
     } 
 
     const handleEdit = () =>{
