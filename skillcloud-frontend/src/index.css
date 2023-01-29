@@ -13,6 +13,8 @@
     flex-direction: row;
     flex-wrap: nowrap;
     background-color: #f2f2f2;
+    height: 100vh;
+    margin-left : 4em;
 }
 
 /* Home / Project Tiles */
@@ -101,7 +103,8 @@
     left: 0;
     top: 0;
     background-color: #00184d;
-    height: 100vh;
+    height: 100%;
+    position: fixed;
 }
 
 .list-group li a {
@@ -122,6 +125,7 @@
     flex-direction: column;
     flex-wrap: nowrap;
     margin: 1.5em;
+    height: 100vh;
 }
 
 .project-heading{
@@ -713,7 +717,6 @@ tr:nth-child(even) {
     margin-top: 5em;
 }
 
-
 .edit-profile {
     display: flex;
     flex-direction: column;
@@ -722,3 +725,105 @@ tr:nth-child(even) {
     margin-top: 2em;
 }
 
+/* Chat App */
+
+.message-page {
+    display: flex;
+    flex-direction: column;
+    flex-wrap: nowrap;
+  
+}
+.chatTitle {
+    margin-left: 3em;
+    margin-top: 1em;
+    margin-right : 3em;
+}
+
+.chat-header {
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-start;
+    align-items: baseline;
+}
+
+.message-page {
+    width: 90%;
+    height: 100%;
+}
+
+.messages {
+    display: flex;
+    flex-direction: column;
+}
+
+.sent {
+    margin-Top : 0;
+    padding: 1em;
+    background-color: #0049e6;
+    color: white;
+    border-radius: 10px;
+    border: none;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+    text-align: end;
+    float: right;
+    flex-direction: row-reverse;
+}
+
+.message-receiver {
+    width : 25%;
+    padding: 1em;
+    border-radius: 10px;
+    border: none;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+    background-color: #FAFAFA;
+    float: left;
+    margin-left: 8em;
+}
+
+.sender {
+    border: none;
+    text-align: end;
+    flex-direction: row-reverse;
+    font-size: 1em;
+    margin-bottom: 0.25em;
+    margin-right: 0.75em;
+    margin-Top : 1em;
+}
+
+.receiver {
+    font-size: 1em;
+    margin-bottom: 0.25em;
+    margin-left: 8.75em;
+    margin-Top : 1em;
+}
+
+.submitMsg {
+    display: flex;
+    flex-direction: row;
+    justify-content: right;
+    margin-top: 1em;
+    margin-bottom: 2em;
+}
+
+.inputMsg {
+    width: 50%;
+    padding: 1em;
+    border-radius: 10px;
+    border: none;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+    background-color: #FAFAFA;
+    margin-right: 1em;
+    margin-top: 3em;
+}
+
+
+.sendBut {
+    background-color: #00184d;
+    color: white;
+    border: none;
+    padding: 1em 2em;
+    border-radius: 10px;
+    cursor: pointer;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+    margin-top: 3em;
+}

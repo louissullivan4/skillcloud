@@ -21,7 +21,7 @@ const Profile = () => {
     const [currentUser, setCurrentUser] = useState("");
 
     const { user } = UserAuth();
-    const [photo, setPhoto] = useState();
+    const [photo, setPhoto] = useState("../../assets/profiles/undefined.jpg");
 
     const getProfilePic = async () => {
         const storage = getStorage();
