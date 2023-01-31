@@ -38,6 +38,7 @@ def updateproject():
     p1 = Project()
     p1.update_project(request.json)
     projectvals = p1.get_project_json()
+    delete_role_notifications(projectvals)
     notified = create_role_notifications(projectvals)
     if notified == 200:
         return json.dumps({"Status Code": 200, "Message": "Success!"}), 200
@@ -91,12 +92,10 @@ def createuser():
 @app.route('/updateuser', methods=['POST'])
 def updateuser():
     u1 = User()
-    data = request.json
-    data = str(data).replace("'", '"').replace("True", "true").replace("False", "false").replace("None", "null").replace("'", '\\"')
-    new = json.loads(data)
-    updated_user = u1.update_user(new)
+    jsonvals = json.loads(request.data)
+    updated_user = u1.update_user(jsonvals)
     if updated_user == 200:
-        event_match_user(data)
+        event_match_user(jsonvals)
         return json.dumps({"Status Code": 200, "Message": "Success!"}), 200
     elif updated_user == 409:
         return json.dumps({"Status Code": 409, "Message": "User didnt update!"}), 409

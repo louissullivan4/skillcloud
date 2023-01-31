@@ -110,9 +110,9 @@ class User:
         lname = requestjson['lname']
         city = requestjson['city']
         country = requestjson['country']
-        job_title = requestjson['title']
-        job_category = requestjson['category']
-        job_desc = requestjson['desc']
+        job_title = requestjson['job_title']
+        job_category = requestjson['job_category']
+        job_desc = requestjson['job_desc']
         work_experience = requestjson['experience']
         education = requestjson['education']
         project_ids = None

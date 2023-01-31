@@ -3,10 +3,10 @@
     "lname":"English",
     "city":"London",
     "country":"United Kingdom",
-    "title":"English Teacher",
-    "category":"Teaching professionals",
-    "desc":"Dedicated and professional English and modern languages tutor with strong communication skills now seeking a graduate teaching assistant role. I am an Oxford University graduate with a 2:2 in French and Spanish, combined with on-going school experience, demonstrating excellent leadership, organisation and planning skills. Living and teaching in France during the university placement year fostered a love of teaching, making a difference in the lives of those students who may not believe they have the potential to achieve.",
-    "certs":[
+    "job_title":"English Teacher",
+    "job_category":"Teaching professionals",
+    "job_desc":"Dedicated and professional English and modern languages tutor with strong communication skills now seeking a graduate teaching assistant role. I am an Oxford University graduate with a 2:2 in French and Spanish, combined with on-going school experience, demonstrating excellent leadership, organisation and planning skills. Living and teaching in France during the university placement year fostered a love of teaching, making a difference in the lives of those students who may not believe they have the potential to achieve.",
+    "certifications":[
        {
           "certName":"English Language Assistant ELA"
        }
@@ -26,7 +26,7 @@
           "edu_desc":"English Literature (A) Spanish (A) French (A)"
        }
     ],
-    "experience":[
+    "work_experience":[
        {
           "experience_name":"Gloucester Tuition Center",
           "experience_title":"English Tutor",

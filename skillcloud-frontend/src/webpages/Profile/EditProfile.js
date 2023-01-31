@@ -24,18 +24,12 @@ const EditProfile = () => {
         }
     }
 
-    const getProfilePic = async () => {
-        const storage = getStorage();
-        const url = await getDownloadURL(ref(storage, `profile/${user.uid}`));
-        setPhoto(url);
-    }
-    // getProfilePic();
-
     const handleSubmit = async (e) => {
         e.preventDefault()
         await updateProfilePic(photo)
         if (userData.email === localStorage.getItem('email')) {
             let finalInfo = {...userData, education: education, work_experience: experience, certifications: certs, email: userData.email}
+            console.log(finalInfo)
             const resp = await fetch(`http://127.0.0.1:5000/updateuser`,{'method':'POST', headers : {'Content-Type':'application/json'}, body: JSON.stringify(finalInfo)})
             if (resp.status === 200) {
                 alert("User updated successfully");
@@ -113,7 +107,7 @@ const EditProfile = () => {
                             <input type="text"  id="job_title" placeholder={userData.job_title} defaultValue={userData.job_title} onChange={(e) => setUserData({...userData, job_title: e.target.value})}/>
                             <label htmlFor="job_desc">Job Description</label>
                             <textarea rows="5" cols="33"  id="job_desc" placeholder={userData.job_desc} defaultValue={userData.job_desc} onChange={(e) => setUserData({...userData, job_desc: e.target.value})}/>
-                            <label htmlFor="category">Job Category</label>
+                            <label htmlFor="job_category">Job Category</label>
                             <select id="job_category" onChange={(e) => setUserData({...userData, job_category: e.target.value})}>
                                 <option>Select a role category...</option>
                                 <option>Acting, Music and other Creative Arts</option>
