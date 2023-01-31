@@ -32,5 +32,4 @@ def get_role(mydb, role_id):
     sql = 'SELECT * FROM roles WHERE role_id = %s'
     cursor.execute(sql, (role_id, ))
     row = cursor.fetchone()
-    print(row)
     return row

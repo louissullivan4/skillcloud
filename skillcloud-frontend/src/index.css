@@ -67,7 +67,8 @@
 .card-header {
     font-size: 1.25em;
     color: steelblue;
-    margin-bottom: 1em;
+    margin-bottom: 0.75em;
+    overflow: hidden;
 }
 
 .card-body {
