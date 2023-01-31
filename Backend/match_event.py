@@ -56,15 +56,31 @@ def no_candidates_notifications(project, role):
     except Exception as e:
         return 404
 
+def delete_role_notifications(projectvals):
+    try:
+        cursor = mydb.cursor()
+        project = str(projectvals).replace("'", '"').replace("True", "true").replace("False", "false").replace("None", "null").replace("'", '\\"')
+        new = json.loads(project)
+        roles = new["roles"]
+        for role in roles:
+            role_id = role["role_id"]
+            sql = "DELETE FROM notifications WHERE role_id = %s"
+            cursor.execute(sql, (role_id, ))
+            mydb.commit()
+            sql = "DELETE FROM ineligible WHERE role_id = %s"
+            cursor.execute(sql, (role_id, ))
+            mydb.commit()
+        return 200
+    except Exception as e:
+        print(e)
+        return 404
+
 def create_role_notifications(project):
     cursor = mydb.cursor()
     project = str(project).replace("'", '"').replace("True", "true").replace("False", "false").replace("None", "null").replace("'", '\\"')
     new = json.loads(project)
     roles = new["roles"]
     for role in roles:
-        sql = """DELETE FROM notifications WHERE role_id = %s"""
-        cursor.execute(sql, (role["role_id"], ))
-        mydb.commit()
         candidates = event_match(role)
         if len(candidates) < 1:
             no_candidates_notifications(project, role)
@@ -75,7 +91,14 @@ def create_role_notifications(project):
 def notify_invite_project(candidates, role, project_author, project_id):
     try:
         cursor = mydb.cursor()
-        total_needed = int(role[4]) - int(role[6])
+        try:
+            total_needed = int(role["role_no_needed"]) - int(role["roles_filled"])
+            role_id = role["role_id"]
+            project_author = project_author
+        except:
+            total_needed = int(role[4]) - int(role[6])
+            role_id = role[5]
+            project_author = project_author[0]
         candidates_needed = {}
         if total_needed < 0:
             total_needed = 0
@@ -85,16 +108,14 @@ def notify_invite_project(candidates, role, project_author, project_id):
             candidates_needed[key] = val
         for key, val in candidates_needed.items():
             sql = "SELECT * FROM notifications WHERE user_notified = %s && role_id = %s"
-            cursor.execute(sql, (key, role[5]))
+            cursor.execute(sql, (key, role_id))
             row = cursor.fetchall()
             if len(row) < 1:
-                print("here 2")
                 sql = "INSERT INTO notifications (type, project_author, user_notified, project_id, date_created, status, role_id) VALUES (%s, %s, %s, %s, %s, %s, %s)"
-                print(("project_invite", project_author[0], key, project_id, str(date.today()), "pending", role[5]))
-                cursor.execute(sql, ("project_invite", project_author[0], key, project_id, str(date.today()), "pending", role[5]))
+                cursor.execute(sql, ("project_invite", project_author, key, project_id, str(date.today()), "pending", role_id))
                 mydb.commit()
-                sql = "DELETE FROM notifications WHERE && role_id = %s && type = 'project_role_wait'"
-                cursor.execute(sql, (role[5], ))
+                sql = "DELETE FROM notifications WHERE role_id = %s && type = 'project_role_wait'"
+                cursor.execute(sql, (role_id, ))
                 mydb.commit()
         return 200
     except Exception as e:
@@ -128,10 +149,11 @@ def notify_response_project(user_email, role_id, req):
             sql = "UPDATE users SET current_project = %s WHERE email = %s"
             cursor.execute(sql, (project_id, user_email))
             mydb.commit()
-            sql = "DELETE FROM notifications WHERE && role_id = %s && type = 'project_role_wait'"
+            sql = "DELETE FROM notifications WHERE role_id = %s && type = 'project_role_wait'"
             cursor.execute(sql, (role_id, ))
             mydb.commit()
         elif req == "declined":
+            print(user_email, role_id, req)
             if int(row[1]) == 0 or int(row[1]) < 0:
                 val = 0
             else:
@@ -178,6 +200,7 @@ def notify_response_project(user_email, role_id, req):
             return 403
         return 200
     except Exception as e:
+        print(traceback.format_exc())
         return 404
 
 def notify_role_change(user_email, role_id, req):
@@ -208,7 +231,7 @@ def notify_role_change(user_email, role_id, req):
             sql = "UPDATE users SET current_project = %s WHERE email = %s"
             cursor.execute(sql, (project_id, user_email))
             mydb.commit()
-            sql = "DELETE FROM notifications WHERE && role_id = %s && type = 'project_role_wait'"
+            sql = "DELETE FROM notifications WHERE role_id = %s && type = 'project_role_wait'"
             cursor.execute(sql, (role_id, ))
             mydb.commit()
         elif req == "remove":
@@ -315,20 +338,18 @@ def fulfill_roles(data):
     return final
 
 def user_values(data):
-    data = str(data).replace("'", '"').replace("True", "true").replace("False", "false").replace("None", "null").replace("'", '\\"')
-    data = json.loads(data)
     email = data["email"].lower()
-    title = data["title"].lower()
-    category = data["category"].lower()
-    desc = data["desc"].lower()
+    title = data["job_title"].lower()
+    category = data["job_category"].lower()
+    desc = data["job_desc"].lower()
     certs = ""
-    for cert in data["certs"]:
+    for cert in data["certifications"]:
         certs += cert["certName"].lower() + " "
     education = ""
     for edu in data["education"]:
         education += edu["edu_type"].lower() + " " + edu["edu_degree"].lower() + " " + edu["edu_desc"].lower() + " "
     experience = ""
-    for exp in data["experience"]:
+    for exp in data["work_experience"]:
         experience += exp["experience_name"].lower() + " " + exp["experience_title"].lower() + " " + exp["experience_desc"].lower() + " "
     profile = title + " " + desc + " " + certs + " " + education + " " + experience
     return profile, category, email
@@ -340,18 +361,22 @@ def fulfill_user(jsonVals):
     try:
         jsonVals = str(jsonVals).replace("'", '"').replace("True", "true").replace("False", "false").replace("None", "null").replace("'", '\\"')
         data = json.loads(jsonVals)
-        profile, category, email = user_values(data)
         cursor = mydb.cursor()
-        sql = "SELECT role_id, role_desc, role_title from roles WHERE roles_filled < role_no_needed && role_category = %s"
+        profile, category, email = user_values(data)
+        sql = "SELECT project_id FROM projects WHERE project_author = %s"
+        cursor.execute(sql, (email, ))
+        row = cursor.fetchall()
+        projects_list = [i[0] for i in row]
+        sql = "SELECT role_id, role_desc, role_title, project_id from roles WHERE roles_filled < role_no_needed && role_category = %s"
         cursor.execute(sql, (category, ))
         row = cursor.fetchall()
         candidates[email] = profile
         if len(row) > 0:
             for val in row:
-                job_desc = val[1].lower() + " " + val[2].lower()
-                job[val[0]] = job_desc
-                percentages_dict = match_skills(profile, job)
-                print(percentages_dict)
+                if val[3] not in projects_list:
+                    job_desc = val[1].lower() + " " + val[2].lower()
+                    job[val[0]] = job_desc
+                    percentages_dict = match_skills(profile, job)
         for roleid, percent in percentages_dict.items():
             if len(percentages_dict) > 0:
                 if percent > 0:
@@ -363,12 +388,10 @@ def fulfill_user(jsonVals):
                         cursor.execute(sql, (role[0], ))
                         project_author = cursor.fetchone()
                         if len(project_author) > 0:
-                            print(candidates, role, project_author, role[0])
                             notify_invite_project(candidates, role, project_author, role[0])     
         return "200" 
     except Exception as e:
-        print("Error in fulfill_user")
-        print(e)
+        print(traceback.format_exc())
         return "400"
 
 def event_match_user(jsonVals):

@@ -16,7 +16,7 @@ const MoreDetails = () => {
         },]
     });
     const [newExperience, setNewExperience] = useState({
-        experience: [{
+        work_experience: [{
             experience_name: "",
             experience_title: "",
             experience_start: "",
@@ -29,7 +29,7 @@ const MoreDetails = () => {
         if (!validated()){
             alert("Please fill in all fields")
         } else {
-            let finalInfo = {...state, education: newEducation.education, experience: newExperience.experience}
+            let finalInfo = {...state, education: newEducation.education, work_experience: newExperience.experience}
             navigate('/acceptdetails', {state:{ ...finalInfo, email: state.email,  password: state.password}})
         }
     }

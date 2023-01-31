@@ -20,7 +20,7 @@ const BasicInfo = () => {
     const validateForm = () => {
         let valid = true;
         let message = "";
-        if (basicInfo.fname === "" || basicInfo.lname === "" || basicInfo.city === "" || basicInfo.country === "" || basicInfo.title === "" || basicInfo.category === "Select a role category..." || basicInfo.desc === "") {
+        if (basicInfo.fname === "" || basicInfo.lname === "" || basicInfo.city === "" || basicInfo.country === "" || basicInfo.job_title === "" || basicInfo.job_category === "Select a role category..." || basicInfo.job_desc === "") {
             valid = false;
             message = "Error! Please fill in all required fields";
         }
@@ -36,7 +36,7 @@ const BasicInfo = () => {
     const submitHandler = (e) => {
         e.preventDefault()
         setBasicInfo({...basicInfo, email: state.email})
-        let basicCert = {...basicInfo, certs: certDetails.certs}
+        let basicCert = {...basicInfo, certifications: certDetails.certs}
         const [validated, message] = validateForm()
         if (validated === true) {
             let finalInfo = {...basicCert, email: state.email}
@@ -49,7 +49,7 @@ const BasicInfo = () => {
 
     const addCert = () => {
         let newList = [...certDetails.certs, {certName: ""}]
-        let newCertDetails = {...certDetails, certs: newList}
+        let newCertDetails = {...certDetails, certifications: newList}
         setCertDetails(newCertDetails)
     };
 
@@ -58,14 +58,14 @@ const BasicInfo = () => {
         let end = newList.length
         if (end > 0){
             newList.pop();
-            let newCertDetails = {...certDetails, certs: newList}
+            let newCertDetails = {...certDetails, certifications: newList}
             setCertDetails(newCertDetails)
         }
     };
 
     const getDescription = (e) => {
         let descval = (e.target.value).toString()
-        setBasicInfo({...basicInfo, desc: descval})
+        setBasicInfo({...basicInfo, job_desc: descval})
     }
 
     const goBack = () => {
@@ -94,10 +94,10 @@ const BasicInfo = () => {
                             <input onChange={(e) => setBasicInfo({...basicInfo, country: e.target.value})} type="text"/>
                         </div>
                         <div className='inline-create'>
-                            <label htmlFor="title">Profession</label>
-                            <input onChange={(e) => setBasicInfo({...basicInfo, title: e.target.value})} type="text"/>
-                            <label htmlFor="category">Job Category</label>
-                            <select onChange={(e) => setBasicInfo({...basicInfo, category: e.target.value})}>
+                            <label htmlFor="job_title">Profession</label>
+                            <input onChange={(e) => setBasicInfo({...basicInfo, job_title: e.target.value})} type="text"/>
+                            <label htmlFor="job_category">Job Category</label>
+                            <select onChange={(e) => setBasicInfo({...basicInfo, job_category: e.target.value})}>
                                 <option>Select a role category...</option>
                                 <option>Acting, Music and other Creative Arts</option>
                                 <option>Agricultural, forestry and fishery labourers</option>
@@ -117,7 +117,7 @@ const BasicInfo = () => {
                             </select>
                         </div>
                         <div className='inline-create'>
-                            <label htmlFor="desc">Describe your professional profile</label>
+                            <label htmlFor="job_desc">Describe your professional profile</label>
                             <textarea rows="7" cols="80" onChange={getDescription} max='150' type="text"/>
                         </div>
                         <label htmlFor="certifications">Certifications</label>

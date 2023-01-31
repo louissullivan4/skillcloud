@@ -72,9 +72,9 @@ const AcceptDetails = () => {
                 </div>
                 <div className='text'>Name: {state.fname} {state.lname}</div>
                 <div className='text'>Location: {state.city}, {state.country}</div>
-                <div className='text'>Profession: {state.title}</div>
-                <div className='text'>Profession Category: {state.category}</div>
-                <div className='text'>Professional profile: {state.desc}</div>
+                <div className='text'>Profession: {state.job_title}</div>
+                <div className='text'>Profession Category: {state.job_category}</div>
+                <div className='text'>Professional profile: {state.job_desc}</div>
                 <div className='text'>Certifications: {state.certs.map((cert) => { return <div>{cert.certName}</div>})}</div>
                 <div className='text'>Education:</div>
                 {state.education.map((edu) => (

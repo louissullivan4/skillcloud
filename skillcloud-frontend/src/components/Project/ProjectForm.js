@@ -25,7 +25,7 @@ const ProjectForm = () => {
         .then(setSpinner(false));
         if (resp.status === 200) {
             alert("Project created successfully");
-            navigate('/home');
+            // navigate('/home');
         } else {
             alert("Project creation failed. Please try again.");
         }
@@ -89,7 +89,7 @@ const ProjectForm = () => {
             <form onSubmit={submitHandler}>
                 <div className="create-project">
                     <label htmlFor="title">Project Title</label>
-                    <input type="text" maxLength={"25"} placeholder="Enter project title..." onChange={(e) => setProjectDetails({...projectDetails, project_title: e.target.value})}/>
+                    <input type="text" maxLength={"100"} placeholder="Enter project title..." onChange={(e) => setProjectDetails({...projectDetails, project_title: e.target.value})}/>
                     <div className='inline-create'>
                         <label htmlFor="startdate">Start Date</label>
                         <input type="date" onChange={(e) => setProjectDetails({...projectDetails, project_startdate: e.target.value})}/>
