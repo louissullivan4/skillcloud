@@ -3,6 +3,7 @@ import { Link, useParams } from 'react-router-dom';
 
 const ProfileTabs = () => {
     let email = useParams()
+    let email1 = email.email
     const [userData, setUserData] = useState([]);
     const [userCurrentProject, setCurrentProject] = useState([]);
     const [userPrevProjects, setUserPrevProjects] = useState([]);
@@ -27,14 +28,12 @@ const ProfileTabs = () => {
         const work = data.result[0].work_experience
         setUserWork(work)
 
-        const resp1 = await fetch('http://127.0.0.1:5000/currentProjects/'+email.email)
+        const resp1 = await fetch('http://127.0.0.1:5000/currentProjects/'+email1)
         const data1 = await resp1.json();
-        console.log(data1.result)
         setCurrentProject(data1.result);
 
-        const resp2 = await fetch('http://127.0.0.1:5000/ownedProjects/'+email.email)
+        const resp2 = await fetch('http://127.0.0.1:5000/ownedProjects/'+email1)
         const data2 = await resp2.json();
-        console.log(data2.result)
         setOwnedProjects(data2.result);
         
       };

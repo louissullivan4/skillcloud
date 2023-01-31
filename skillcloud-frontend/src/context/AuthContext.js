@@ -4,7 +4,7 @@ import { createUserWithEmailAndPassword,
         signOut,
         onAuthStateChanged,
         deleteUser,
-        updateProfile
+        updateProfile,
 } from "firebase/auth";
 import { auth } from '../firebase';
 import { getDownloadURL, getStorage, ref, uploadBytes } from "firebase/storage";
@@ -17,7 +17,7 @@ export const AuthContextProvider = ({ children }) => {
     const createUser = (email, password) => {
         return createUserWithEmailAndPassword(auth, email, password)
     }
-
+    
     const deleteAUser = (uid) => {
         return deleteUser(uid)
     }
@@ -35,9 +35,9 @@ export const AuthContextProvider = ({ children }) => {
         return signOut(auth)
     }
 
-    const updateProfilePic = async (file) => {
+    const updateProfilePic = async (file, uuid) => {
         const storage = getStorage();
-        const storageRef = ref(storage, `profile/${user.uid}`);
+        const storageRef = ref(storage, `profile/${uuid}`);
         uploadBytes(storageRef, file).then( () => {
             console.log('Uploaded a blob or file!');
             const url = getDownloadURL(storageRef);

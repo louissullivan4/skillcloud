@@ -3,7 +3,6 @@ import { useParams, useNavigate } from 'react-router-dom'
 
 import { collection, query, where, getDocs } from "firebase/firestore";
 import { db } from "../../firebase";
-import { UserAuth } from '../../context/AuthContext';
 import { getStorage, ref, getDownloadURL } from "firebase/storage";
 
 
@@ -19,13 +18,21 @@ const Profile = () => {
     const [userData, setUserData] = useState("");
     const [emailUser, setEmailUser] = useState({});
     const [currentUser, setCurrentUser] = useState("");
+    const [profileName, setProfileName] = useState("");
 
-    const { user } = UserAuth();
     const [photo, setPhoto] = useState("../../assets/profiles/undefined.jpg");
 
+
+    const getName = async () => {
+        const q = query(collection(db, "users"),where("email", "==", email.email));
+        const querySnapshot = await getDocs(q);
+        setProfileName(querySnapshot.docs[0].data().uid)
+    }
+    
     const getProfilePic = async () => {
+        getName()
         const storage = getStorage();
-        const url = await getDownloadURL(ref(storage, `profile/${user.uid}`));
+        const url = await getDownloadURL(ref(storage, `profile/${profileName}`));
         setPhoto(url);
     }
     getProfilePic();

@@ -1,6 +1,3 @@
-:root {
-}
-
 * {
     margin: 0;
     padding: 0;
@@ -446,7 +443,7 @@ tr:nth-child(even) {
     font-size: 1.25em;
 }
 
-.msg-footer button {
+.msg-footer button, .msg-footer-link {
     background-color: #0049e6;
     color: white;
     border: none;

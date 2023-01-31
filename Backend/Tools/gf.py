@@ -26,3 +26,11 @@ def generate_id():
         uid += str(random.randint(0,9))
         i += 1
     return uid
+
+def get_role(mydb, role_id):
+    cursor = mydb.cursor()
+    sql = 'SELECT * FROM roles WHERE role_id = %s'
+    cursor.execute(sql, (role_id, ))
+    row = cursor.fetchone()
+    print(row)
+    return row

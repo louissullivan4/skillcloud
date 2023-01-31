@@ -17,7 +17,6 @@ class User:
         self.project_ids = ""
         self.certifications = ""
         self.availability = ""
-        self.profilepic = ""
         self.current_project = ""
 
     def create_experience(self, email, experience):
@@ -122,15 +121,14 @@ class User:
             certifications += val.get('certName') + ","
         certifications = certifications[:-1]
         availability = "Open"
-        profilepic = requestjson['profilepic']
         current_project = None
         cursor.execute("SELECT * FROM users WHERE email = %s", (email, ))
         row = cursor.fetchone()
         if row == None:
             sql = """INSERT INTO users 
-                (email, fname, lname, city, country, job_title, job_category, job_desc, project_ids, certifications, availability, profilepic, current_project)
-                VALUES (%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s)"""
-            val = (email, fname, lname, city, country, job_title, job_category, job_desc, project_ids, certifications, availability, profilepic, current_project)
+                (email, fname, lname, city, country, job_title, job_category, job_desc, project_ids, certifications, availability, current_project)
+                VALUES (%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s)"""
+            val = (email, fname, lname, city, country, job_title, job_category, job_desc, project_ids, certifications, availability, current_project)
             cursor.execute(sql, val)
             self.email = email
             self.fname = fname
@@ -145,7 +143,6 @@ class User:
             self.project_ids = project_ids
             self.certifications = certifications
             self.availability = availability
-            self.profilepic = profilepic
             self.current_project = current_project
             mydb.commit()
             return 200
@@ -172,11 +169,10 @@ class User:
             self.project_ids = row[8]
             self.certifications = row[9]
             self.availability = row[10]
-            self.profilepic = row[11]
-            self.current_project = row[12]
+            self.current_project = row[11]
             self.work_experience = self.get_experience(email)
             self.education = self.get_education(email)
-        return (self.email, self.fname, self.lname, self.city, self.country, self.job_title, self.job_category, self.job_desc, self.project_ids, self.certifications, self.availability, self.profilepic, self.current_project, self.work_experience, self.education)
+        return (self.email, self.fname, self.lname, self.city, self.country, self.job_title, self.job_category, self.job_desc, self.project_ids, self.certifications, self.availability, self.current_project, self.work_experience, self.education)
 
     def update_user(self, requestjson):
         cursor = mydb.cursor()
@@ -197,10 +193,9 @@ class User:
             certifications += val.get('certName') + ","
         certifications = certifications[:-1]
         availability = "Open"
-        profilepic = requestjson['profilepic']
         current_project = None
-        sql = """UPDATE users SET fname = %s, lname = %s, city = %s, country = %s, job_title = %s, job_category = %s, job_desc = %s, project_ids = %s, certifications = %s, availability = %s, profilepic = %s, current_project = %s WHERE email = %s"""
-        val = (fname, lname, city, country, job_title, job_category, job_desc, project_ids, certifications, availability, profilepic, current_project, email)
+        sql = """UPDATE users SET fname = %s, lname = %s, city = %s, country = %s, job_title = %s, job_category = %s, job_desc = %s, project_ids = %s, certifications = %s, availability = %s, current_project = %s WHERE email = %s"""
+        val = (fname, lname, city, country, job_title, job_category, job_desc, project_ids, certifications, availability, current_project, email)
         cursor.execute(sql, val)
         mydb.commit()
         self.update_education(email, education)
@@ -224,7 +219,7 @@ class User:
         for val in newcerts:
             newVal = {"certName": val}
             certs.append(newVal)
-        user_json = {"email" : self.email, "fname" : self.fname, "lname" : self.lname, "city" : self.city, "country" : self.country, "job_title" : self.job_title, "job_category" : self.job_category, "job_desc" : self.job_desc, "work_experience" : experience_json, "education" : education_json, "project_ids" : self.project_ids, "certifications" : certs, "availability" : self.availability, "profilepic" : self.profilepic, "current_project" : self.current_project}
+        user_json = {"email" : self.email, "fname" : self.fname, "lname" : self.lname, "city" : self.city, "country" : self.country, "job_title" : self.job_title, "job_category" : self.job_category, "job_desc" : self.job_desc, "work_experience" : experience_json, "education" : education_json, "project_ids" : self.project_ids, "certifications" : certs, "availability" : self.availability, "current_project" : self.current_project}
         user.append(user_json)
         user_json = {"result":user}
         return user_json
@@ -254,11 +249,9 @@ class User:
     
     def get_owned_projects(self, email):
         cursor = mydb.cursor()
-        print(email)
         sql = "SELECT * FROM projects WHERE project_author = %s"
         cursor.execute(sql, (email, ))
         row = cursor.fetchall()
-        print(row)
         projects_json = []
         for val in row:
             newVal = {"project_id": val[0], "project_title": val[1], "project_author": val[2], "project_createdate": val[3], "project_startdate": val[4], "project_enddate": val[5], "project_summary": val[6], "project_state": val[7], "project_city": val[8], "project_country": val[9]}
