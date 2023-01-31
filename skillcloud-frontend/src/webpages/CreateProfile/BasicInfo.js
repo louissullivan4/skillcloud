@@ -40,6 +40,7 @@ const BasicInfo = () => {
         const [validated, message] = validateForm()
         if (validated === true) {
             let finalInfo = {...basicCert, email: state.email}
+            console.log(finalInfo)
             navigate('/moredetails', {state:{ ...finalInfo, email: state.email,  password: state.password}})
         } else {
             alert(message)
@@ -61,6 +62,11 @@ const BasicInfo = () => {
             setCertDetails(newCertDetails)
         }
     };
+
+    const getDescription = (e) => {
+        let descval = (e.target.value).toString()
+        setBasicInfo({...basicInfo, desc: descval})
+    }
 
     const goBack = () => {
         navigate("/createaccount")
@@ -112,7 +118,7 @@ const BasicInfo = () => {
                         </div>
                         <div className='inline-create'>
                             <label htmlFor="desc">Describe your professional profile</label>
-                            <textarea rows="7" cols="80" onChange={(e) => setBasicInfo({...basicInfo, desc: e.target.value})} max='150' type="text"/>
+                            <textarea rows="7" cols="80" onChange={getDescription} max='150' type="text"/>
                         </div>
                         <label htmlFor="certifications">Certifications</label>
                         {certDetails.certs.map((_cert, index) => (

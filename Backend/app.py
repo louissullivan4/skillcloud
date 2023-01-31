@@ -1,12 +1,11 @@
 from flask import Flask, request, Response
 from flask_cors import CORS
-
 import json
 
 from project import Project
 from user import User
-from notification_service import *
 from match_event import *
+from Tools.gf import *
 
 app = Flask(__name__)
 CORS(app)
@@ -79,9 +78,10 @@ def ownedProjects(email: str):
 @app.route('/createuser', methods=['POST'])
 def createuser():
     u1 = User()
-    created_user = u1.create_user(request.json)
+    jsonvals = json.loads(request.data)
+    created_user = u1.create_user(jsonvals)
     if created_user == 200:
-        event_match_user(request.json)
+        event_match_user(jsonvals)
         return json.dumps({"Status Code": 200, "Message": "Success!"}), 200
     elif created_user == 409:
         return json.dumps({"Status Code": 409, "Message": "User already exists!"}), 409
@@ -122,6 +122,13 @@ def invitationresponse(email : str, role_id : str, req : str):
 def rolechange(email : str, role_id : str, response : str):
     result = notify_role_change(email, role_id, response)
     return json.dumps(result)
+
+@app.route('/getrole/<string:roleid>/')
+def getrole(roleid : str):
+    mydb = connect_db()
+    result = get_role(mydb, roleid)
+    return json.dumps(result)
+
 
 if __name__ == "__main__":
     app.run(threaded=True)

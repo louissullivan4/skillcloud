@@ -1,5 +1,6 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { useNavigate, useLocation } from 'react-router-dom'
+import BeatLoader from 'react-spinners/BeatLoader'
 
 import {
     setDoc,
@@ -15,24 +16,32 @@ const AcceptDetails = () => {
     const location = useLocation()
     let navigate = useNavigate();
     const state = location.state
-    
-    const { createUser } = UserAuth()
+    const [spinner, setSpinner] = useState(false);
 
-    console.log(state.experience)
+    const [photo, setPhoto] = useState("")
+    const { createUser, updateProfilePic } = UserAuth()
+    
     const addUser = async () => {
-        console.log(state.email, state.password)
         await createUser(state.email, state.password)
         await setDoc(doc(db, "users", auth.currentUser.uid), {
             email: auth.currentUser.email,
             uid : auth.currentUser.uid,
             name: state.fname + " " + state.lname,
         });
-        
+        await updateProfilePic(photo, auth.currentUser.uid)
     };
 
+    function handleChange(e) {
+        if (e.target.files[0]) {
+          setPhoto(e.target.files[0])
+        }
+    }
+
     const completeProfile = async () => {
+        setSpinner(true);
         addUser();
         const resp = await fetch(`http://127.0.0.1:5000/createuser`,{'method':'POST', headers : {'Content-Type':'application/json'}, body: JSON.stringify(state)})
+        .then(setSpinner(false))
         if (resp.status === 200) {
             alert("User created successfully. Proceed to login.");
             navigate('/');
@@ -47,12 +56,20 @@ const AcceptDetails = () => {
 
     
     return (
+        ( spinner === true ? 
+            <BeatLoader color="#36d7b7" /> :
         <div className='create-profile-page'>
             <div className='create-profile-heading'>
                 <div>Create Profile</div>
             </div>
             <div className='create-profile-title'>Are these details correct?</div>
+            
             <div className='create-profile-final'>
+                <div className="edit-profile">
+                    <label htmlFor="file">Add Profile Image</label>
+                    <img src={photo} style={{"height": "130px", "width": "100px", "marginRight":"1.5em"}}/>
+                    <input type="file" onChange={handleChange}/>
+                </div>
                 <div className='text'>Name: {state.fname} {state.lname}</div>
                 <div className='text'>Location: {state.city}, {state.country}</div>
                 <div className='text'>Profession: {state.title}</div>
@@ -83,6 +100,7 @@ const AcceptDetails = () => {
                 </div>
             </div>
         </div>
+        )
     );
 }
 export default AcceptDetails;

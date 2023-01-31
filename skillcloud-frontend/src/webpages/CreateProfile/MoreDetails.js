@@ -45,7 +45,6 @@ const MoreDetails = () => {
         }
         if (newExperience.experience.length > 0){
             newExperience.experience.forEach((exp) => {
-                exp.experience_desc = exp.experience_desc.replace(/(\r\n|\n|\r)/gm, "")
                 if (exp.experience_name === "" || exp.experience_title === "" || exp.experience_desc === "" || exp.experience_start === "" || exp.experience_end === ""){
                     valid = false
                 }
@@ -86,6 +85,7 @@ const MoreDetails = () => {
         }
     };
 
+
     const goBack = () => {
         navigate(-1)
     }
@@ -116,7 +116,7 @@ const MoreDetails = () => {
                                     </div>
                                     <div className='inline-create'>
                                         <label htmlFor="edu_school">Brief description of course</label>
-                                        <textarea rows="7" cols="80" onChange={(e) => newEducation.education[index]["edu_desc"] = e.target.value} type="text" max='300'/>
+                                        <textarea rows="7" cols="80" onChange={(e) => newEducation.education[index]["edu_desc"] = (e.target.value).toString()} type="text" max='300'/>
                                     </div>
                                 </div>
                             ))}
@@ -149,7 +149,7 @@ const MoreDetails = () => {
                                     </div>
                                     <div className='inline-create'>
                                         <label htmlFor="experience_desc">Brief description of work done during experience</label>
-                                        <textarea rows="7" cols="80" onChange={(e) => newExperience.experience[index]["experience_desc"] = e.target.value} type="text" max="500"/>
+                                        <textarea rows="7" cols="80" onChange={(e) => newExperience.experience[index]["experience_desc"] = (e.target.value).toString()} type="text" max="500"/>
                                     </div>
                                 </div>
                             ))}
