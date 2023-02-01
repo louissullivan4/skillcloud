@@ -113,11 +113,11 @@ class User:
         job_title = requestjson['job_title']
         job_category = requestjson['job_category']
         job_desc = requestjson['job_desc']
-        work_experience = requestjson['experience']
+        work_experience = requestjson['work_experience']
         education = requestjson['education']
         project_ids = None
         certifications = ""
-        for val in requestjson['certs']:
+        for val in requestjson['certifications']:
             certifications += val.get('certName') + ","
         certifications = certifications[:-1]
         availability = "Open"

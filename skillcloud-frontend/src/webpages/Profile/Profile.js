@@ -37,20 +37,20 @@ const Profile = () => {
     }
     getProfilePic();
            
-    const handleClick = async () => {
-        const q = query(collection(db, "users"),where("email", "==", email.email));
-        const querySnapshot = await getDocs(q);
-        querySnapshot.forEach((doc) => {
-            setEmailUser(doc.data().uid);
-        });
-        const q1 = query(collection(db, "users"),where("email", "==", currentEmail));
-        const querySnapshot1 = await getDocs(q1);
-        querySnapshot1.forEach((doc) => {
-            setCurrentUser(doc.data().uid);
-        });
-        const combinedId = emailUser + currentUser;
-        navigate(`/chat/${combinedId.toString()}/${email.email}`)
-    };
+    // const handleClick = async () => {
+    //     const q = query(collection(db, "users"),where("email", "==", email.email));
+    //     const querySnapshot = await getDocs(q);
+    //     querySnapshot.forEach((doc) => {
+    //         setEmailUser(doc.data().uid);
+    //     });
+    //     const q1 = query(collection(db, "users"),where("email", "==", currentEmail));
+    //     const querySnapshot1 = await getDocs(q1);
+    //     querySnapshot1.forEach((doc) => {
+    //         setCurrentUser(doc.data().uid);
+    //     });
+    // //     const combinedId = emailUser + currentUser;
+    //     navigate(`/chat/${combinedId.toString()}/${email.email}`)
+    // };
 
     const editProfile = () => {
         navigate("/editprofile", { state: { email: localStorage.getItem("email"), details: userData} })
@@ -97,7 +97,8 @@ const Profile = () => {
                         </div>
                     </div>
                     <div className="profile-button">
-                        {email.email !== localStorage.getItem('email') ? <button type="button" onClick={handleClick}>Send Message </button> : <button type="button" onClick={editProfile}>Edit Profile </button>}
+                        {/* {email.email !== localStorage.getItem('email') ? <button type="button" onClick={handleClick}>Send Message </button> : <button type="button" onClick={editProfile}>Edit Profile </button>} */}
+                        {email.email !== localStorage.getItem('email') ? <div></div> : <button type="button" onClick={editProfile}>Edit Profile </button>}
                     </div>
                     </div>
                     <div className="p-container-2">

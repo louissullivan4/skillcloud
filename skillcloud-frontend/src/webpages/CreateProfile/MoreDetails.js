@@ -29,7 +29,7 @@ const MoreDetails = () => {
         if (!validated()){
             alert("Please fill in all fields")
         } else {
-            let finalInfo = {...state, education: newEducation.education, work_experience: newExperience.experience}
+            let finalInfo = {...state, education: newEducation.education, work_experience: newExperience.work_experience}
             navigate('/acceptdetails', {state:{ ...finalInfo, email: state.email,  password: state.password}})
         }
     }
@@ -43,8 +43,8 @@ const MoreDetails = () => {
                 }
             })
         }
-        if (newExperience.experience.length > 0){
-            newExperience.experience.forEach((exp) => {
+        if (newExperience.work_experience.length > 0){
+            newExperience.work_experience.forEach((exp) => {
                 if (exp.experience_name === "" || exp.experience_title === "" || exp.experience_desc === "" || exp.experience_start === "" || exp.experience_end === ""){
                     valid = false
                 }
@@ -70,17 +70,17 @@ const MoreDetails = () => {
     };
 
     const addExp= () => {
-        let newList = [...newExperience.experience, {experience_name: "", experience_title: "", experience_start: "", experience_end: "", experience_desc: ""}]
-        let newExpDetails = {...newExperience, experience: newList}
+        let newList = [...newExperience.work_experience, {experience_name: "", experience_title: "", experience_start: "", experience_end: "", experience_desc: ""}]
+        let newExpDetails = {...newExperience, work_experience: newList}
         setNewExperience(newExpDetails)
     };
 
     const removeExp = () => {
-    let newList = [...newExperience.experience]
+    let newList = [...newExperience.work_experience]
     let end = newList.length
     if (end > 0){
         newList.pop();
-        let newExpDetails= {...newExperience, experience: newList}
+        let newExpDetails= {...newExperience, work_experience: newList}
         setNewExperience(newExpDetails)
         }
     };
@@ -133,23 +133,23 @@ const MoreDetails = () => {
                     </div>
                     <div className='create-profile-title'>Previous Work Experience</div>
                         <div className='create-profile-section'>
-                            {newExperience.experience.map((_exp, index) => (
+                            {newExperience.work_experience.map((_exp, index) => (
                                 <div key={index}>
                                     <div className='inline-create'>
                                         <label htmlFor="experience_name">Company</label>
-                                        <input onChange={(e) => newExperience.experience[index]["experience_name"] = e.target.value} type="text" />
+                                        <input onChange={(e) => newExperience.work_experience[index]["experience_name"] = e.target.value} type="text" />
                                         <label htmlFor="experience_title">Your title</label>
-                                        <input onChange={(e) => newExperience.experience[index]["experience_title"] = e.target.value} type="text"/>
+                                        <input onChange={(e) => newExperience.work_experience[index]["experience_title"] = e.target.value} type="text"/>
                                     </div>
                                     <div className='inline-create'>
                                         <label htmlFor="experience_start">Start date</label>
-                                        <input onChange={(e) => newExperience.experience[index]["experience_start"] = e.target.value} type="date"/>
+                                        <input onChange={(e) => newExperience.work_experience[index]["experience_start"] = e.target.value} type="date"/>
                                         <label htmlFor="experience_end">End date</label>
-                                        <input onChange={(e) => newExperience.experience[index]["experience_end"] = e.target.value} type="date"/>
+                                        <input onChange={(e) => newExperience.work_experience[index]["experience_end"] = e.target.value} type="date"/>
                                     </div>
                                     <div className='inline-create'>
                                         <label htmlFor="experience_desc">Brief description of work done during experience</label>
-                                        <textarea rows="7" cols="80" onChange={(e) => newExperience.experience[index]["experience_desc"] = (e.target.value).toString()} type="text" max="500"/>
+                                        <textarea rows="7" cols="80" onChange={(e) => newExperience.work_experience[index]["experience_desc"] = (e.target.value).toString()} type="text" max="500"/>
                                     </div>
                                 </div>
                             ))}
@@ -157,7 +157,7 @@ const MoreDetails = () => {
                                 <button type="button" className="but-pos" onClick={addExp} style={{"backgroundColor": "green"}}>
                                     Add another work experience +
                                 </button>
-                                {newExperience.experience.length > 0 && (
+                                {newExperience.work_experience.length > 0 && (
                                     <button type="button" className="but-neg" onClick={removeExp} style={{"backgroundColor": "red"}}>
                                         Remove work experience - 
                                     </button>

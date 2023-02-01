@@ -75,7 +75,7 @@ const AcceptDetails = () => {
                 <div className='text'>Profession: {state.job_title}</div>
                 <div className='text'>Profession Category: {state.job_category}</div>
                 <div className='text'>Professional profile: {state.job_desc}</div>
-                <div className='text'>Certifications: {state.certs.map((cert) => { return <div>{cert.certName}</div>})}</div>
+                <div className='text'>Certifications: {state.certifications.map((cert) => { return <div>{cert.certName}</div>})}</div>
                 <div className='text'>Education:</div>
                 {state.education.map((edu) => (
                     <div key={edu.degree}>
@@ -83,7 +83,7 @@ const AcceptDetails = () => {
                         <div>{edu.edu_desc}</div>
                     </div>
                 ))};
-                {state.experience.map((exp) => (
+                {state.work_experience.map((exp) => (
                     <div key={exp.experience_name}>
                         <div>{exp.experience_title} at {exp.experience_name}</div>
                         <div>{exp.experience_start} - {exp.experience_end}</div>

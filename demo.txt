@@ -1,0 +1,32 @@
+Person 1 :
+
+Email: tom@gmail.com
+Name: Tom Grimes
+City: Sydney
+Country: Australia
+Profession: Software Engineer
+Describe your professional profile: I am a highly skilled software engineer with a passion for creating innovative and user-friendly software. My expertise lies in mobile application development, particularly in the areas of Android and iOS development. I have experience in both native and cross-platform development. I am also experienced in developing software in an Agile environment and have a good understanding of Scrum methodologies.
+Certifications:
+Android Development Certification
+Level: BSc
+Degree Name: Computer Science
+School: University of New South Wales
+Brief Description of Modules: Object-oriented programming, Mobile Development, Data Structures, Algorithms, Databases
+Company Name: Uber
+Job Title: Senior Software Engineer
+Brief Description of Job: Led a team of software engineers in the development of new features for the Uber app. I was responsible for the overall architecture and design of the app and worked closely with the product and design teams to ensure that the app met the needs of the end-users. I also mentored junior engineers on the team and helped them to improve their skills and knowledge.
+
+====================
+
+Project 1:
+
+Project Title: Software Piracy Protection
+Project Summary: The goal of this project is to create a software piracy protection system that is robust, reliable and easy to use. This system will help to prevent unauthorized distribution of software, while still providing an accessible and convenient experience for legitimate users.
+Roles:
+Software Engineer
+An experienced software engineer with a background in developing and implementing software protection systems. Strong knowledge of cryptography, code obfuscation, and other security techniques is essential, as well as experience working with licensing management systems and technologies such as DRM, code signing, and license key generation. Familiarity with programming languages such as C++, Java, and Python is desirable. Ability to design and implement secure and efficient software protection solutions is key.
+
+Software Tester
+A software tester with experience in testing software systems, with a focus on identifying and reporting security vulnerabilities and testing the effectiveness of anti-piracy measures. Familiarity with testing methodologies, tools, and technologies such as manual testing, automated testing, and security testing frameworks is required. Knowledge of programming languages such as C++, Java, and Python is a plus. Ability to analyze software security, identify vulnerabilities, and develop effective test cases is key.
+
+====================

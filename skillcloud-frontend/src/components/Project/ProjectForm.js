@@ -63,6 +63,7 @@ const ProjectForm = () => {
         let validated = validateForm()
         if (validated[0]) {
             sendData()
+            navigate('/home')
         } else {
             alert(validated[1])
         }
