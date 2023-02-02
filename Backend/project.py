@@ -135,7 +135,37 @@ class Project:
             return "200"
         except Exception as e:
             return "404"
-            
+
+    def delete_project(self, pid):  
+        try:  
+            mycursor = mydb.cursor()
+            sql = "DELETE FROM projects WHERE project_id = %s"
+            val = (pid,)
+            mycursor.execute(sql, val)
+            mydb.commit()
+            sql = "DELETE FROM roles WHERE project_id = %s"
+            val = (pid,)
+            mycursor.execute(sql, val)
+            mydb.commit()
+            sql = "SELECT user_notified FROM notifications WHERE project_id = %s AND status = 'accepted'"
+            val = (pid,)
+            mycursor.execute(sql, val)
+            row = mycursor.fetchall()
+            if len(row) > 0:
+                for user in row:
+                    sql = "UPDATE users SET current_project = null, availability = 'Open' WHERE email = %s"
+                    val = (user[0],)
+                    mycursor.execute(sql, val)
+                    mydb.commit()
+            sql = "DELETE FROM notifications WHERE project_id = %s"
+            val = (pid,)
+            mycursor.execute(sql, val)
+            mydb.commit()
+            return 200
+        except Exception as e:
+            print(e)
+            return 404
+                        
     def get_project(self, id):
         cursor = mydb.cursor()
         sql = "SELECT * FROM projects WHERE project_id = %s"

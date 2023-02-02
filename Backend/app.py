@@ -50,11 +50,24 @@ def createproject():
     p1 = Project()
     p1.create_project(request.json)
     projectvals = p1.get_project_json()
-    notified = create_role_notifications(projectvals)
-    if notified == 200:
-        return json.dumps({"Status Code": 200, "Message": "Success!"})
+    return json.dumps(projectvals)
+
+@app.route('/deleteproject/<string:pid>')
+def deleteproject(pid : str):
+    p1 = Project()
+    deleted = p1.delete_project(pid)
+    if deleted == 200:
+        return json.dumps({"Status Code": 200, "Message": "Success!"}), 200
     else:
-        return json.dumps({"Status Code": 404, "Message": "Error!"})
+        return json.dumps({"Status Code": 404, "Message": "Error!"}), 404
+
+@app.route('/eventmatch', methods=['POST'])
+def eventmatchapi():
+    notified = create_role_notifications(request.json)
+    if notified == 200:
+        return json.dumps({"Status Code": 200, "Message": "Success!"}), 200
+    else:
+        return json.dumps({"Status Code": 404, "Message": "Error!"}), 404
     
 @app.route('/profile/<string:email>')
 def profilepage(email: str):
@@ -63,18 +76,6 @@ def profilepage(email: str):
     user_json = user.get_user_json()
     return json.dumps(user_json)
 
-@app.route('/currentProjects/<string:email>')
-def currentProjects(email: str):
-    user = User()
-    u1 = user.get_user(email)
-    user_json = user.get_current_projects(email)
-    return json.dumps(user_json)
-
-@app.route('/ownedProjects/<string:email>')
-def ownedProjects(email: str):
-    user = User()
-    user_json = user.get_owned_projects(email)
-    return json.dumps(user_json)
 
 @app.route('/createuser', methods=['POST'])
 def createuser():
@@ -101,6 +102,15 @@ def updateuser():
         return json.dumps({"Status Code": 409, "Message": "User didnt update!"}), 409
     else:
         return json.dumps({"Status Code": 404, "Message": "Success!"}), 404
+
+@app.route('/deleteuser/<string:email>')
+def deleteuser(email : str):
+    u1 = User()
+    deleted = u1.delete_user(email)
+    if deleted == 200:
+        return json.dumps({"Status Code": 200, "Message": "Success!"}), 200
+    else:
+        return json.dumps({"Status Code": 404, "Message": "Error!"}), 404
     
 @app.route('/inbox/<string:user>')
 def inbox(user : str):

@@ -28,13 +28,11 @@ const ProfileTabs = () => {
         const work = data.result[0].work_experience
         setUserWork(work)
 
-        const resp1 = await fetch('http://127.0.0.1:5000/currentProjects/'+email1)
-        const data1 = await resp1.json();
-        setCurrentProject(data1.result);
+        const cproject = data.result[0].current_projects
+        setCurrentProject(cproject);
 
-        const resp2 = await fetch('http://127.0.0.1:5000/ownedProjects/'+email1)
-        const data2 = await resp2.json();
-        setOwnedProjects(data2.result);
+        const oproject = data.result[0].owned_projects
+        setOwnedProjects(oproject);
         
       };
       if (hasFetchedData.current === false) {

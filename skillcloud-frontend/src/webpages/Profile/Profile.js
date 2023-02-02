@@ -1,10 +1,11 @@
 import React, { useEffect, useState } from 'react'
 import { useParams, useNavigate } from 'react-router-dom'
 
-import { collection, query, where, getDocs } from "firebase/firestore";
+import { collection, query, where, getDocs, deleteDoc } from "firebase/firestore";
 import { db } from "../../firebase";
-import { getStorage, ref, getDownloadURL } from "firebase/storage";
-
+import { getStorage, ref, getDownloadURL, deleteObject } from "firebase/storage";
+import { UserAuth } from '../../context/AuthContext'
+import { auth } from '../../firebase'
 
 import Sidebar from "../../components/Sidebar";
 import ProfileTabs from '../../components/Profile/ProfileTabs';
@@ -19,6 +20,9 @@ const Profile = () => {
     const [emailUser, setEmailUser] = useState({});
     const [currentUser, setCurrentUser] = useState("");
     const [profileName, setProfileName] = useState("");
+    const { createUser, deleteAUser } = UserAuth()
+    
+
 
     const [photo, setPhoto] = useState("../../assets/profiles/undefined.jpg");
 
@@ -36,6 +40,12 @@ const Profile = () => {
         setPhoto(url);
     }
     getProfilePic();
+
+    // const deleteProfilePic = async () => {
+    //     const storage = getStorage();
+    //     const desertRef = ref(storage, `profile/${profileName}`);
+    //     await deleteObject(desertRef);
+    // }
            
     // const handleClick = async () => {
     //     const q = query(collection(db, "users"),where("email", "==", email.email));
@@ -55,6 +65,20 @@ const Profile = () => {
     const editProfile = () => {
         navigate("/editprofile", { state: { email: localStorage.getItem("email"), details: userData} })
     }
+    
+    const deleteUser = async () => {
+        if (window.confirm("Are you sure you want to delete your profile?")) {
+            await fetch('http://localhost:5000/deleteuser/'+currentEmail)
+            await deleteAUser(auth.currentUser)
+            // const q = query(collection(db, "users"),where("email", "==", currentEmail));
+            // await deleteDoc(q);
+            // const q1 = query(collection(db, "messages"),where("uid", "==", auth.currentUser.uid));
+            // await deleteDoc(q1);
+            // await deleteProfilePic()
+            // navigate("/")
+        }
+      }
+
 
     useEffect(() => {
       const fetchData = async () => {
@@ -99,6 +123,7 @@ const Profile = () => {
                     <div className="profile-button">
                         {/* {email.email !== localStorage.getItem('email') ? <button type="button" onClick={handleClick}>Send Message </button> : <button type="button" onClick={editProfile}>Edit Profile </button>} */}
                         {email.email !== localStorage.getItem('email') ? <div></div> : <button type="button" onClick={editProfile}>Edit Profile </button>}
+                        {email.email !== localStorage.getItem('email') ? <div></div> : <button type="button" style={{"backgroundColor" : "red"}} onClick={deleteUser}>Delete Profile </button>}
                     </div>
                     </div>
                     <div className="p-container-2">

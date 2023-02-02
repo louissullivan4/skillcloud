@@ -175,6 +175,11 @@
     color: steelblue;
 }
 
+.button-inline {
+    display: flex;
+    flex-direction: row;
+}
+
 table {
     display: flex;
     flex-direction: column;

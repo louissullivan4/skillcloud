@@ -8,17 +8,22 @@ function Project() {
     const [projectData, setProjectData] = useState([]);
     let navigate = useNavigate();
 
-    const handleClick = () =>{ 
-        // make a poppup appear
-        
-    } 
+    const handleClick = () => {
+    }
 
     const handleEdit = () =>{
       if (window.confirm("You are about to edit this project. All previous roles fufilled by users will be deleted. Are you sure you want to continue?")) {
         navigate("/editproject", { state: { id: projectId.id, details: projectData} })
       }
     }
-    
+
+    const handleDelete = async () => {
+      if (window.confirm("Are you sure you want to delete this project?")) {
+          await fetch('http://localhost:5000/deleteproject/'+projectId.id)
+          navigate("/home")
+      }
+    }
+
     useEffect(() => {
       const fetchData = async () => {
         const resp = await fetch('http://127.0.0.1:5000/project/'+projectId.id)
@@ -72,7 +77,10 @@ function Project() {
                 </tbody>
               </table>
           </div>
-          {localStorage.getItem("email") === projectData.author ? <button type="button" onClick={handleEdit}>Edit Project  </button> : projectData.state === 'Open' ? <button type="button" onClick={handleClick}>Apply Here  </button>: <div></div>}
+          <div className="button-inline">
+            {localStorage.getItem("email") === projectData.author ? <button type="button" onClick={handleEdit}>Edit Project  </button> : projectData.state === 'Open' ? <button type="button" onClick={handleClick}>Apply Here  </button>: <div></div>}
+            {localStorage.getItem("email") === projectData.author ? <button type="button" style={{"marginLeft": "1em", "backgroundColor" : "red"}} onClick={handleDelete}>Delete Project  </button> : <div></div>}
+          </div>
           </div>
         </div>
       </div>

@@ -8,6 +8,7 @@ const ProjectForm = () => {
     const navigate = useNavigate();
     const user = localStorage.getItem('email');
     const [spinner, setSpinner] = useState(false); 
+    // const [data, setData] = useState();
     const [projectDetails, setProjectDetails] = useState(
         {roles: [{ 
         role_category: "",
@@ -22,6 +23,13 @@ const ProjectForm = () => {
     const sendData = async () => {
         setSpinner(true);
         const resp = await fetch(`http://127.0.0.1:5000/createproject`,{'method':'POST', headers : {'Content-Type':'application/json'}, body: JSON.stringify(projectDetails)})
+        .then(setSpinner(false));
+        const data = await resp.json();        
+        return data
+      };
+
+      const event_match = async (newData) => {
+        const resp = await fetch(`http://127.0.0.1:5000/eventmatch`,{'method':'POST', headers : {'Content-Type':'application/json'}, body: JSON.stringify(newData)})
         .then(setSpinner(false));
         if (resp.status === 200) {
             alert("Project created successfully");
@@ -58,11 +66,12 @@ const ProjectForm = () => {
         return [valid, message]
     }
 
-    const submitHandler = (e) => {        
+    const submitHandler = async (e) => {        
         e.preventDefault()
         let validated = validateForm()
         if (validated[0]) {
-            sendData()
+            let newData = await sendData()
+            event_match(newData)
             navigate('/home')
         } else {
             alert(validated[1])

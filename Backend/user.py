@@ -50,17 +50,21 @@ class User:
         return experience
 
     def get_experience(self, email):
-        experience = []
-        cursor = mydb.cursor()
-        sql = "SELECT * FROM user_experience WHERE user_email = %s"
-        cursor.execute(sql, (email, ))
-        row = cursor.fetchall()
-        if row == None:
-            return "Error! User does not exist."
-        else:
-            for person in row:
-                experience.append(person)
-        return experience
+        try:
+            experience = []
+            cursor = mydb.cursor()
+            sql = "SELECT * FROM user_experience WHERE user_email = %s"
+            cursor.execute(sql, (email, ))
+            row = cursor.fetchall()
+            if row == None:
+                return "Error! User does not exist."
+            else:
+                for person in row:
+                    experience.append(person)
+            return experience
+        except Exception as e:
+            print(e)
+            return "404"
 
     def create_education(self, email, education):
         cursor = mydb.cursor()
@@ -78,17 +82,22 @@ class User:
         return education
 
     def get_education(self, email):
-        education = []
-        cursor = mydb.cursor()
-        sql = "SELECT * FROM user_education WHERE user_email = %s"
-        cursor.execute(sql, (email, ))
-        row = cursor.fetchall()
-        if row == None:
-            return "Error! User does not exist."
-        else:
-            for person in row:
-                education.append(person)
-        return education
+        try:
+            education = []
+            cursor = mydb.cursor()
+            sql = "SELECT * FROM user_education WHERE user_email = %s"
+            cursor.execute(sql, (email, ))
+            row = cursor.fetchall()
+            if row == None:
+                return "Error! User does not exist."
+            else:
+                for person in row:
+                    education.append(person)
+            return education
+        except Exception as e:
+            print(e)
+            return "404"
+
     
     def update_education(self, email, education):
         cursor = mydb.cursor()
@@ -153,26 +162,30 @@ class User:
 
     def get_user(self, email):
         cursor = mydb.cursor()
-        cursor.execute("SELECT * FROM users WHERE email = %s", (email, ))
-        row = cursor.fetchone()
-        if row == None:
-            return "Error! User does not exist."
-        else:
-            self.email = row[0]
-            self.fname = row[1]
-            self.lname = row[2]
-            self.city = row[3]
-            self.country = row[4]
-            self.job_title = row[5]
-            self.job_category = row[6]
-            self.job_desc= row[7]
-            self.project_ids = row[8]
-            self.certifications = row[9]
-            self.availability = row[10]
-            self.current_project = row[11]
-            self.work_experience = self.get_experience(email)
-            self.education = self.get_education(email)
-        return (self.email, self.fname, self.lname, self.city, self.country, self.job_title, self.job_category, self.job_desc, self.project_ids, self.certifications, self.availability, self.current_project, self.work_experience, self.education)
+        try :
+            cursor.execute("SELECT * FROM users WHERE email = %s", (email, ))
+            row = cursor.fetchone()
+            if row == None:
+                return "Error! User does not exist."
+            else:
+                self.email = row[0]
+                self.fname = row[1]
+                self.lname = row[2]
+                self.city = row[3]
+                self.country = row[4]
+                self.job_title = row[5]
+                self.job_category = row[6]
+                self.job_desc= row[7]
+                self.project_ids = row[8]
+                self.certifications = row[9]
+                self.availability = row[10]
+                self.current_project = row[11]
+                self.work_experience = self.get_experience(email)
+                self.education = self.get_education(email)
+            return "200"
+        except Exception as e:
+            print(e)
+            return "404"
 
     def update_user(self, requestjson):
         cursor = mydb.cursor()
@@ -204,6 +217,103 @@ class User:
         # except:
         #     return 404
 
+    def delete_user(self, email):
+        try:
+            mycursor = mydb.cursor()
+            sql = "DELETE FROM users WHERE email = %s"
+            val = (email,)
+            mycursor.execute(sql, val)
+            mydb.commit()
+            sql = "DELETE FROM user_education WHERE user_email = %s"
+            val = (email,)
+            mycursor.execute(sql, val)
+            mydb.commit()
+            sql = "DELETE FROM user_experience WHERE user_email = %s"
+            val = (email,)
+            mycursor.execute(sql, val)
+            mydb.commit()
+            sql = "SELECT role_id FROM notifications WHERE user_notified = %s and status = 'accepted'"
+            val = (email,)
+            mycursor.execute(sql, val)
+            roles = mycursor.fetchall()
+            for role in roles:
+                sql = "SELECT roles_filled FROM roles WHERE role_id = %s"
+                val = (role[0],)
+                mycursor.execute(sql, val)
+                roles_filled = mycursor.fetchall()
+                roles_filled = roles_filled[0][0] - 1
+                sql = "UPDATE roles SET roles_filled = %s WHERE role_id = %s"
+                val = (roles_filled, role[0])
+                mycursor.execute(sql, val)
+                mydb.commit()
+            sql = "DELETE FROM notifications WHERE user_notified = %s"
+            val = (email,)
+            mycursor.execute(sql, val)
+            mydb.commit()
+            sql = "DELETE FROM notifications WHERE project_author = %s"
+            val = (email,)
+            mycursor.execute(sql, val)
+            mydb.commit()
+            sql = "DELETE FROM ineligible WHERE user_email = %s"
+            val = (email,)
+            mycursor.execute(sql, val)
+            mydb.commit()
+            sql = "SELECT project_id FROM projects WHERE project_author = %s"
+            val = (email,)
+            mycursor.execute(sql, val)
+            projects = mycursor.fetchall()
+            for project in projects:
+                sql = "DELETE FROM roles WHERE project_id = %s"
+                val = (project[0],)
+                mycursor.execute(sql, val)
+                mydb.commit()
+                sql = "DELETE FROM projects WHERE project_id = %s"
+                val = (project[0],)
+                mycursor.execute(sql, val)
+                mydb.commit()
+            return 200
+        except Exception as e:
+            print(e)
+            return 404
+
+    def get_current_projects(self, email):    
+        cursor = mydb.cursor()
+        sql = "SELECT current_project FROM users WHERE email = %s"
+        cursor.execute(sql, (email, ))
+        row = cursor.fetchall()
+        print(row)
+        if row[0][0] != None:
+            current_project_ids = []
+            for val in row:
+                current_project_ids.append(val[0])
+            projects = []
+            for ids in current_project_ids:
+                sql = "SELECT * FROM projects WHERE project_id = %s"
+                val = (ids, )
+                cursor.execute(sql, val)
+                row = cursor.fetchone()
+                projects.append(row)
+            projects_json = []
+            for val in projects:
+                newVal = {"project_id": val[0], "project_title": val[1], "project_author": val[2], "project_createdate": val[3], "project_startdate": val[4], "project_enddate": val[5], "project_summary": val[6], "project_state": val[7], "project_city": val[8], "project_country": val[9]}
+                projects_json.append(newVal)
+            return projects_json
+        else:
+            projects_json = []
+            return projects_json
+        
+    
+    def get_owned_projects(self, email):
+        cursor = mydb.cursor()
+        sql = "SELECT * FROM projects WHERE project_author = %s"
+        cursor.execute(sql, (email, ))
+        row = cursor.fetchall()
+        projects_json = []
+        for val in row:
+            newVal = {"project_id": val[0], "project_title": val[1], "project_author": val[2], "project_createdate": val[3], "project_startdate": val[4], "project_enddate": val[5], "project_summary": val[6], "project_state": val[7], "project_city": val[8], "project_country": val[9]}
+            projects_json.append(newVal)
+        return projects_json
+
     def get_user_json(self):
         experience_json = []
         for val in self.work_experience:
@@ -219,45 +329,11 @@ class User:
         for val in newcerts:
             newVal = {"certName": val}
             certs.append(newVal)
-        user_json = {"email" : self.email, "fname" : self.fname, "lname" : self.lname, "city" : self.city, "country" : self.country, "job_title" : self.job_title, "job_category" : self.job_category, "job_desc" : self.job_desc, "work_experience" : experience_json, "education" : education_json, "project_ids" : self.project_ids, "certifications" : certs, "availability" : self.availability, "current_project" : self.current_project}
+        user_json = {"email" : self.email, "fname" : self.fname, "lname" : self.lname, "city" : self.city, "country" : self.country, "job_title" : self.job_title, "job_category" : self.job_category, "job_desc" : self.job_desc, "work_experience" : experience_json, "education" : education_json, "project_ids" : self.project_ids, "certifications" : certs, "availability" : self.availability, "current_project" : self.current_project, "current_projects" : self.get_current_projects(self.email), "owned_projects" : self.get_owned_projects(self.email)}
         user.append(user_json)
         user_json = {"result":user}
         return user_json
     
-    def get_current_projects(self, email):    
-        cursor = mydb.cursor()
-        sql = "SELECT project_id FROM notifications WHERE user_notified = %s"
-        val = (email, )
-        cursor.execute(sql, val)
-        row = cursor.fetchall()
-        current_project_ids = []
-        for val in row:
-            current_project_ids.append(val[0])
-        projects = []
-        for ids in current_project_ids:
-            sql = "SELECT * FROM projects WHERE project_id = %s"
-            val = (ids, )
-            cursor.execute(sql, val)
-            row = cursor.fetchone()
-            projects.append(row)
-        projects_json = []
-        for val in projects:
-            newVal = {"project_id": val[0], "project_title": val[1], "project_author": val[2], "project_createdate": val[3], "project_startdate": val[4], "project_enddate": val[5], "project_summary": val[6], "project_state": val[7], "project_city": val[8], "project_country": val[9]}
-            projects_json.append(newVal)
-        projects_json = {"result":projects_json}
-        return projects_json
-    
-    def get_owned_projects(self, email):
-        cursor = mydb.cursor()
-        sql = "SELECT * FROM projects WHERE project_author = %s"
-        cursor.execute(sql, (email, ))
-        row = cursor.fetchall()
-        projects_json = []
-        for val in row:
-            newVal = {"project_id": val[0], "project_title": val[1], "project_author": val[2], "project_createdate": val[3], "project_startdate": val[4], "project_enddate": val[5], "project_summary": val[6], "project_state": val[7], "project_city": val[8], "project_country": val[9]}
-            projects_json.append(newVal)
-        projects_json = {"result":projects_json}
-        return projects_json
         
 # u1 = User()
 # u1.get_owned_projects("sullivanlouis0@gmail.com")
