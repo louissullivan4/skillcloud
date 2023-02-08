@@ -10,20 +10,35 @@ const EditProfile = () => {
     let navigate = useNavigate()
     let project_id = location.state.id
     const [projectData, setProjectData] = useState(location.state.details);
-    const [roles, setRoles] = useState(location.state.details.roles);      
+    const [roles, setRoles] = useState(location.state.details.roles);
+    const [finalInfo, setFinalInfo] = useState();
+
+    const sendData = async () => {
+        const resp = await fetch(`http://127.0.0.1:5000/updateproject`,{'method':'POST', headers : {'Content-Type':'application/json'}, body: JSON.stringify(finalInfo)})
+        const data = await resp.json();        
+        return data
+      };
+
+      const event_match = async (newData) => {
+        const resp = await fetch(`http://127.0.0.1:5000/eventmatch`,{'method':'POST', headers : {'Content-Type':'application/json'}, body: JSON.stringify(newData)})
+        if (resp.status === 200) {
+            alert("Project created successfully");
+            // navigate('/project/' + project_id);
+        } else {
+            alert("Project creation failed. Please try again.");
+        }
+      };
+
+
     const handleSubmit = async (e) => {
         e.preventDefault()
         if (projectData.author === localStorage.getItem('email')) {
-            let finalInfo = {...projectData, roles: roles}
-            const resp = await fetch(`http://127.0.0.1:5000/updateproject`,{'method':'POST', headers : {'Content-Type':'application/json'}, body: JSON.stringify(finalInfo)})
-            if (resp.status === 200) {
-                alert("Project updated successfully");
-                navigate('/project/' + project_id);
-            } else {
-                alert("Project update failed. Please try again.");
-            }
+            setFinalInfo({...projectData, roles: roles})
+            let newData = await sendData()
+            alert("The project will now be created, you will be notified when creation has been completed. Please free to continue using the site.");
+            event_match(newData)
         } else {
-            navigate('/')
+            // navigate('/')
         }
     }
 

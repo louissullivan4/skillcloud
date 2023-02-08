@@ -33,23 +33,21 @@ def projectpage(id: str):
     project_json = project.get_project_json()
     return json.dumps(project_json)
 
-@app.route('/updateproject', methods=['POST'])
-def updateproject():
-    p1 = Project()
-    p1.update_project(request.json)
-    projectvals = p1.get_project_json()
-    delete_role_notifications(projectvals)
-    notified = create_role_notifications(projectvals)
-    if notified == 200:
-        return json.dumps({"Status Code": 200, "Message": "Success!"}), 200
-    else:
-        return json.dumps({"Status Code": 404, "Message": "Error!"}), 404
-
 @app.route('/createproject', methods=['POST'])
 def createproject():
     p1 = Project()
     p1.create_project(request.json)
     projectvals = p1.get_project_json()
+    return json.dumps(projectvals)
+
+@app.route('/updateproject', methods=['POST'])
+def updateproject():
+    p1 = Project()
+    print(request.json)
+    p1.update_project(request.json)
+    projectvals = p1.get_project_json()
+    print(projectvals)
+    delete_role_notifications(projectvals)
     return json.dumps(projectvals)
 
 @app.route('/deleteproject/<string:pid>')
@@ -96,6 +94,7 @@ def updateuser():
     jsonvals = json.loads(request.data)
     updated_user = u1.update_user(jsonvals)
     if updated_user == 200:
+        print("here")
         event_match_user(jsonvals)
         return json.dumps({"Status Code": 200, "Message": "Success!"}), 200
     elif updated_user == 409:

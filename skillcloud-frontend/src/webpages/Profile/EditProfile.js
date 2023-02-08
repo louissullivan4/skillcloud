@@ -30,15 +30,13 @@ const EditProfile = () => {
         if (userData.email === localStorage.getItem('email')) {
             let finalInfo = {...userData, education: education, work_experience: experience, certifications: certs, email: userData.email}
             console.log(finalInfo)
-            const resp = await fetch(`http://127.0.0.1:5000/updateuser`,{'method':'POST', headers : {'Content-Type':'application/json'}, body: JSON.stringify(finalInfo)})
-            if (resp.status === 200) {
-                alert("User updated successfully");
-                navigate('/profile/'+userData.email);
-            } else {
-                alert("User update failed. Please try again.");
-            }
+            fetch(`http://127.0.0.1:5000/updateuser`,{'method':'POST', headers : {'Content-Type':'application/json'}, body: JSON.stringify(finalInfo)})
+            .then(() => { alert("User updated successfully");
+            })
+            alert("User is being updated. You can continue to use the site in the mean time.")
+            navigate('/profile/'+userData.email);
         } else {
-            navigate('/')
+            alert("Error occurred updating user.")
         }
     }
     

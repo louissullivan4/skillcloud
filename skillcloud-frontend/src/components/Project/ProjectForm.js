@@ -29,7 +29,7 @@ const ProjectForm = () => {
       };
 
       const event_match = async (newData) => {
-        const resp = await fetch(`http://127.0.0.1:5000/eventmatch`,{'method':'POST', headers : {'Content-Type':'application/json'}, body: JSON.stringify(newData)})
+        const resp = await fetch(`http://127.0.0.1:5000/proeventmatch`,{'method':'POST', headers : {'Content-Type':'application/json'}, body: JSON.stringify(newData)})
         .then(setSpinner(false));
         if (resp.status === 200) {
             alert("Project created successfully");
@@ -71,8 +71,8 @@ const ProjectForm = () => {
         let validated = validateForm()
         if (validated[0]) {
             let newData = await sendData()
+            alert("The project will now be created, you will be notified when creation has been completed. Please free to continue using the site.");
             event_match(newData)
-            navigate('/home')
         } else {
             alert(validated[1])
         }

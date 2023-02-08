@@ -189,33 +189,33 @@ class User:
 
     def update_user(self, requestjson):
         cursor = mydb.cursor()
-        # try:
-        email = requestjson["email"]
-        fname = requestjson["fname"]
-        lname = requestjson['lname']
-        city = requestjson['city']
-        country = requestjson['country']
-        job_title = requestjson['job_title']
-        job_category = requestjson['job_category']
-        job_desc = requestjson['job_desc']
-        work_experience = requestjson['work_experience']
-        education = requestjson['education']
-        project_ids = None
-        certifications = ""
-        for val in requestjson['certifications']:
-            certifications += val.get('certName') + ","
-        certifications = certifications[:-1]
-        availability = "Open"
-        current_project = None
-        sql = """UPDATE users SET fname = %s, lname = %s, city = %s, country = %s, job_title = %s, job_category = %s, job_desc = %s, project_ids = %s, certifications = %s, availability = %s, current_project = %s WHERE email = %s"""
-        val = (fname, lname, city, country, job_title, job_category, job_desc, project_ids, certifications, availability, current_project, email)
-        cursor.execute(sql, val)
-        mydb.commit()
-        self.update_education(email, education)
-        self.update_experience(email, work_experience)
-        return 200
-        # except:
-        #     return 404
+        try:
+            email = requestjson["email"]
+            fname = requestjson["fname"]
+            lname = requestjson['lname']
+            city = requestjson['city']
+            country = requestjson['country']
+            job_title = requestjson['job_title']
+            job_category = requestjson['job_category']
+            job_desc = requestjson['job_desc']
+            work_experience = requestjson['work_experience']
+            education = requestjson['education']
+            project_ids = None
+            certifications = ""
+            for val in requestjson['certifications']:
+                certifications += val.get('certName') + ","
+            certifications = certifications[:-1]
+            availability = "Open"
+            current_project = None
+            sql = """UPDATE users SET fname = %s, lname = %s, city = %s, country = %s, job_title = %s, job_category = %s, job_desc = %s, project_ids = %s, certifications = %s, availability = %s, current_project = %s WHERE email = %s"""
+            val = (fname, lname, city, country, job_title, job_category, job_desc, project_ids, certifications, availability, current_project, email)
+            cursor.execute(sql, val)
+            mydb.commit()
+            self.update_education(email, education)
+            self.update_experience(email, work_experience)
+            return 200
+        except:
+            return 404
 
     def delete_user(self, email):
         try:
@@ -281,7 +281,6 @@ class User:
         sql = "SELECT current_project FROM users WHERE email = %s"
         cursor.execute(sql, (email, ))
         row = cursor.fetchall()
-        print(row)
         if row[0][0] != None:
             current_project_ids = []
             for val in row:
