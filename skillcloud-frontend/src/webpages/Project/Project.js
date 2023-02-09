@@ -24,6 +24,13 @@ function Project() {
       }
     }
 
+    const handleClose = async () => {
+      if (window.confirm("Are you sure you want to close this project? It will be added to your closed projects list.")) {
+          await fetch('http://localhost:5000/closeproject/'+projectId.id)
+          navigate("/home")
+      }
+    }
+
     useEffect(() => {
       const fetchData = async () => {
         const resp = await fetch('http://127.0.0.1:5000/project/'+projectId.id)
@@ -39,7 +46,10 @@ function Project() {
       <div className="project">
         <div className="project-heading">
           <div className="project-heading-title">
-            <h1>{projectData.title}</h1>
+            <div className="project-button">
+              <h1>{projectData.title}</h1>
+              {localStorage.getItem("email") === projectData.author &&  projectData.state === 'Open' ? <button type="button" style={{"marginLeft": "1em", "backgroundColor" : "green"}} onClick={handleClose}>Close Project</button> : <div></div>}
+            </div>
             <div>#{projectData.id}</div>
             {projectData.state === 'Open' ? <div style={{color: "green"}}>State: {projectData.state}</div> : <div style={{color: "red"}}>State: {projectData.state}</div>}
           </div>
@@ -78,7 +88,7 @@ function Project() {
               </table>
           </div>
           <div className="button-inline">
-            {localStorage.getItem("email") === projectData.author ? <button type="button" onClick={handleEdit}>Edit Project  </button> : projectData.state === 'Open' ? <button type="button" onClick={handleClick}>Apply Here  </button>: <div></div>}
+            {localStorage.getItem("email") === projectData.author &&  projectData.state === 'Open' ? <button type="button" onClick={handleEdit}>Edit Project  </button> : projectData.state === 'Open' ? <button type="button" onClick={handleClick}>Apply Here  </button>: <div></div>}
             {localStorage.getItem("email") === projectData.author ? <button type="button" style={{"marginLeft": "1em", "backgroundColor" : "red"}} onClick={handleDelete}>Delete Project  </button> : <div></div>}
           </div>
           </div>

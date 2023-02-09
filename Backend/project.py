@@ -165,6 +165,38 @@ class Project:
         except Exception as e:
             print(e)
             return 404
+
+    def close_project(self, pid):
+        try:
+            cursor = mydb.cursor()
+            sql = "UPDATE projects SET project_state = %s WHERE project_id = %s"
+            val = ("Closed", pid)
+            cursor.execute(sql, val)
+            mydb.commit()
+            sql = "SELECT email, project_ids FROM users WHERE current_project = %s"
+            val = (pid,)
+            cursor.execute(sql, val)
+            row = cursor.fetchall()
+            if len(row) > 0:
+                for user in row:
+                    if user[1] != None:
+                        list_ids = user[1].split(",")
+                    else:
+                        list_ids = []
+                    list_ids.append(pid)
+                    sql = "UPDATE users SET current_project = null, availability = 'Open', project_ids = %s WHERE email = %s"
+                    val = (",".join(list_ids), user[0])
+                    cursor.execute(sql, val)
+                    mydb.commit()
+            sql = "DELETE FROM notifications WHERE project_id = %s"
+            val = (pid,)
+            cursor.execute(sql, val)
+            mydb.commit()
+            return 200
+        except Exception as e:
+            print(e)
+            return 404
+
                         
     def get_project(self, id):
         cursor = mydb.cursor()

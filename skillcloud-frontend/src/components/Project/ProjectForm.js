@@ -29,7 +29,7 @@ const ProjectForm = () => {
       };
 
       const event_match = async (newData) => {
-        const resp = await fetch(`http://127.0.0.1:5000/proeventmatch`,{'method':'POST', headers : {'Content-Type':'application/json'}, body: JSON.stringify(newData)})
+        const resp = await fetch(`http://127.0.0.1:5000/eventmatch`,{'method':'POST', headers : {'Content-Type':'application/json'}, body: JSON.stringify(newData)})
         .then(setSpinner(false));
         if (resp.status === 200) {
             alert("Project created successfully");

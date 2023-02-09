@@ -1,6 +1,5 @@
 import React, { useState } from 'react';
 import { useNavigate, useLocation } from 'react-router-dom'
-import BeatLoader from 'react-spinners/BeatLoader'
 
 import {
     setDoc,
@@ -16,10 +15,11 @@ const AcceptDetails = () => {
     const location = useLocation()
     let navigate = useNavigate();
     const state = location.state
-    const [spinner, setSpinner] = useState(false);
 
     const [photo, setPhoto] = useState("")
     const { createUser, updateProfilePic } = UserAuth()
+
+    console.log("state", state)
     
     const addUser = async () => {
         await createUser(state.email, state.password)
@@ -53,8 +53,6 @@ const AcceptDetails = () => {
 
     
     return (
-        ( spinner === true ? 
-            <BeatLoader color="#36d7b7" /> :
         <div className='create-profile-page'>
             <div className='create-profile-heading'>
                 <div>Create Profile</div>
@@ -62,12 +60,11 @@ const AcceptDetails = () => {
             <div className='create-profile-title'>Are these details correct?</div>
             
             <div className='create-profile-final'>
-                <div className="edit-profile">
-                    <label htmlFor="file">Add Profile Image</label>
-                    <img src={photo} style={{"height": "130px", "width": "100px", "marginRight":"1.5em"}}/>
-                    <input type="file" onChange={handleChange}/>
-                </div>
                 <div className='text'>Name: {state.fname} {state.lname}</div>
+                <div className="inline-create">
+                    <label htmlFor="file">Profile Image:</label>
+                    <input type="file" onChange={handleChange} style={{"marginLeft" : "2em"}}/>
+                </div>
                 <div className='text'>Location: {state.city}, {state.country}</div>
                 <div className='text'>Profession: {state.job_title}</div>
                 <div className='text'>Profession Category: {state.job_category}</div>
@@ -79,14 +76,14 @@ const AcceptDetails = () => {
                         <div className='text'>{edu.edu_type} {edu.edu_degree} at {edu.edu_school}</div>
                         <div>{edu.edu_desc}</div>
                     </div>
-                ))};
+                ))}
                 {state.work_experience.map((exp) => (
                     <div key={exp.experience_name}>
                         <div>{exp.experience_title} at {exp.experience_name}</div>
                         <div>{exp.experience_start} - {exp.experience_end}</div>
                         <div>{exp.experience_desc}</div>
                     </div>
-                ))};
+                ))}
                 <div className='button-group'>
                     <button type="button" onClick={goBack} style={{"backgroundColor": "darkblue"}}>
                             Back
@@ -98,6 +95,5 @@ const AcceptDetails = () => {
             </div>
         </div>
         )
-    );
 }
 export default AcceptDetails;

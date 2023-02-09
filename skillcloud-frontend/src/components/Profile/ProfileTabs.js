@@ -33,6 +33,10 @@ const ProfileTabs = () => {
 
         const oproject = data.result[0].owned_projects
         setOwnedProjects(oproject);
+
+        const pprojects = data.result[0].previous_projects
+        console.log(data.result[0].previous_projects)
+        setUserPrevProjects(pprojects);
         
       };
       if (hasFetchedData.current === false) {
@@ -40,6 +44,16 @@ const ProfileTabs = () => {
         hasFetchedData.current = true;
       } 
     }, []);
+
+    async function leaveProject(pid) {
+        let projectjson = await fetch('http://127.0.0.1:5000/leaveproject/'+email.email+'/'+pid)
+        .then(() => {
+            alert("You have left the project.");
+        })
+        fetch(`http://127.0.0.1:5000/eventmatch`,{'method':'POST', headers : {'Content-Type':'application/json'}, body: JSON.stringify(projectjson)})
+    }
+
+
     const [activeIndex, setActiveIndex] = useState(1);
     const handleClick = (index) => setActiveIndex(index);
     const checkActive = (index, className) => activeIndex === index ? className : "";
@@ -65,6 +79,7 @@ const ProfileTabs = () => {
                                         </div>
                                     </div>
                                 </Link>
+                                <button className="leave-button" onClick={() => leaveProject(userCurrentProject.project_id)}>Leave</button>
                             </div>
                         ))}
                     </div>
@@ -97,11 +112,11 @@ const ProfileTabs = () => {
                             <div className="p-card-body">
                             {userPrevProjects.map((userPrevProjects, k) => (
                             <div className='p-col' key={k}>
-                                <Link to={`/project/${userPrevProjects.id}`}>
+                                <Link to={`/project/${userPrevProjects.project_id}`}>
                                 <div className='p-card'>
-                                    <div className='p-card-header'>{userPrevProjects.title}</div>
+                                    <div className='p-card-header'>{userPrevProjects.project_title}</div>
                                     <div className='p-card-body'>
-                                        <div className='p-card-text'>{userPrevProjects.summary}...</div>
+                                        <div className='p-card-text'>{userPrevProjects.project_summary}...</div>
                                     </div>
                                 </div>
                                 </Link>

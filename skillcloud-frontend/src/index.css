@@ -2,7 +2,6 @@
     margin: 0;
     padding: 0;
     font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
-
 }
  
 .app {
@@ -10,8 +9,9 @@
     flex-direction: row;
     flex-wrap: nowrap;
     background-color: #f2f2f2;
-    height: 100vh;
     margin-left : 4em;
+    min-height: 100vh
+
 }
 
 /* Home / Project Tiles */
@@ -45,6 +45,23 @@
 
 .page-heading button:hover {
     background-color: #6696ff;
+}
+
+.project-button button{
+    display: flex;
+    flex-direction: row;
+    flex-wrap: nowrap;
+    color: white;
+    border: none;
+    padding: 0.5em 1em;
+    border-radius: 10px;
+    cursor: pointer;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+    font-size: 1.25em;
+    position:absolute; 
+    margin-top: 1em;
+    left:85%;
+    top:0px;
 }
 
 .card-wrapper {
@@ -133,7 +150,7 @@
     justify-content: space-between;
 }
 
-.project-body button {
+.project-body button, .edit-body button{
     background-color: #0049e6;
     color: white;
     border: none;
@@ -145,7 +162,7 @@
     margin-top: 2em;
 }
 
-.project-body button:hover {
+.project-body button:hover, .edit-body button:hover {
     background-color: #6696ff;
 }
 
@@ -288,21 +305,6 @@ tr:nth-child(even) {
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
 }
 
-.education-edit {
-    display: flex;
-    flex-direction: column;
-    flex-wrap: nowrap;
-    justify-content: space-around;
-    padding: 0.5em;
-}
-
-.education-edit input, .education-edit select, .education-edit textarea {
-    margin: 1em;
-    padding: 0.5em;
-    border-radius: 10px;
-    border: none;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
-}
 
 .input-role-title {
     width: 20%;
@@ -424,6 +426,17 @@ tr:nth-child(even) {
     margin-top: 2em;
     margin-left: 2em;
 
+}
+
+.leave-button {
+    background-color: red;
+    color: white;
+    border: none;
+    padding: 0.5em 1em;
+    border-radius: 10px;
+    cursor: pointer;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+    font-size: 1em;
 }
 
 /* Inbox Messages*/
@@ -720,13 +733,49 @@ tr:nth-child(even) {
     margin-top: 5em;
 }
 
+/* Edit Profile */
+
 .edit-profile {
+    margin: 2em;
+}
+
+.edit-body {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+}
+
+.edit-one {
     display: flex;
     flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    margin-top: 2em;
+    flex-wrap: wrap;
+    height: 50%;
 }
+
+.edit-two {
+    display: flex;
+    flex-direction: column;
+    flex-wrap: wrap;
+    height: 50%;
+}
+
+
+.education-edit {
+    display: flex;
+    flex-direction: column;
+    flex-wrap: nowrap;
+    justify-content: space-around;
+    padding: 0.5em;
+}
+
+.education-edit input, .education-edit select, .education-edit textarea {
+    margin: 1em;
+    padding: 0.5em;
+    border-radius: 10px;
+    border: none;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+}
+
 
 /* Chat App */
 

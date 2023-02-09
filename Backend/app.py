@@ -59,6 +59,27 @@ def deleteproject(pid : str):
     else:
         return json.dumps({"Status Code": 404, "Message": "Error!"}), 404
 
+@app.route('/leaveproject/<string:email>/<string:pid>')
+def leaveproject(email : str, pid : str):
+    u1 = User()
+    leave = u1.leave_project(email, pid)
+    if leave == 200:
+        p1 = Project()
+        p1.get_project(pid)
+        project_json = p1.get_project_json()
+        return json.dumps(project_json)
+    else:
+        return json.dumps({"Status Code": 404, "Message": "Error!"}), 404
+
+@app.route('/closeproject/<string:pid>')
+def closeproject(pid : str):
+    p1 = Project()
+    closed = p1.close_project(pid)
+    if closed == 200:
+        return json.dumps({"Status Code": 200, "Message": "Success!"}), 200
+    else:
+        return json.dumps({"Status Code": 404, "Message": "Error!"}), 404
+
 @app.route('/eventmatch', methods=['POST'])
 def eventmatchapi():
     notified = create_role_notifications(request.json)
@@ -72,8 +93,8 @@ def profilepage(email: str):
     user = User()
     user.get_user(email)
     user_json = user.get_user_json()
+    # print(user_json)
     return json.dumps(user_json)
-
 
 @app.route('/createuser', methods=['POST'])
 def createuser():

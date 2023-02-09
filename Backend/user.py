@@ -276,9 +276,34 @@ class User:
             print(e)
             return 404
 
-    def get_current_projects(self, email):    
+    def get_current_projects(self, email):
         cursor = mydb.cursor()
         sql = "SELECT current_project FROM users WHERE email = %s"
+        cursor.execute(sql, (email, ))
+        row = cursor.fetchall()
+        if len(row) == 0:
+            current_project_ids = []
+            for val in row:
+                current_project_ids.append(val[0])
+            projects = []
+            for ids in current_project_ids:
+                sql = "SELECT * FROM projects WHERE project_id = %s"
+                val = (ids, )
+                cursor.execute(sql, val)
+                row = cursor.fetchone()
+                projects.append(row)
+            projects_json = []
+            for val in projects:
+                newVal = {"project_id": val[0], "project_title": val[1], "project_author": val[2], "project_createdate": val[3], "project_startdate": val[4], "project_enddate": val[5], "project_summary": val[6], "project_state": val[7], "project_city": val[8], "project_country": val[9]}
+                projects_json.append(newVal)
+            return projects_json
+        else:
+            projects_json = []
+            return projects_json
+
+    def get_previous_projects(self, email):    
+        cursor = mydb.cursor()
+        sql = "SELECT project_ids FROM users WHERE email = %s"
         cursor.execute(sql, (email, ))
         row = cursor.fetchall()
         if row[0][0] != None:
@@ -301,7 +326,6 @@ class User:
             projects_json = []
             return projects_json
         
-    
     def get_owned_projects(self, email):
         cursor = mydb.cursor()
         sql = "SELECT * FROM projects WHERE project_author = %s"
@@ -312,6 +336,35 @@ class User:
             newVal = {"project_id": val[0], "project_title": val[1], "project_author": val[2], "project_createdate": val[3], "project_startdate": val[4], "project_enddate": val[5], "project_summary": val[6], "project_state": val[7], "project_city": val[8], "project_country": val[9]}
             projects_json.append(newVal)
         return projects_json
+
+    def leave_project(self, email, project_id):
+        try:
+            cursor = mydb.cursor()
+            sql = "UPDATE users SET current_project = null, availability = 'Open' WHERE email = %s"
+            val = (email,)
+            cursor.execute(sql, val)
+            mydb.commit()
+            sql = "SELECT role_id FROM notifications WHERE user_notified = %s AND project_id = %s AND status = 'accepted'"
+            val = (email, project_id)
+            cursor.execute(sql, val)
+            role_id = cursor.fetchone()
+            if role_id is not None:
+                sql = "UPDATE notifications SET status = 'pending', user_notified = null, type = 'project_role_wait' WHERE role_id = %s"
+                val = (role_id[0],)
+                cursor.execute(sql, val)
+                mydb.commit()
+                sql = "UPDATE roles SET roles_filled = roles_filled - 1 WHERE role_id = %s"
+                val = (role_id[0],)
+                cursor.execute(sql, val)
+                mydb.commit()
+                sql = "INSERT into ineligible (user_email, role_id) VALUES (%s, %s)"
+                val = (email, role_id[0])
+                cursor.execute(sql, val)
+                mydb.commit()
+                return 200
+        except Exception as e:
+            print(e)
+            return 404            
 
     def get_user_json(self):
         experience_json = []
@@ -328,7 +381,7 @@ class User:
         for val in newcerts:
             newVal = {"certName": val}
             certs.append(newVal)
-        user_json = {"email" : self.email, "fname" : self.fname, "lname" : self.lname, "city" : self.city, "country" : self.country, "job_title" : self.job_title, "job_category" : self.job_category, "job_desc" : self.job_desc, "work_experience" : experience_json, "education" : education_json, "project_ids" : self.project_ids, "certifications" : certs, "availability" : self.availability, "current_project" : self.current_project, "current_projects" : self.get_current_projects(self.email), "owned_projects" : self.get_owned_projects(self.email)}
+        user_json = {"email" : self.email, "fname" : self.fname, "lname" : self.lname, "city" : self.city, "country" : self.country, "job_title" : self.job_title, "job_category" : self.job_category, "job_desc" : self.job_desc, "work_experience" : experience_json, "education" : education_json, "project_ids" : self.project_ids, "certifications" : certs, "availability" : self.availability, "current_project" : self.current_project, "current_projects" : self.get_current_projects(self.email), "owned_projects" : self.get_owned_projects(self.email), "previous_projects" : self.get_previous_projects(self.email)}
         user.append(user_json)
         user_json = {"result":user}
         return user_json

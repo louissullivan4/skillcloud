@@ -2,63 +2,37 @@ from db_connect import connect_db
 
 mydb = connect_db()
 
-def deleteuser(email):
-    mycursor = mydb.cursor()
-    sql = "DELETE FROM users WHERE email = %s"
-    val = (email,)
-    mycursor.execute(sql, val)
-    mydb.commit()
-    sql = "DELETE FROM user_education WHERE user_email = %s"
-    val = (email,)
-    mycursor.execute(sql, val)
-    mydb.commit()
-    sql = "DELETE FROM user_experience WHERE user_email = %s"
-    val = (email,)
-    mycursor.execute(sql, val)
-    mydb.commit()
-    sql = "SELECT role_id FROM notifications WHERE user_notified = %s and status = 'accepted'"
-    val = (email,)
-    mycursor.execute(sql, val)
-    roles = mycursor.fetchall()
-    for role in roles:
-        sql = "SELECT roles_filled FROM roles WHERE role_id = %s"
-        val = (role[0],)
-        mycursor.execute(sql, val)
-        roles_filled = mycursor.fetchall()
-        roles_filled = roles_filled[0][0] - 1
-        sql = "UPDATE roles SET roles_filled = %s WHERE role_id = %s"
-        val = (roles_filled, role[0])
-        mycursor.execute(sql, val)
-        mydb.commit()
-    sql = "DELETE FROM notifications WHERE user_notified = %s"
-    val = (email,)
-    mycursor.execute(sql, val)
-    mydb.commit()
-    sql = "DELETE FROM notifications WHERE project_author = %s"
-    val = (email,)
-    mycursor.execute(sql, val)
-    mydb.commit()
-    sql = "DELETE FROM ineligible WHERE user_email = %s"
-    val = (email,)
-    mycursor.execute(sql, val)
-    mydb.commit()
-    sql = "SELECT project_id FROM projects WHERE project_author = %s"
-    val = (email,)
-    mycursor.execute(sql, val)
-    projects = mycursor.fetchall()
-    for project in projects:
-        sql = "DELETE FROM roles WHERE project_id = %s"
-        val = (project[0],)
-        mycursor.execute(sql, val)
-        mydb.commit()
-        sql = "DELETE FROM projects WHERE project_id = %s"
-        val = (project[0],)
-        mycursor.execute(sql, val)
-        mydb.commit()
-    return 200
+def leave_project(email, project_id):    
+        cursor = mydb.cursor()
+        sql = "SELECT role_id FROM notifications WHERE user_notified = %s AND project_id = %s AND status = 'accepted'"
+        val = (email, project_id)
+        cursor.execute(sql, val)
+        role_id = cursor.fetchone()
+        if role_id is None:
+            return "You are not a member of this project"
+        else:
+            sql = "UPDATE notifications SET status = 'pending', user_notified = null, type = 'project_role_wait' WHERE role_id = %s"
+            val = (role_id[0],)
+            cursor.execute(sql, val)
+            mydb.commit()
+            sql = "UPDATE roles SET roles_filled = roles_filled - 1 WHERE role_id = %s"
+            val = (role_id[0],)
+            cursor.execute(sql, val)
+            mydb.commit()
+            sql = "UPDATE users SET current_project = null, availability = 'Open' WHERE email = %s"
+            val = (email,)
+            cursor.execute(sql, val)
+            mydb.commit()
+            return "You have left the project"
 
 
-    
-    
-    
-print(deleteuser("katie@gmail.com"))
+# print(leave_project("john@gmail.com", "06914814"))
+
+            
+
+           
+
+
+        
+
+# print(get_previous_projects("john@gmail.com"))
