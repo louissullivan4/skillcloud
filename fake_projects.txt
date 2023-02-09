@@ -1,0 +1,116 @@
+Question:
+Can you write me a project posting about needing a team of people to make a ___________. Here is an example of the format i want the job posting to be in. 
+Title: Gym Workout Application
+Project Summary: The application will provide users with user generated programs that will create a self sustaining ecosystem of new workouts for fitness, bodybuilding or any other type of sport. It will allow users to stay consistent with set plans and how to adjust the workout to cater for their needs.
+Roles:
+Person 1:
+- Title: Software Engineer (App Development)
+- Desc: A developer who has experience in IOS app development. Must have good knowledge on data basing practices too.
+Person 2:
+- Title: UX Designer
+- Desc: A designer with proven work in mobile or web application design. Portfolio required.
+Person 3:
+- Title: Digital Marketing Strategist
+- Desc: A person who has experience working with social media advertising. Fitness advertising is a want but not a need.
+
+====================================================================================================
+Title: WhatsApp Competitor Development Team
+Project Summary: We are seeking a team of professionals to develop a new messaging app that will rival WhatsApp in terms of functionality and user experience. The app will feature a range of advanced features such as end-to-end encryption, group chat capabilities, and seamless integration with other popular apps and services. The ultimate goal is to create a messaging platform that is both secure and user-friendly.
+
+Roles:
+
+Title: Software Engineer
+Desc: A developer with experience in building messaging apps and a strong understanding of end-to-end encryption. Should be proficient in several programming languages and have experience with cloud infrastructure.
+
+Title: UX/UI Designer
+Desc: A designer with a strong portfolio of work in mobile app design, who can create intuitive and visually pleasing interfaces for the messaging app.
+
+Title: Marketing and Growth Lead
+Desc: A marketer with experience in social media advertising and a solid understanding of how to create and execute a growth strategy for a new app.
+
+Title: Quality Assurance Engineer
+Desc: A QA Engineer who has experience in testing and quality assurance of messaging apps and has knowledge of automated testing.
+
+====================================================================================================
+Title: Skin Disease Detection System Using CNN
+Project Summary: This project aims to develop a skin disease detection system using convolutional neural networks (CNNs). The system will be able to classify different types of skin diseases based on images and provide an accurate diagnosis to users. The system will be accessible via a mobile application, allowing users to easily take a picture of their skin and receive a diagnosis.
+
+Roles:
+Title: Machine Learning Engineer
+Desc: A developer with experience in building and training CNNs for image classification. Must have good knowledge in deep learning and computer vision.
+
+Title: Data Scientist
+Desc: A data scientist with experience in data preprocessing, feature extraction, and data augmentation for image classification. Knowledge in medical imaging is a plus.
+
+Title: Mobile App Developer
+Desc: A developer with experience in developing mobile applications for Android and iOS. Knowledge in integrating machine learning models into mobile apps is a plus.
+
+Title: Medical Expert
+Desc: A medical professional with expertise in dermatology. Will be responsible for providing medical guidance and validation of the system's diagnoses.
+
+====================================================================================================
+
+Title: Two Floor House Construction
+Project Summary: We are seeking a team of experienced professionals to design and construct a two floor house in a specified location. The house will include standard amenities such as bedrooms, bathrooms, kitchen, living room, and garage. The house will be built to local building codes and regulations.
+
+Roles:
+
+Title: Architect
+Desc: A professional with experience in designing residential buildings and creating detailed plans and blueprints.
+
+Title: General Contractor
+Desc: A professional with experience in managing the construction process, including coordinating subcontractors and overseeing all aspects of the project.
+
+Title: Carpenter
+Desc: A professional with experience in constructing and installing wooden structures, including framing and finishing.
+
+Title: Electrician
+Desc: A professional with experience in installing and maintaining electrical systems in residential buildings.
+
+Title: Plumber
+Desc: A professional with experience in installing and maintaining plumbing systems in residential buildings.
+
+Title: Landscaper
+Desc: A professional with experience in designing and maintaining outdoor spaces, including planting, grading, and installing irrigation systems.
+
+====================================================================================================
+
+Title: Gibbon Monkey Documentary
+Project Summary: We are creating a documentary about the gibbon monkey, a primate species found in Southeast Asia. The documentary will focus on the conservation efforts to save these endangered animals and the unique characteristics of their behavior and habitat.
+
+Roles:
+Title: Director
+Desc: A film director with experience in creating documentaries. Must have a strong understanding of storytelling and visual storytelling.
+
+Title: Cinematographer
+Desc: A skilled camera operator with experience in capturing natural landscapes and wildlife. Must be able to work in remote locations.
+
+Title: Sound Engineer
+Desc: A sound engineer with experience in capturing and editing natural soundscapes.
+
+Title: Research Coordinator
+Desc: A person who has experience in conducting research on gibbons and will be responsible for coordinating and organizing the research aspect of the project.
+
+Title: Editor
+Desc: A video editor with experience in cutting and assembling footage into a cohesive story.
+
+====================================================================================================
+
+Title: Nike Photo Shoot
+Project Summary: We are seeking a team of professionals to help us create visually stunning and high-quality images for the clothing brand Nike. The shoot will focus on showcasing the latest collections and styles.
+
+Roles:
+Title: Photographer
+Desc: A professional photographer with experience in fashion and commercial photography. Must have a strong portfolio showcasing their work.
+
+Title: Art Director
+Desc: A creative professional with experience in art direction and styling. Must have experience in fashion photography and a strong understanding of visual storytelling.
+
+Title: Model
+Desc: Professional models with experience in fashion photography and a strong understanding of posing and movement.
+
+Title: Hair and Makeup Artist
+Desc: A professional hair and makeup artist with experience in fashion and beauty photography. Must have a strong portfolio showcasing their work.
+
+Title: Production Assistant
+Desc: A professional with experience in production and coordination of photo shoots. They will be responsible for assisting the team and ensuring that the shoot runs smoothly.

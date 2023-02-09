@@ -1,0 +1,152 @@
+Question:
+
+Can you write me three person's profile who's profession is Software Engineer. Here is an example of the format I want the profile to be in. 
+Email: jimmy@gmail.com
+Name: Jimmy Lee
+City: Cork
+Country: Ireland
+Profession: Software Engineer
+Describe your professional profile: Consider myself dedicated and cooperative. Often take up leadership rolls within team projects. A strength of mine is my ability to take a step back and look at the bigger picture when solving a problem. Interned at IBM for six months during my degree where my focus was on cloud application development.
+Certifications: AWS Certified Developer Associate
+Education:
+ Degree 1:
+    Level: BSc
+    Degree Name: Computer Science
+    School: University College Cork
+    Brief Description of Modules: Programming, Ethical Hacking, Cloud Infrastructure, Operating Systems, Relational Databases, Software Engineering
+Work Experience:
+  Work 1:
+    Company Name: IBM
+    Job Title: Software Engineer Intern
+    Brief Description of Job: For the work placement programme during the degree, joined the APIConnect team in IBM. Assisted a team of eight people on a business automation tool named Watson Orchestrate. Spent a large majority of the time developing a cloud computing driven application called APICatalog. Kubernetes, Docker and Golang were technologies used daily. An example of a feature implemented would be a script wrote that allowed other teams to import APIs to the catalog automatically. This accelerated the speed at which they could make updates to their APIs on a live environment. - Learnt several non-technical skills such as how an Agile Development team works, how to communicate within a team and with others, documentation skills, presentation skills and how to take initiative when developing software.
+  Work 2:
+    Company Name: Bausch Health Ireland
+    Job Title: Software Engineer Intern
+    Brief Description of Job: Chosen as the recipient of Bausch & Lombs Scholars Bursary Award in 2018. This included both monetary support and an internship with the company during the summer holidays while completing my degree. Placed in the Projects Engineering office for three months. Spent time learning C# and then building web apps that are now used on the machines in the company. The web apps displayed data from stored procedures and then tables and line graphs were created to display this data. Engineers could then actively use this data to discover issues in the process and work to fix them.
+
+=========================
+
+Email: john@gmail.com
+Name: John Smith
+City: New York
+Country: USA
+Profession: Software Engineer
+Describe your professional profile: I am a highly skilled software engineer with experience in both front-end and back-end development. I have a strong understanding of various programming languages and technologies, including JavaScript, Python, and SQL. I am a team player who is dedicated to delivering high-quality work on time and on budget. I am also a quick learner and enjoy staying up to date with the latest industry trends and technologies.
+Certifications: Microsoft Certified: Azure Developer Associate
+Education:
+Degree 1:
+Level: BSc
+Degree Name: Computer Science
+School: New York University
+Brief Description of Modules: Object-Oriented Programming, Web Development, Database Systems, Artificial Intelligence, Operating Systems, Algorithms and Data Structures
+Work Experience:
+Work 1:
+Company Name: Google
+Job Title: Software Engineer
+Brief Description of Job: Worked as a software engineer at Google for 2 years. Worked on various projects including the development of a new feature for Google Maps. I was responsible for the development and maintenance of the feature, as well as the testing and deployment of it. I also collaborated with the design and product teams to ensure the feature met user needs and was user-friendly.
+Work 2:
+Company Name: Amazon
+Job Title: Software Development Engineer
+Brief Description of Job: Worked as a software development engineer at Amazon for 3 years. Worked on the development of new features for the Amazon website. I was responsible for the development of new features and the maintenance of existing features. I also collaborated with the design and product teams to ensure the features met user needs and were user-friendly.
+
+=========================
+
+Email: Sarah@gmail.com
+Name: Sarah Johnson
+City: London
+Country: United Kingdom
+Profession: Software Engineer
+Describe your professional profile: I am a software engineer with a strong background in software development and a passion for coding. I have experience in various programming languages including Java, Python, and JavaScript. I am a team player and have the ability to work independently. I have strong problem-solving skills, and I am able to take a project from an idea to a finished product.
+Certifications: Oracle Certified Professional, Java SE 11 Developer
+Education:
+Degree 1:
+Level: BSc
+Degree Name: Computer Science
+School: Imperial College London
+Brief Description of Modules: Software Engineering, Object-Oriented Design, Algorithms and Data Structures, Database Systems, Web Development, Human-Computer Interaction
+Work Experience:
+Work 1:
+Company Name: J.P Morgan
+Job Title: Software Engineer
+Brief Description of Job: Worked as a software engineer at J.P Morgan for 2 years. Worked on various projects including the development of a new feature for J.P Morgans trading platform. Worked with multiple technology stacks including the following Node.Js, Python, Java, .Net, React, Angular, MySQL, NoSQL, Relational Databases (Oracle, SQLServer). An example of what my team and I worked on would be integrating java-based features with modern APIs and cloud native environments to support JPMorgan Chase's 5k+ retail branches and 17k+ ATMs across the U.S.
+Work 2:
+Company Name: Spotify
+Job Title: Software Development Engineer
+Brief Description of Job: Worked as a software development engineer at Spotify for 3 years. Worked on the development of new features for the Spotify website. I was responsible for the development of new features and the maintenance of existing features. I also collaborated with the design and product teams to ensure the features met user needs and were user-friendly.
+
+=========================
+
+Email: tom@gmail.com
+Name: Tom Grimes
+City: Sydney
+Country: Australia
+Profession: Software Engineer
+Describe your professional profile: I am a highly skilled software engineer with a passion for creating innovative and user-friendly software. My expertise lies in mobile application development, particularly in the areas of Android and iOS development. I have experience in both native and cross-platform development. I am also experienced in developing software in an Agile environment and have a good understanding of Scrum methodologies.
+Certifications:
+Android Development Certification
+iOS Development Certification
+Education:
+Degree 1:
+Level: BSc
+Degree Name: Computer Science
+School: University of New South Wales
+Brief Description of Modules: Object-oriented programming, Mobile Development, Data Structures, Algorithms, Databases
+Work Experience:
+Work 1:
+Company Name: Microsoft
+Job Title: Software Engineer
+Brief Description of Job: Worked on the development of Microsoft Office, focusing on the design and implementation of new features for Excel. I was responsible for optimizing the performance of the application and worked closely with the design team to ensure that the user interface was intuitive and visually appealing. I also collaborated with other engineers to ensure that the code was maintainable and scalable.
+Work 2:
+Company Name: Uber
+Job Title: Senior Software Engineer
+Brief Description of Job: Led a team of software engineers in the development of new features for the Uber app. I was responsible for the overall architecture and design of the app and worked closely with the product and design teams to ensure that the app met the needs of the end-users. I also mentored junior engineers on the team and helped them to improve their skills and knowledge.
+
+=========================
+
+Email: katie@gmail.com
+Name: Katie Smith
+City: San Francisco
+Country: United States
+Profession: Software Engineer
+Describe your professional profile: I am a highly motivated and results-driven software engineer with a passion for creating innovative solutions. I have experience in full-stack development and have worked on projects in various industries, including e-commerce, healthcare, and finance. I am a strong team player and have excellent communication skills.
+Certifications: Microsoft Certified: Azure Developer Associate
+Education:
+Degree 1:
+Level: BSc
+Degree Name: Computer Science
+School: San Francisco State University
+Brief Description of Modules: Data Structures and Algorithms, Database Systems, Web Development, Machine Learning, Operating Systems, Computer Networks
+Work Experience:
+Work 1:
+Company Name: Amazon
+Job Title: Software Development Engineer
+Brief Description of Job: Worked as a software development engineer at Amazon for 2 years. Was part of the team responsible for developing and maintaining the company's e-commerce platform. Used technologies such as Java, AWS, and React. Worked on several projects, including the implementation of a new search feature that improved the user experience and increased sales.
+Work 2:
+Company Name: Salesforce
+Job Title: Software Engineer
+Brief Description of Job: Worked as a software engineer at Salesforce for 1 year. Was part of the team responsible for developing and maintaining the company's customer relationship management (CRM) platform. Used technologies such as Apex, Java, and Lightning. Worked on several projects, including the implementation of a new feature that improved the collaboration and communication between sales teams.
+
+=========================
+
+Email: Michael@gmail.com
+Name: Michael Johnson
+City: New York
+Country: United States
+Profession: Software Engineer
+Describe your professional profile: I am a software engineer with over 5 years of experience in developing and implementing software solutions. I am highly skilled in Python, JavaScript, and React. I am passionate about creating innovative and user-friendly solutions that make a real difference. I am a strong collaborator and enjoy working in cross-functional teams to achieve common goals.
+Certifications: Oracle Certified Professional, Java SE 11 Developer
+Education:
+Degree 1:
+Level: BSc
+Degree Name: Computer Science
+School: New York University
+Brief Description of Modules: Algorithm Analysis, Artificial Intelligence, Database Systems, Computer Networks, Software Engineering, Mobile Application Development
+Work Experience:
+Work 1:
+Company Name: Google
+Job Title: Software Engineer
+Brief Description of Job: Worked as a software engineer at Google for 3 years. Was part of the team responsible for developing and maintaining the company's search engine. Used technologies such as Python, JavaScript, and AngularJS. Worked on several projects, including the implementation of a new feature that improved the search results relevance and speed.
+Work 2:
+Company Name: Netflix
+Job Title: Senior Software Engineer
+Brief Description of Job: Worked as a senior software engineer at Netflix for 2 years. Was part of the team responsible for developing and maintaining the company's video streaming platform. Used technologies such as React, Node.js, and AWS. Worked on several projects, including the implementation of a new feature that improved the recommendation system and personalized the user experience.
