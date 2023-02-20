@@ -83,12 +83,11 @@ const EditProfile = () => {
                 <div className="project-heading">
                     <h1 className="project-heading-title">Edit Profile</h1>
                 </div>
-                <div className="project-body">
+                <div className="edit-body">
                     <form>
                         <div className="create-project">
                             <div className="edit-profile">
                                 <label htmlFor="file">Profile Image</label>
-                                <img src={photo} style={{"height": "130px", "width": "100px", "marginRight":"1.5em"}}/>
                                 <input type="file" onChange={handleChange}/>
                             </div>
                             <label htmlFor="fname">First Name</label>

@@ -735,30 +735,13 @@ tr:nth-child(even) {
 
 /* Edit Profile */
 
-.edit-profile {
-    margin: 2em;
-}
-
 .edit-body {
     display: flex;
-    flex-direction: row;
-    flex-wrap: wrap;
-}
-
-.edit-one {
-    display: flex;
     flex-direction: column;
-    flex-wrap: wrap;
-    height: 50%;
+    justify-content: center;
+    align-items: center;
+    margin-top: 2em;
 }
-
-.edit-two {
-    display: flex;
-    flex-direction: column;
-    flex-wrap: wrap;
-    height: 50%;
-}
-
 
 .education-edit {
     display: flex;
