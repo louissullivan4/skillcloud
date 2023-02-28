@@ -10,7 +10,7 @@ const BasicInfo = () => {
     
     const [basicInfo, setBasicInfo] = useState({});
     const [certDetails, setCertDetails] = useState({
-        certs: [
+        certifications: [
             {
                 certName: "",
             },
@@ -20,11 +20,11 @@ const BasicInfo = () => {
     const validateForm = () => {
         let valid = true;
         let message = "";
-        if (basicInfo.fname === "" || basicInfo.lname === "" || basicInfo.city === "" || basicInfo.country === "" || basicInfo.job_title === "" || basicInfo.job_category === "Select a role category..." || basicInfo.job_desc === "") {
+        if (basicInfo.fname === "" || basicInfo.lname === "" || basicInfo.city === "" || basicInfo.country === "" || basicInfo.job_title === "" || basicInfo.job_category === "Select a role category..." || basicInfo.job_category === "" || basicInfo.job_desc === "") {
             valid = false;
             message = "Error! Please fill in all required fields";
         }
-        certDetails.certs.forEach((cert) => {
+        certDetails.certifications.forEach((cert) => {
             if (cert.certName === "") {
                 valid = false;
                 message = "Error! Please fill in all required fields";
@@ -36,7 +36,7 @@ const BasicInfo = () => {
     const submitHandler = (e) => {
         e.preventDefault()
         setBasicInfo({...basicInfo, email: state.email})
-        let basicCert = {...basicInfo, certifications: certDetails.certs}
+        let basicCert = {...basicInfo, certifications: certDetails.certifications}
         const [validated, message] = validateForm()
         if (validated === true) {
             let finalInfo = {...basicCert, email: state.email}
@@ -48,13 +48,14 @@ const BasicInfo = () => {
     }
 
     const addCert = () => {
-        let newList = [...certDetails.certs, {certName: ""}]
+        let newList = [...certDetails.certifications, {certName: ""}]
         let newCertDetails = {...certDetails, certifications: newList}
         setCertDetails(newCertDetails)
+        console.log(certDetails)
     };
 
     const removeCert = () => {
-        let newList = [...certDetails.certs]
+        let newList = [...certDetails.certifications]
         let end = newList.length
         if (end > 0){
             newList.pop();
@@ -212,16 +213,16 @@ const BasicInfo = () => {
                             <textarea rows="7" cols="80" onChange={getDescription} max='150' type="text"/>
                         </div>
                         <label htmlFor="certifications">Certifications</label>
-                        {certDetails.certs.map((_cert, index) => (
+                        {certDetails.certifications.map((_cert, index) => (
                             <div key={index}>
-                                <input type="text" onChange={e => certDetails.certs[index]["certName"] = e.target.value}/>
+                                <input type="text" onChange={e => certDetails.certifications[index]["certName"] = e.target.value}/>
                             </div>
                         ))}
                         <div className='button-group'>
                             <button type="button" onClick={addCert} style={{"backgroundColor": "green"}}>
                                 Add another certification +
                             </button>
-                            {certDetails.certs.length > 0 && (
+                            {certDetails.certifications.length > 0 && (
                                 <button type="button" onClick={removeCert} style={{"backgroundColor": "red"}}>
                                     Remove certification - 
                                 </button>
