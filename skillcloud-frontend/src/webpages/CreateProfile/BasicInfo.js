@@ -102,101 +102,108 @@ const BasicInfo = () => {
                             {/*The following occupation list was created by 
                             McKenna,J (2017) occupation-dropdown.html[Source Code]. https://gist.github.com/ag14spirit/fbf877576c9d6b78899e3ad02fe92b50*/}
                             <optgroup label="Healthcare Practitioners and Technical Occupations:">
-                                <option>-  Chiropractor</option>
-                                <option>-  Dentist</option>
-                                <option>-  Dietitian or Nutritionist</option>
-                                <option>-  Optometrist</option>
-                                <option>-  Pharmacist</option>
-                                <option>-  Physician</option>
-                                <option>-  Physician Assistant</option>
-                                <option>-  Podiatrist</option>
-                                <option>-  Registered Nurse</option>
-                                <option>-  Therapist</option>
-                                <option>-  Veterinarian</option>
-                                <option>-  Health Technologist or Technician</option>
-                                <option>-  Other Healthcare Practitioners and Technical Occupation</option>
+                                <option>Chiropractor</option>
+                                <option>Dentist</option>
+                                <option>Dietitian or Nutritionist</option>
+                                <option>Optometrist</option>
+                                <option>Pharmacist</option>
+                                <option>Physician</option>
+                                <option>Physician Assistant</option>
+                                <option>Podiatrist</option>
+                                <option>Registered Nurse</option>
+                                <option>Therapist</option>
+                                <option>Veterinarian</option>
+                                <option>Health Technologist or Technician</option>
+                                <option>Other Healthcare Practitioners and Technical Occupation</option>
                                 </optgroup>
                                 <optgroup label="Healthcare Support Occupations:">
-                                <option>-  Nursing, Psychiatric, or Home Health Aide</option>
-                                <option>-  Occupational and Physical Therapist Assistant or Aide</option>
-                                <option>-  Other Healthcare Support Occupation</option>
+                                <option>Nursing, Psychiatric, or Home Health Aide</option>
+                                <option>Occupational and Physical Therapist Assistant or Aide</option>
+                                <option>Other Healthcare Support Occupation</option>
                                 </optgroup>
                                 <optgroup label="Business, Executive, Management, and Financial Occupations:">
-                                <option>-  Chief Executive</option>
-                                <option>-  General and Operations Manager</option>
-                                <option>-  Advertising, Marketing, Promotions, Public Relations, and Sales Manager</option>
-                                <option>-  Operations Specialties Manager (e.g., IT or HR Manager)</option>
-                                <option>-  Construction Manager</option>
-                                <option>-  Engineering Manager</option>
-                                <option>-  Accountant, Auditor</option>
-                                <option>-  Business Operations or Financial Specialist</option>
-                                <option>-  Business Owner</option>
-                                <option>-  Other Business, Executive, Management, Financial Occupation</option>
+                                <option>Chief Executive</option>
+                                <option>General and Operations Manager</option>
+                                <option>Advertising, Marketing, Promotions, Public Relations, and Sales Manager</option>
+                                <option>Operations Specialties Manager (e.g., IT or HR Manager)</option>
+                                <option>Construction Manager</option>
+                                <option>Engineering Manager</option>
+                                <option>Accountant, Auditor</option>
+                                <option>Business Operations or Financial Specialist</option>
+                                <option>Business Owner</option>
+                                <option>Other Business, Executive, Management, Financial Occupation</option>
                                 </optgroup>
                                 <optgroup label="Architecture and Engineering Occupations:">
-                                <option>-  Architect, Surveyor, or Cartographer</option>
-                                <option>-  Engineer</option>
-                                <option>-  Other Architecture and Engineering Occupation</option>
+                                <option>Architect, Surveyor, or Cartographer</option>
+                                <option>Engineer</option>
+                                <option>Other Architecture and Engineering Occupation</option>
                                 </optgroup>
                                 <optgroup label="Education, Training, and Library Occupations:">
-                                <option>-  Postsecondary Teacher (e.g., College Professor)</option>
-                                <option>-  Primary School Teacher</option>
-                                <option>-  Secondary Education School Teacher</option>
-                                <option>-  Special Education School Teacher</option>
-                                <option>-  Other Teacher or Instructor</option>
-                                <option>-  Other Education, Training, and Library Occupation</option>
+                                <option>Post-secondary Teacher (e.g., College Professor)</option>
+                                <option>Primary School Teacher</option>
+                                <option>Secondary Education School Teacher</option>
+                                <option>Special Education School Teacher</option>
+                                <option>Other Teacher or Instructor</option>
+                                <option>Other Education, Training, and Library Occupation</option>
+                                </optgroup>
+                                <optgroup label="Computer Occupations:">
+                                <option>Computer Scientist</option>
+                                <option>Data Scientist</option>
+                                <option>Hardware Engineer</option>
+                                <option>IT Consultant</option>
+                                <option>Security engineer</option>
+                                <option>Test engineer</option>
+                                <option>UX designer</option>
+                                <option>Web developer</option>
                                 </optgroup>
                                 <optgroup label="Other Professional Occupations:">
-                                <option>-  Arts, Design, Entertainment, Sports, and Media Occupations</option>
-                                <option>-  Mathematical Science</option>
-                                <option>-  Computer Scientist</option>
-                                <option>-  Software Engineer</option>
-                                <option>-  UX Designer</option>
-                                <option>-  Counselor, Social Worker, or Other Community and Social Service Specialist</option>
-                                <option>-  Lawyer, Judge</option>
-                                <option>-  Life Scientist (e.g., Animal, Food, Soil, or Biological Scientist, Zoologist)</option>
-                                <option>-  Physical Scientist (e.g., Astronomer, Physicist, Chemist, Hydrologist)</option>
-                                <option>-  Religious Worker (e.g., Clergy, Director of Religious Activities or Education)</option>
-                                <option>-  Social Scientist and Related Worker</option>
-                                <option>-  Other Professional Occupation</option>
+                                <option>Arts, Design, Entertainment, Sports, and Media Occupations</option>
+                                <option>Mathematical Science</option>
+                                <option>Counselor, Social Worker, or Other Community and Social Service Specialist</option>
+                                <option>Lawyer, Judge</option>
+                                <option>Life Scientist (e.g., Animal, Food, Soil, or Biological Scientist, Zoologist)</option>
+                                <option>Physical Scientist (e.g., Astronomer, Physicist, Chemist, Hydrologist)</option>
+                                <option>Religious Worker (e.g., Clergy, Director of Religious Activities or Education)</option>
+                                <option>Social Scientist and Related Worker</option>
+                                <option>Other Professional Occupation</option>
                                 </optgroup>
                                 <optgroup label="Office and Administrative Support Occupations:">
-                                <option>-  Supervisor of Administrative Support Workers</option>
-                                <option>-  Financial Clerk</option>
-                                <option>-  Secretary or Administrative Assistant</option>
-                                <option>-  Material Recording, Scheduling, and Dispatching Worker</option>
-                                <option>-  Other Office and Administrative Support Occupation</option>
+                                <option>Supervisor of Administrative Support Workers</option>
+                                <option>Financial Clerk</option>
+                                <option>Secretary or Administrative Assistant</option>
+                                <option>Material Recording, Scheduling, and Dispatching Worker</option>
+                                <option>Other Office and Administrative Support Occupation</option>
                                 </optgroup>
                                 <optgroup label="Services Occupations:">
-                                <option>-  Protective Service (e.g., Fire Fighting, Police Officer, Correctional Officer)</option>
-                                <option>-  Chef or Head Cook</option>
-                                <option>-  Cook or Food Preparation Worker</option>
-                                <option>-  Food and Beverage Serving Worker (e.g., Bartender, Waiter, Waitress)</option>
-                                <option>-  Building and Grounds Cleaning and Maintenance</option>
-                                <option>-  Personal Care and Service (e.g., Hairdresser, Flight Attendant, Concierge)</option>
-                                <option>-  Sales Supervisor, Retail Sales</option>
-                                <option>-  Retail Sales Worker</option>
-                                <option>-  Insurance Sales Agent</option>
-                                <option>-  Sales Representative</option>
-                                <option>-  Real Estate Sales Agent</option>
-                                <option>-  Other Services Occupation</option>
+                                <option>Protective Service (e.g., Fire Fighting, Police Officer, Correctional Officer)</option>
+                                <option>Chef or Head Cook</option>
+                                <option>Cook or Food Preparation Worker</option>
+                                <option>Food and Beverage Serving Worker (e.g., Bartender, Waiter, Waitress)</option>
+                                <option>Building and Grounds Cleaning and Maintenance</option>
+                                <option>Personal Care and Service (e.g., Hairdresser, Flight Attendant, Concierge)</option>
+                                <option>Sales Supervisor, Retail Sales</option>
+                                <option>Retail Sales Worker</option>
+                                <option>Insurance Sales Agent</option>
+                                <option>Sales Representative</option>
+                                <option>Real Estate Sales Agent</option>
+                                <option>Other Services Occupation</option>
                                 </optgroup>
                                 <optgroup label="Agriculture, Maintenance, Repair, and Skilled Crafts Occupations:">
-                                <option>-  Construction and Extraction (e.g., Construction Laborer, Electrician)</option>
-                                <option>-  Farming, Fishing, and Forestry</option>
-                                <option>-  Installation, Maintenance, and Repair</option>
-                                <option>-  Production Occupations</option>
-                                <option>-  Other Agriculture, Maintenance, Repair, and Skilled Crafts Occupation</option>
+                                <option>Construction and Extraction (e.g., Construction Laborer, Electrician)</option>
+                                <option>Farming, Fishing, and Forestry</option>
+                                <option>Installation, Maintenance, and Repair</option>
+                                <option>Production Occupations</option>
+                                <option>Other Agriculture, Maintenance, Repair, and Skilled Crafts Occupation</option>
                                 </optgroup>
                                 <optgroup label="Transportation Occupations:">
-                                <option>-  Aircraft Pilot or Flight Engineer</option>
-                                <option>-  Motor Vehicle Operator (e.g., Ambulance, Bus, Taxi, or Truck Driver)</option>
-                                <option>-  Other Transportation Occupation</option>
+                                <option>Aircraft Pilot or Flight Engineer</option>
+                                <option>Motor Vehicle Operator (e.g., Ambulance, Bus, Taxi, or Truck Driver)</option>
+                                <option>Other Transportation Occupation</option>
                                 </optgroup>
                                 <optgroup label="Other Occupations:">
-                                <option>-  Military</option>
-                                <option>-  Homemaker</option>
-                                <option>-  Other Occupation</option>
+                                <option>Military</option>
+                                <option>Homemaker</option>
+                                <option>Other Occupation</option>
                                 </optgroup>
                             </select>
                         </div>
