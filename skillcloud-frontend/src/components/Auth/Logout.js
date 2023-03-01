@@ -15,7 +15,7 @@ const Logout = () => {
             navigate('/');
         };
         handleLogout()
-      }, []);
+    }, []);
 
     return (
         <div className="app">

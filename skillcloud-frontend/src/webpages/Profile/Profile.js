@@ -1,9 +1,9 @@
 import React, { useEffect, useState } from 'react'
 import { useParams, useNavigate } from 'react-router-dom'
 
-import { collection, query, where, getDocs, deleteDoc } from "firebase/firestore";
+import { collection, query, where, getDocs } from "firebase/firestore";
 import { db } from "../../firebase";
-import { getStorage, ref, getDownloadURL, deleteObject } from "firebase/storage";
+import { getStorage, ref, getDownloadURL } from "firebase/storage";
 import { UserAuth } from '../../context/AuthContext'
 import { auth } from '../../firebase'
 
