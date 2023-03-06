@@ -15,6 +15,7 @@ import EditProfile from "./webpages/Profile/EditProfile";
 import Project from "./webpages/Project/Project";
 import CreateProject from "./webpages/Project/CreateProject";
 import EditProject from "./webpages/Project/EditProject";
+import ApplyForm from "./webpages/Project/ApplyForm";
 
 import Inbox from "./webpages/Inbox/Inbox";
 import MsgDefault from "./webpages/Inbox/MsgDefault";
@@ -22,8 +23,8 @@ import MsgInvite from "./webpages/Inbox/MsgInvite";
 import MsgResponse from "./webpages/Inbox/MsgResponse";
 import MsgNoUsers from "./webpages/Inbox/MsgNoUsers";
 import CompleteRequest from "./webpages/Inbox/CompleteRequest";
-import MsgApplication from "./webpages/Inbox/MsgApplication";
-
+import MsgApply from "./webpages/Inbox/MsgApply";
+import MsgApplyResponse from "./webpages/Inbox/MsgApplyResponse";
 
 import Contacts from "./webpages/Chat/Contacts";
 import Chat from "./webpages/Chat/Chat";
@@ -54,14 +55,17 @@ function App() {
           <Route path="/project/:id" element={<ProtectedRoute><Project /></ProtectedRoute>} />
           <Route path="/createproject" element={<ProtectedRoute><CreateProject /></ProtectedRoute>} />
           <Route path="/editproject" element={<ProtectedRoute><EditProject /></ProtectedRoute>} />
+          <Route path="/applyform" element={<ProtectedRoute><ApplyForm /></ProtectedRoute>} />
 
           <Route path="/inbox" element={<ProtectedRoute><Inbox /></ProtectedRoute>} />
           <Route path="/msg" element={<ProtectedRoute><MsgDefault /></ProtectedRoute>} />
           <Route path="/msginvite" element={<ProtectedRoute><MsgInvite /></ProtectedRoute>} />
           <Route path="/msgresponse" element={<ProtectedRoute><MsgResponse /></ProtectedRoute>} />
           <Route path="/msgnousers" element={<ProtectedRoute><MsgNoUsers /></ProtectedRoute>} />
+          <Route path="/msgapplication" element={<ProtectedRoute><MsgApply /></ProtectedRoute>} />
           <Route path="/completerequest" element={<ProtectedRoute><CompleteRequest /></ProtectedRoute>} />
-          <Route path="/msgapplication" element={<ProtectedRoute><MsgApplication /></ProtectedRoute>} />
+          <Route path="/msgapply" element={<ProtectedRoute><MsgApply /></ProtectedRoute>} />
+          <Route path="/msgapplyresponse" element={<ProtectedRoute><MsgApplyResponse /></ProtectedRoute>} />
 
           <Route path="/contacts" element={<ProtectedRoute><Contacts /></ProtectedRoute>} />
           <Route path="/chat/:senderid/:recieverid" element={<ProtectedRoute><Chat /></ProtectedRoute>} />

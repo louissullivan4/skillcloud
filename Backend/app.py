@@ -73,8 +73,7 @@ def leaveproject(email : str, pid : str):
 
 @app.route('/applyproject/<string:email>/<string:pid>')
 def applyproject(email : str, pid : str):
-    u1 = User()
-    apply = u1.apply_project(email, pid)
+    apply = apply_project(email, pid)
     if apply == 200:
         return json.dumps({"Status Code": 200, "Message": "Success!"}), 200
     else:

@@ -222,7 +222,7 @@ table {
     background-color: white;
 }
 
-tr {
+tr{
     display: table;
     width: 100%;
     table-layout: fixed;
@@ -873,4 +873,38 @@ tr:nth-child(even) {
     cursor: pointer;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
     margin-top: 3em;
+}
+
+.apply-form {
+    display: flex;
+    flex-direction: column;
+    width: 35%;
+    margin-top: 2em;
+    background-color: white;
+    padding: 1em;
+    border-radius: 10px;
+}
+
+.apply-form h2{
+    margin-bottom: 1em;
+    color: steelblue;
+}
+
+.apply-form select{
+    padding: 0.5em;
+    border-radius: 10px;
+    border: none;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+}
+
+.apply-form button {
+    background-color: green;
+    color: white;
+    border: none;
+    padding: 1em 1em;
+    border-radius: 10px;
+    cursor: pointer;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+    margin-top: 1em;
+    width : 50%;
 }

@@ -36,13 +36,30 @@ const Inbox = () => {
                     </thead>
                     <tbody>
                         {inboxData.map((inboxData, k) => (
-                            <Link style={{"textDecoration": "none"}} to={inboxData.status === "pending" && inboxData.type === "project_invite" ? "/msginvite" : inboxData.type === "project_role_wait" ? "/msgnousers" : inboxData.status === "accepted" || inboxData.status === "declined" ? "/msgresponse" : "/msg"} state={{ from: inboxData }}>
+                            <Link style={{"textDecoration": "none"}} to={
+                            inboxData.status === "accepted" && inboxData.type === "project_apply" ? "/msgapplyresponse" 
+                            : inboxData.status === "declined" && inboxData.type === "project_apply" ? "/msgapplyresponse" 
+                            : inboxData.status === "pending" && inboxData.type === "project_apply" ? "/msgapply" 
+                            : inboxData.status === "pending" && inboxData.type === "project_invite" ? "/msginvite" 
+                            : inboxData.type === "project_role_wait" ? "/msgnousers" 
+                            : inboxData.status === "accepted" || inboxData.status === "declined" ? "/msgresponse"  
+                            : "/msg"} 
+                            state={{ from: inboxData }}>
                                 <tr key={k}>
-                                    <td>{inboxData.project_author}</td>
+                                    {inboxData.type === "project_apply" ? <td>{inboxData.user_notified}</td> : <td>{inboxData.project_author}</td>}
                                         <td>
-                                            {inboxData.status === "pending" && inboxData.type === "project_invite" ? "You have received a project invite!" : inboxData.type === "project_role_wait" ? "No users found !" : inboxData.status === "accepted" || inboxData.type === "declined" ? "You have received a project role update!" : "Click to see more..." }
+                                            {inboxData.status === "declined" && inboxData.type === "project_apply" ? "Manual Role Application Declined" 
+                                            : inboxData.status === "accepted" && inboxData.type === "project_apply" ? "Manual Role Application Accepted!" 
+                                            : inboxData.status === "pending" && inboxData.type === "project_apply" ? "Manual Role Application Received"
+                                            : inboxData.status === "pending" && inboxData.type === "project_invite" ? "Project Invitation!" 
+                                            : inboxData.type === "project_role_wait" ? "No User Matches" 
+                                            : inboxData.status === "accepted" || inboxData.type === "declined" ? "Project Role Update!" 
+                                            : "Click to see more..." }
                                         </td>
-                                    <td>{inboxData.status === "pending" ? "Pending" : inboxData.status === "accepted" ? "Accepted" : inboxData.status === "declined" ? "Declined" : ""}</td>
+                                    <td>{inboxData.status === "pending" ? "Pending" 
+                                    : inboxData.status === "accepted" ? "Accepted" 
+                                    : inboxData.status === "declined" ? "Declined" 
+                                    : ""}</td>
                                 </tr>
                             </Link>
                         ))}

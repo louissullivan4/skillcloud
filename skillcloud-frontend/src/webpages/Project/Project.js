@@ -7,17 +7,9 @@ function Project() {
     let projectId = useParams()
     const [projectData, setProjectData] = useState([]);
     let navigate = useNavigate();
-    let email = localStorage.getItem("email")
 
-    const handleApply = async() => {
-      if (window.confirm("Are you sure you want to apply for this project?")) {
-        const resp = await fetch('http://localhost:5000/applyproject/'+email+projectId.id)
-        if (resp.status === 200) {
-          window.alert("You have successfully applied for this project!")
-        } else {
-          window.alert("An error occurred while applying for this project. Please try again later.")
-        }
-      }
+    const handleApply = () => {
+      navigate('/applyform', {state: projectData})
     }
 
     const handleEdit = () =>{

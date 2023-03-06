@@ -12,7 +12,7 @@ mydb = connect_db()
 def get_notifications(user_email):
     cursor = mydb.cursor()
     msg_json = []
-    sql = "SELECT * FROM notifications WHERE user_notified = %s && status = 'pending'"
+    sql = "SELECT * FROM notifications WHERE project_author = %s && status = 'pending' && type = 'project_apply'"
     cursor.execute(sql, (user_email, ))
     row = cursor.fetchall()
     if row == None:
@@ -21,7 +21,25 @@ def get_notifications(user_email):
         for msg in row:
             val = {"type": msg[0], "project_author": msg[1], "user_notified": msg[2], "project_id": msg[3], "date_created": msg[4], "status": msg[5], "role_id": msg[6]}
             msg_json.append(val)
-    sql = "SELECT * FROM notifications WHERE project_author = %s && (status != 'pending' || type = 'project_role_wait')"
+    sql = "SELECT * FROM notifications WHERE user_notified = %s && status = 'pending' && type = 'project_invite'"
+    cursor.execute(sql, (user_email, ))
+    row = cursor.fetchall()
+    if row == None:
+        return {"Status Code": 404, "Message": "Error! No notifications found."}
+    else:
+        for msg in row:
+            val = {"type": msg[0], "project_author": msg[1], "user_notified": msg[2], "project_id": msg[3], "date_created": msg[4], "status": msg[5], "role_id": msg[6]}
+            msg_json.append(val)   
+    sql = "SELECT * FROM notifications WHERE user_notified = %s && status != 'pending' && type = 'project_apply'"
+    cursor.execute(sql, (user_email, ))
+    row = cursor.fetchall()
+    if row == None:
+        return {"Status Code": 404, "Message": "Error! No notifications found."}
+    else:
+        for msg in row:
+            val = {"type": msg[0], "project_author": msg[1], "user_notified": msg[2], "project_id": msg[3], "date_created": msg[4], "status": msg[5], "role_id": msg[6]}
+            msg_json.append(val)   
+    sql = "SELECT * FROM notifications WHERE project_author = %s && (status != 'pending' || type = 'project_role_wait') && type != 'project_apply'"
     cursor.execute(sql, (user_email, ))
     row = cursor.fetchall()
     if row == None:
@@ -223,7 +241,7 @@ def response_apply_project(email, user_notified, role_id, response):
                         cursor.execute(sql, (role_id, ))
                         mydb.commit()
                         sql = "UPDATE users SET current_project = %s, availability = %s WHERE email = %s"
-                        cursor.execute(sql, (project_id, "Closed", email))
+                        cursor.execute(sql, (project_id, "Closed", user_notified))
                         mydb.commit()
                         sql = "SELECT role_no_needed, roles_filled FROM roles WHERE role_id = %s"
                         cursor.execute(sql, (role_id, ))
