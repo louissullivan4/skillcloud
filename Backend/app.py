@@ -156,6 +156,16 @@ def invitationresponse(email : str, role_id : str, req : str):
     else:
         return json.dumps({"Status Code": 404, "Message": "Error!"}), 404
 
+@app.route('/applyresponse/<string:email>/<string:user_notified>/<string:role_id>/<string:response>/')
+def applyresponse(email : str, user_notified : str, role_id : str, response : str):
+    result = response_apply_project(email, user_notified, role_id, response)
+    if result == 200:
+        return json.dumps({"Status Code": 200, "Message": "Success!"}), 200
+    elif result == 403:
+        return json.dumps({"Status Code": 403, "Message": "Role is now unavailable"}), 403
+    else:
+        return json.dumps({"Status Code": 404, "Message": "Error!"}), 404
+
 @app.route('/rolechange/<string:email>/<string:role_id>/<string:response>')
 def rolechange(email : str, role_id : str, response : str):
     result = notify_role_change(email, role_id, response)
@@ -166,7 +176,6 @@ def getrole(roleid : str):
     mydb = connect_db()
     result = get_role(mydb, roleid)
     return json.dumps(result)
-
 
 if __name__ == "__main__":
     app.run(threaded=True)
