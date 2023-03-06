@@ -2,37 +2,25 @@ from db_connect import connect_db
 
 mydb = connect_db()
 
-def leave_project(email, project_id):    
-        cursor = mydb.cursor()
-        sql = "SELECT role_id FROM notifications WHERE user_notified = %s AND project_id = %s AND status = 'accepted'"
-        val = (email, project_id)
-        cursor.execute(sql, val)
-        role_id = cursor.fetchone()
-        if role_id is None:
-            return "You are not a member of this project"
-        else:
-            sql = "UPDATE notifications SET status = 'pending', user_notified = null, type = 'project_role_wait' WHERE role_id = %s"
-            val = (role_id[0],)
-            cursor.execute(sql, val)
-            mydb.commit()
-            sql = "UPDATE roles SET roles_filled = roles_filled - 1 WHERE role_id = %s"
-            val = (role_id[0],)
-            cursor.execute(sql, val)
-            mydb.commit()
-            sql = "UPDATE users SET current_project = null, availability = 'Open' WHERE email = %s"
-            val = (email,)
-            cursor.execute(sql, val)
-            mydb.commit()
-            return "You have left the project"
+def apply_project(email, role_id):
+    cursor = mydb.cursor()
+    sql = "SELECT role_no_needed, role_filled FROM roles WHERE role_id = %s"
+    val = (role_id,)
+    res = cursor.fetchall(sql, val)
+    if len(res) > 0:
+        print(res[0][0], res[0][1])
+        if (res[0][0] - res[0][1]) > 0:
+            print("Role available")
+    return "You have applied for the project"
 
-
-# print(leave_project("john@gmail.com", "06914814"))
-
-            
-
-           
-
-
-        
-
-# print(get_previous_projects("john@gmail.com"))
+print(apply_project("sullivanlouis0@gmail.com", "00240535"))
+"""
+Apply button on project page
+Clicked takes you to form that asks for what role you want to apply for
+Submit send request to backend endpoint applyproject
+Check if project role is available
+create notification for project owner that contains user email and role they applied for
+Notification on frontend should have accept and decline buttons, display user profile link and the role name on which project
+accept = add user to project role, reduce number of available roles, delete apply notification, if it was the final place for role, delete role notification for other users
+decline = delete apply notification, notify user that they have been declined
+"""

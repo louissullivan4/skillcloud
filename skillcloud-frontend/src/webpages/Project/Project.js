@@ -7,8 +7,17 @@ function Project() {
     let projectId = useParams()
     const [projectData, setProjectData] = useState([]);
     let navigate = useNavigate();
+    let email = localStorage.getItem("email")
 
-    const handleClick = () => {
+    const handleApply = async() => {
+      if (window.confirm("Are you sure you want to apply for this project?")) {
+        const resp = await fetch('http://localhost:5000/applyproject/'+email+projectId.id)
+        if (resp.status === 200) {
+          window.alert("You have successfully applied for this project!")
+        } else {
+          window.alert("An error occurred while applying for this project. Please try again later.")
+        }
+      }
     }
 
     const handleEdit = () =>{
@@ -88,7 +97,7 @@ function Project() {
               </table>
           </div>
           <div className="button-inline">
-            {localStorage.getItem("email") === projectData.author &&  projectData.state === 'Open' ? <button type="button" onClick={handleEdit}>Edit Project  </button> : projectData.state === 'Open' ? <button type="button" onClick={handleClick}>Apply Here  </button>: <div></div>}
+            {localStorage.getItem("email") === projectData.author &&  projectData.state === 'Open' ? <button type="button" onClick={handleEdit}>Edit Project  </button> : projectData.state === 'Open' ? <button type="button" onClick={handleApply}>Apply Here  </button>: <div></div>}
             {localStorage.getItem("email") === projectData.author ? <button type="button" style={{"marginLeft": "1em", "backgroundColor" : "red"}} onClick={handleDelete}>Delete Project  </button> : <div></div>}
           </div>
           </div>

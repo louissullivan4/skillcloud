@@ -67,7 +67,16 @@ def leaveproject(email : str, pid : str):
         p1 = Project()
         p1.get_project(pid)
         project_json = p1.get_project_json()
-        return json.dumps(project_json)
+        return json.dumps(project_json), 200
+    else:
+        return json.dumps({"Status Code": 404, "Message": "Error!"}), 404
+
+@app.route('/applyproject/<string:email>/<string:pid>')
+def applyproject(email : str, pid : str):
+    u1 = User()
+    apply = u1.apply_project(email, pid)
+    if apply == 200:
+        return json.dumps({"Status Code": 200, "Message": "Success!"}), 200
     else:
         return json.dumps({"Status Code": 404, "Message": "Error!"}), 404
 
