@@ -281,7 +281,7 @@ class User:
         sql = "SELECT current_project FROM users WHERE email = %s"
         cursor.execute(sql, (email, ))
         row = cursor.fetchall()
-        if len(row) == 0:
+        if len(row) > 0:
             current_project_ids = []
             for val in row:
                 current_project_ids.append(val[0])
@@ -296,6 +296,7 @@ class User:
             for val in projects:
                 newVal = {"project_id": val[0], "project_title": val[1], "project_author": val[2], "project_createdate": val[3], "project_startdate": val[4], "project_enddate": val[5], "project_summary": val[6], "project_state": val[7], "project_city": val[8], "project_country": val[9]}
                 projects_json.append(newVal)
+            print(projects_json)
             return projects_json
         else:
             projects_json = []

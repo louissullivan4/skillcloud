@@ -29,13 +29,13 @@ const ProfileTabs = () => {
         setUserWork(work)
 
         const cproject = data.result[0].current_projects
-        setCurrentProject(cproject);
+        console.log(data.result)
+        setCurrentProject(data.result[0].current_projects);
 
         const oproject = data.result[0].owned_projects
         setOwnedProjects(oproject);
 
         const pprojects = data.result[0].previous_projects
-        console.log(data.result[0].previous_projects)
         setUserPrevProjects(pprojects);
         
       };

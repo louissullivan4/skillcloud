@@ -101,7 +101,6 @@ def profilepage(email: str):
     user = User()
     user.get_user(email)
     user_json = user.get_user_json()
-    # print(user_json)
     return json.dumps(user_json)
 
 @app.route('/createuser', methods=['POST'])

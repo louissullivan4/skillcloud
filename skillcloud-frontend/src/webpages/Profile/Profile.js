@@ -24,7 +24,7 @@ const Profile = () => {
     
 
 
-    const [photo, setPhoto] = useState("../../assets/profiles/undefined.jpg");
+    const [photo, setPhoto] = useState("");
 
 
     const getName = async () => {
