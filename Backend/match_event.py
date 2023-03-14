@@ -100,6 +100,9 @@ def create_role_notifications(project):
     roles = new["roles"]
     for role in roles:
         candidates = event_match(role)
+        # sort candidates by hightest to lowest value percentage
+        candidates = dict(sorted(candidates.items(), key=lambda item: item[1], reverse=True))
+        print(role, candidates)
         if len(candidates) < 1:
             no_candidates_notifications(project, role)
         else:
@@ -171,7 +174,6 @@ def notify_response_project(user_email, role_id, req):
             cursor.execute(sql, (role_id, ))
             mydb.commit()
         elif req == "declined":
-            print(user_email, role_id, req)
             if int(row[1]) == 0 or int(row[1]) < 0:
                 val = 0
             else:
@@ -368,6 +370,7 @@ def get_input_users(category, project_id):
     sql = "SELECT project_author FROM projects WHERE project_id = %s"
     cursor.execute(sql, (project_id, ))
     row = cursor.fetchall()
+    print(row)
     project_author = row[0][0]
     sql = "SELECT email, job_title, job_desc, certifications FROM users WHERE job_category = %s && availability = 'Open' && email != %s"
     cursor.execute(sql, (category, project_author))     

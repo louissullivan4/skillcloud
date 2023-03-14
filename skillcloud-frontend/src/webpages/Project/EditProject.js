@@ -36,6 +36,7 @@ const EditProfile = () => {
             setFinalInfo({...projectData, roles: roles})
             let newData = await sendData()
             alert("The project will now be created, you will be notified when creation has been completed. Please free to continue using the site.");
+            navigate('/home')
             event_match(newData)
         } else {
             // navigate('/')
@@ -98,10 +99,10 @@ const EditProfile = () => {
                                     <input className='input-role-desc' type="text" onChange={e => roles[index].role_desc = e.target.value} placeholder={role.role_desc} defaultValue={role.role_desc}/>
                                     <select className="input-role-category" onChange={e => roles[index].role_category= e.target.value}>
                                     <option disabled selected>Select a role category...</option>
+                                    <option disabled selected>Select a role category...</option>
                                     {/*The following occupation list was created by 
                                     McKenna,J (2017) occupation-dropdown.html[Source Code]. https://gist.github.com/ag14spirit/fbf877576c9d6b78899e3ad02fe92b50*/}
                                     <optgroup label="Healthcare Practitioners and Technical Occupations:">
-                                        <option>-  Chiropractor</option>
                                         <option>-  Dentist</option>
                                         <option>-  Dietitian or Nutritionist</option>
                                         <option>-  Optometrist</option>
@@ -132,10 +133,28 @@ const EditProfile = () => {
                                         <option>-  Business Owner</option>
                                         <option>-  Other Business, Executive, Management, Financial Occupation</option>
                                         </optgroup>
-                                        <optgroup label="Architecture and Engineering Occupations:">
-                                        <option>-  Architect, Surveyor, or Cartographer</option>
-                                        <option>-  Engineer</option>
+                                        <optgroup label="Information Technology and Communication Occupations:">
+                                        <option>-  Software Engineer, Full Stack Developer, Programmer, Web Developer</option>
+                                        <option>-  QA Tester, Test Analyst</option>
+                                        <option>-  UX Designer</option>
+                                        <option>-  Database Administrator, Database Analyst</option>
+                                        <option>-  Network Engineer, Network Administrator</option>
+                                        <option>-  Systems Administrator, Systems Analyst, Systems Engineer</option>
+                                        <option>-  IT Consultant, IT Manager</option>
+                                        <option>-  Tech Support</option>
                                         <option>-  Other Architecture and Engineering Occupation</option>
+                                        </optgroup>
+                                        <optgroup label="Engineering Occupations:">
+                                        <option>-  Architect, Surveyor, or Cartographer</option>
+                                        <option>-  Chemical Engineer</option>
+                                        <option>-  Industrial Engineer</option>
+                                        <option>-  Manufacturing Engineer</option>
+                                        <option>-  Environmental Engineer</option>
+                                        <option>-  Biomedical engineer</option>
+                                        <option>-  Civil engineer</option>
+                                        <option>-  Electrical engineer</option>
+                                        <option>-  Mechanical engineer</option>
+                                        <option>-  Other Engineering Occupation</option>
                                         </optgroup>
                                         <optgroup label="Education, Training, and Library Occupations:">
                                         <option>-  Postsecondary Teacher (e.g., College Professor)</option>
@@ -147,10 +166,8 @@ const EditProfile = () => {
                                         </optgroup>
                                         <optgroup label="Other Professional Occupations:">
                                         <option>-  Arts, Design, Entertainment, Sports, and Media Occupations</option>
+                                        <option>-  Content Creator, Social Media Influencer, Professional e-sports Player</option>
                                         <option>-  Mathematical Science</option>
-                                        <option>-  Computer Scientist</option>
-                                        <option>-  Software Engineer</option>
-                                        <option>-  UX Designer</option>
                                         <option>-  Counselor, Social Worker, or Other Community and Social Service Specialist</option>
                                         <option>-  Lawyer, Judge</option>
                                         <option>-  Life Scientist (e.g., Animal, Food, Soil, or Biological Scientist, Zoologist)</option>
@@ -180,12 +197,12 @@ const EditProfile = () => {
                                         <option>-  Real Estate Sales Agent</option>
                                         <option>-  Other Services Occupation</option>
                                         </optgroup>
-                                        <optgroup label="Agriculture, Maintenance, Repair, and Skilled Crafts Occupations:">
-                                        <option>-  Construction and Extraction (e.g., Construction Laborer, Electrician)</option>
+                                        <optgroup label="Agriculture, Architecture, Maintenance, Repair, and Skilled Crafts Occupations:">
+                                        <option>-  Construction and Extraction (e.g., Construction Laborer, Carpenter, Electrician)</option>
                                         <option>-  Farming, Fishing, and Forestry</option>
                                         <option>-  Installation, Maintenance, and Repair</option>
                                         <option>-  Production Occupations</option>
-                                        <option>-  Other Agriculture, Maintenance, Repair, and Skilled Crafts Occupation</option>
+                                        <option>-  Other Agriculture, Architecture, Maintenance, Repair, and Skilled Crafts Occupation</option>
                                         </optgroup>
                                         <optgroup label="Transportation Occupations:">
                                         <option>-  Aircraft Pilot or Flight Engineer</option>

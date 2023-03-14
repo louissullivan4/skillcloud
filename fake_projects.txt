@@ -32,7 +32,7 @@ Title: Quality Assurance Engineer
 Desc: A QA Engineer who has experience in testing and quality assurance of messaging apps and has knowledge of automated testing.
 
 ====================================================================================================
-Title: Skin Disease Detection System Using CNN
+Title: Skin Disease Detection System
 Project Summary: This project aims to develop a skin disease detection system using convolutional neural networks (CNNs). The system will be able to classify different types of skin diseases based on images and provide an accurate diagnosis to users. The system will be accessible via a mobile application, allowing users to easily take a picture of their skin and receive a diagnosis.
 
 Roles:
@@ -46,7 +46,7 @@ Title: Mobile App Developer
 Desc: A developer with experience in developing mobile applications for Android and iOS. Knowledge in integrating machine learning models into mobile apps is a plus.
 
 Title: Medical Expert
-Desc: A medical professional with expertise in dermatology. Will be responsible for providing medical guidance and validation of the system's diagnoses.
+Desc: A medical professional with expertise in the medical field. Will be responsible for providing medical guidance and validation of the systems diagnoses. Experience with skin diseases, cancers and other conditions essential.
 
 ====================================================================================================
 

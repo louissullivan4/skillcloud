@@ -43,10 +43,8 @@ def createproject():
 @app.route('/updateproject', methods=['POST'])
 def updateproject():
     p1 = Project()
-    print(request.json)
     p1.update_project(request.json)
     projectvals = p1.get_project_json()
-    print(projectvals)
     delete_role_notifications(projectvals)
     return json.dumps(projectvals)
 
@@ -122,7 +120,6 @@ def updateuser():
     jsonvals = json.loads(request.data)
     updated_user = u1.update_user(jsonvals)
     if updated_user == 200:
-        print("here")
         event_match_user(jsonvals)
         return json.dumps({"Status Code": 200, "Message": "Success!"}), 200
     elif updated_user == 409:
