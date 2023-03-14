@@ -20,7 +20,7 @@ const ApplyForm = () => {
             window.alert("Error! Please select a role to apply for.")
         } else {
             if (window.confirm("Are you sure you want to apply for the role?")) {
-                const resp = await fetch('http://localhost:5000/applyproject/'+email+"/"+selectedRole)
+                const resp = await fetch('http://scbackend-env.eba-93hey2mi.eu-north-1.elasticbeanstalk.com/'+email+"/"+selectedRole)
                 if (resp.status === 200) {
                     window.alert("You have successfully applied for this role!")
                     navigate('/home')

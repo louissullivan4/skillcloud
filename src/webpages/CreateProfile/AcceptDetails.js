@@ -39,7 +39,7 @@ const AcceptDetails = () => {
 
     const completeProfile = () => {
         addUser();
-        fetch(`http://127.0.0.1:5000/createuser`,{'method':'POST', headers : {'Content-Type':'application/json'}, body: JSON.stringify(state)})
+        fetch(`http://scbackend-env.eba-93hey2mi.eu-north-1.elasticbeanstalk.com/createuser`,{'method':'POST', headers : {'Content-Type':'application/json'}, body: JSON.stringify(state)})
         .then(() => {
             alert("Profile Created");
         })

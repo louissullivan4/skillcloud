@@ -18,7 +18,7 @@ const MsgResponse = () => {
 
     useEffect(() => {
         const fetchData = async () => {
-            const resp = await fetch('http://127.0.0.1:5000/getrole/' + role_id)
+            const resp = await fetch('http://scbackend-env.eba-93hey2mi.eu-north-1.elasticbeanstalk.com/' + role_id)
             const data = await resp.json();
             setRole(data[2]);
         }; 
@@ -27,14 +27,14 @@ const MsgResponse = () => {
 
 
     const addUser = async () => {
-        const resp = await fetch('http://127.0.0.1:5000/rolechange/'+from.user_notified+"/"+from.role_id+"/add")
+        const resp = await fetch('http://scbackend-env.eba-93hey2mi.eu-north-1.elasticbeanstalk.com/'+from.user_notified+"/"+from.role_id+"/add")
         const data = await resp.json();
         setCompletion(data.result);
         navigate("/completerequest" , { state: { from: completion } });
     };
 
     const removeUser = async () => {
-        const resp = await fetch('http://127.0.0.1:5000/rolechange/'+from.user_notified+"/"+from.role_id+"/remove")
+        const resp = await fetch('http://scbackend-env.eba-93hey2mi.eu-north-1.elasticbeanstalk.com/'+from.user_notified+"/"+from.role_id+"/remove")
         const data = await resp.json();
         setCompletion(data.result);
         navigate("/completerequest" , { state: { from: completion } });

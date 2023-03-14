@@ -19,7 +19,7 @@ const Home = () => {
 
     useEffect(() => {
       const fetchData = async () => {
-        const resp = await fetch('http://127.0.0.1:5000/home')
+        const resp = await fetch('http://scbackend-env.eba-93hey2mi.eu-north-1.elasticbeanstalk.com/home')
         const data = await resp.json();
         setTileData(data.result);
       };

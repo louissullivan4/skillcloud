@@ -15,7 +15,7 @@ const ProfileTabs = () => {
 
     useEffect(() => {
       const fetchData = async () => {
-        const resp = await fetch('http://127.0.0.1:5000/profile/'+email.email)
+        const resp = await fetch('http://scbackend-env.eba-93hey2mi.eu-north-1.elasticbeanstalk.com/'+email.email)
         const data = await resp.json();
         setUserData(data.result[0]);
 
@@ -46,7 +46,7 @@ const ProfileTabs = () => {
     }, []);
 
     async function leaveProject(pid) {
-        let projectjson = await fetch('http://127.0.0.1:5000/leaveproject/'+email.email+'/'+pid)
+        let projectjson = await fetch('http://scbackend-env.eba-93hey2mi.eu-north-1.elasticbeanstalk.com/'+email.email+'/'+pid)
         .then(() => {
             alert("You have left the project.");
         })
