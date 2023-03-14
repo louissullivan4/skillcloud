@@ -1,24 +1,25 @@
 import mysql.connector
-# import os
+import os
+
+# def connect_db():
+#     mydb = mysql.connector.connect(
+#     host="localhost",
+#     user="root",
+#     password="admin",
+#     database="skillcloud")
+#     return mydb
 
 def connect_db():
-    # vars = os.getenv("CLEARDB_DATABASE_URL")
-    # hostname=vars.split("@")[1].split("/")[0]
-    # user=vars.split("://")[1].split(":")[0]
-    # password=vars.split(":")[2].split("@")[0]
-    # database=vars.split("/")[3].split("?")[0]
-
-    # mydb = mysql.connector.connect(
-    # host=hostname,
-    # user=user,
-    # password=password,
-    # database=database)
-
+    db_host = os.environ['DB_HOST']
+    db_user = os.environ['DB_USER']
+    db_password = os.environ['DB_PWORD']
+    db_name = os.environ['DB_NAME']
     mydb = mysql.connector.connect(
-    host="localhost",
-    user="root",
-    password="admin",
-    database="skillcloud")
+        host = db_host,
+        user = db_user,
+        password = db_password)
+    cursor = mydb.cursor()
+    cursor.execute("USE {}".format(db_name))
     return mydb
 
 def clear_dbs(mydb):

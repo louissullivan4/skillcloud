@@ -385,7 +385,3 @@ class User:
         user.append(user_json)
         user_json = {"result":user}
         return user_json
-    
-        
-# u1 = User()
-# u1.get_owned_projects("sullivanlouis0@gmail.com")
