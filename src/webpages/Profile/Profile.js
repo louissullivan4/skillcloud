@@ -68,7 +68,7 @@ const Profile = () => {
     
     const deleteUser = async () => {
         if (window.confirm("Are you sure you want to delete your profile?")) {
-            await fetch('http://scbackend-env.eba-93hey2mi.eu-north-1.elasticbeanstalk.com/'+currentEmail)
+            await fetch('http://scbackend-env.eba-93hey2mi.eu-north-1.elasticbeanstalk.com/deleteuser/'+currentEmail)
             await deleteAUser(auth.currentUser)
             // const q = query(collection(db, "users"),where("email", "==", currentEmail));
             // await deleteDoc(q);
@@ -82,7 +82,7 @@ const Profile = () => {
 
     useEffect(() => {
       const fetchData = async () => {
-        const resp = await fetch('http://scbackend-env.eba-93hey2mi.eu-north-1.elasticbeanstalk.com/'+email.email)
+        const resp = await fetch('http://scbackend-env.eba-93hey2mi.eu-north-1.elasticbeanstalk.com/profile/'+email.email)
         const data = await resp.json();
         setUserData(data.result[0]);
       };

@@ -19,7 +19,7 @@ const MsgApply = () => {
 
     useEffect(() => {
         const fetchData = async () => {
-            const resp = await fetch('http://scbackend-env.eba-93hey2mi.eu-north-1.elasticbeanstalk.com/' + role_id)
+            const resp = await fetch('http://scbackend-env.eba-93hey2mi.eu-north-1.elasticbeanstalk.com/getrole/' + role_id)
             const data = await resp.json();
             setRole(data[2]);
         }; 
@@ -27,13 +27,13 @@ const MsgApply = () => {
     }, [role_id]);
     
     const AcceptApply= async () => {
-        const resp = await fetch('http://scbackend-env.eba-93hey2mi.eu-north-1.elasticbeanstalk.com/'+from.project_author+"/"+from.user_notified+"/"+from.role_id+"/accepted")
+        const resp = await fetch('http://scbackend-env.eba-93hey2mi.eu-north-1.elasticbeanstalk.com/applyresponse/'+from.project_author+"/"+from.user_notified+"/"+from.role_id+"/accepted")
         const data = await resp.status;
         navigate("/completerequest" , { state: { from: data } });
     };
 
     const DeclineApply = async () => {
-        const resp = await fetch('http://scbackend-env.eba-93hey2mi.eu-north-1.elasticbeanstalk.com/'+from.project_author+"/"+from.user_notified+"/"+from.role_id+"/declined")
+        const resp = await fetch('http://scbackend-env.eba-93hey2mi.eu-north-1.elasticbeanstalk.com/applyresponse/'+from.project_author+"/"+from.user_notified+"/"+from.role_id+"/declined")
         const data = await resp.status;
         navigate("/completerequest" , { state: { from: data } });
     };

@@ -1,0 +1,11 @@
+services:
+  web:
+    image: public.ecr.aws/r8a6n3u1/my-app:latest
+    container_name: web
+    ports:
+      - "80:80"
+    volumes:
+      - ./:/app
+      - /app/node_modules
+    environment:
+      - DEBUG=1

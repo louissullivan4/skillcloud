@@ -16,7 +16,7 @@ const MsgApplyResponse = () => {
 
     useEffect(() => {
         const fetchData = async () => {
-            const resp = await fetch('http://scbackend-env.eba-93hey2mi.eu-north-1.elasticbeanstalk.com/' + role_id)
+            const resp = await fetch('http://scbackend-env.eba-93hey2mi.eu-north-1.elasticbeanstalk.com/getrole/' + role_id)
             const data = await resp.json();
             setRole(data[2]);
         }; 

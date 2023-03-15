@@ -22,14 +22,14 @@ const ProjectForm = () => {
 
     const sendData = async () => {
         setSpinner(true);
-        const resp = await fetch(`http://scbackend-env.eba-93hey2mi.eu-north-1.elasticbeanstalk.com/`,{'method':'POST', headers : {'Content-Type':'application/json'}, body: JSON.stringify(projectDetails)})
+        const resp = await fetch(`http://scbackend-env.eba-93hey2mi.eu-north-1.elasticbeanstalk.com/createproject`,{'method':'POST', headers : {'Content-Type':'application/json'}, body: JSON.stringify(projectDetails)})
         .then(setSpinner(false));
         const data = await resp.json();        
         return data
       };
 
       const event_match = async (newData) => {
-        const resp = await fetch(`http://scbackend-env.eba-93hey2mi.eu-north-1.elasticbeanstalk.com/`,{'method':'POST', headers : {'Content-Type':'application/json'}, body: JSON.stringify(newData)})
+        const resp = await fetch(`http://scbackend-env.eba-93hey2mi.eu-north-1.elasticbeanstalk.com/eventmatch`,{'method':'POST', headers : {'Content-Type':'application/json'}, body: JSON.stringify(newData)})
         .then(setSpinner(false));
         if (resp.status === 200) {
             alert("Project created successfully");
