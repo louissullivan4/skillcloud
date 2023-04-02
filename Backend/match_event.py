@@ -474,6 +474,7 @@ def fulfill_user(jsonVals):
                         cursor.execute(sql, (role[0], ))
                         project_author = cursor.fetchone()
                         if len(project_author) > 0:
+                            print(role, candidates)
                             notify_invite_project(candidates, role, project_author, role[0])     
         return "200" 
     except Exception as e:
