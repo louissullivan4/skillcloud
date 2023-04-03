@@ -1,6 +1,6 @@
 services:
   web:
-    image: public.ecr.aws/k1g7s6j6/deploy-frontend:latest
+    image: 584839284110.dkr.ecr.eu-north-1.amazonaws.com/deploy-frontend
     container_name: web
     ports:
       - "80:80"
