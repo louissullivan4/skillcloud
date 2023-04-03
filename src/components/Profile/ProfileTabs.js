@@ -15,7 +15,7 @@ const ProfileTabs = () => {
 
     useEffect(() => {
       const fetchData = async () => {
-        const resp = await fetch('http://scbackend-env.eba-93hey2mi.eu-north-1.elasticbeanstalk.com/profile/'+email.email)
+        const resp = await fetch('http://scbackend-env.eba-imjep3am.eu-north-1.elasticbeanstalk.com/profile/'+email.email)
         const data = await resp.json();
         setUserData(data.result[0]);
 
@@ -46,11 +46,11 @@ const ProfileTabs = () => {
     }, []);
 
     async function leaveProject(pid) {
-        let projectjson = await fetch('http://scbackend-env.eba-93hey2mi.eu-north-1.elasticbeanstalk.com/leaveproject/'+email.email+'/'+pid)
+        let projectjson = await fetch('http://scbackend-env.eba-imjep3am.eu-north-1.elasticbeanstalk.com/leaveproject/'+email.email+'/'+pid)
         .then(() => {
             alert("You have left the project.");
         })
-        fetch(`http://scbackend-env.eba-93hey2mi.eu-north-1.elasticbeanstalk.com/eventmatch`,{'method':'POST', headers : {'Content-Type':'application/json'}, body: JSON.stringify(projectjson)})
+        fetch(`http://scbackend-env.eba-imjep3am.eu-north-1.elasticbeanstalk.com/eventmatch`,{'method':'POST', headers : {'Content-Type':'application/json'}, body: JSON.stringify(projectjson)})
     }
 
 

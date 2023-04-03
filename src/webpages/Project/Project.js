@@ -20,21 +20,21 @@ function Project() {
 
     const handleDelete = async () => {
       if (window.confirm("Are you sure you want to delete this project?")) {
-          await fetch('http://scbackend-env.eba-93hey2mi.eu-north-1.elasticbeanstalk.com/deleteproject/'+projectId.id)
+          await fetch('http://scbackend-env.eba-imjep3am.eu-north-1.elasticbeanstalk.com/deleteproject/'+projectId.id)
           navigate("/home")
       }
     }
 
     const handleClose = async () => {
       if (window.confirm("Are you sure you want to close this project? It will be added to your closed projects list.")) {
-          await fetch('http://scbackend-env.eba-93hey2mi.eu-north-1.elasticbeanstalk.com/closeproject/'+projectId.id)
+          await fetch('http://scbackend-env.eba-imjep3am.eu-north-1.elasticbeanstalk.com/closeproject/'+projectId.id)
           navigate("/home")
       }
     }
 
     useEffect(() => {
       const fetchData = async () => {
-        const resp = await fetch('http://scbackend-env.eba-93hey2mi.eu-north-1.elasticbeanstalk.com/project/'+projectId.id)
+        const resp = await fetch('http://scbackend-env.eba-imjep3am.eu-north-1.elasticbeanstalk.com/project/'+projectId.id)
         const data = await resp.json();
         setProjectData(data);
       };

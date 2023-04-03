@@ -30,7 +30,7 @@ const EditProfile = () => {
         if (userData.email === localStorage.getItem('email')) {
             let finalInfo = {...userData, education: education, work_experience: experience, certifications: certs, email: userData.email}
             console.log(finalInfo)
-            fetch(`http://scbackend-env.eba-93hey2mi.eu-north-1.elasticbeanstalk.com/updateuser`,{'method':'POST', headers : {'Content-Type':'application/json'}, body: JSON.stringify(finalInfo)})
+            fetch(`http://scbackend-env.eba-imjep3am.eu-north-1.elasticbeanstalk.com/updateuser`,{'method':'POST', headers : {'Content-Type':'application/json'}, body: JSON.stringify(finalInfo)})
             .then(() => { alert("User updated successfully");
             })
             alert("User is being updated. You can continue to use the site in the mean time.")

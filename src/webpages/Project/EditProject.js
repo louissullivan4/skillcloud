@@ -14,13 +14,13 @@ const EditProfile = () => {
     const [finalInfo, setFinalInfo] = useState();
 
     const sendData = async () => {
-        const resp = await fetch(`http://scbackend-env.eba-93hey2mi.eu-north-1.elasticbeanstalk.com/updateproject`,{'method':'POST', headers : {'Content-Type':'application/json'}, body: JSON.stringify(finalInfo)})
+        const resp = await fetch(`http://scbackend-env.eba-imjep3am.eu-north-1.elasticbeanstalk.com/updateproject`,{'method':'POST', headers : {'Content-Type':'application/json'}, body: JSON.stringify(finalInfo)})
         const data = await resp.json();        
         return data
       };
 
       const event_match = async (newData) => {
-        const resp = await fetch(`http://scbackend-env.eba-93hey2mi.eu-north-1.elasticbeanstalk.com/eventmatch`,{'method':'POST', headers : {'Content-Type':'application/json'}, body: JSON.stringify(newData)})
+        const resp = await fetch(`http://scbackend-env.eba-imjep3am.eu-north-1.elasticbeanstalk.com/eventmatch`,{'method':'POST', headers : {'Content-Type':'application/json'}, body: JSON.stringify(newData)})
         if (resp.status === 200) {
             alert("Project created successfully");
             // navigate('/project/' + project_id);

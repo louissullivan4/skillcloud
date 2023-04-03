@@ -11,7 +11,7 @@ const Inbox = () => {
     const [inboxData, setInboxData] = useState([]);
     useEffect(() => {
       const fetchData = async () => {
-        const resp = await fetch('http://scbackend-env.eba-93hey2mi.eu-north-1.elasticbeanstalk.com/inbox/'+email)
+        const resp = await fetch('http://scbackend-env.eba-imjep3am.eu-north-1.elasticbeanstalk.com/inbox/'+email)
         const data = await resp.json();        
         setInboxData(data.result);
       };
