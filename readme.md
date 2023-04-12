@@ -12,7 +12,7 @@ python -m virtualenv .venv
 ```
 .\.venv\Scripts\activate
 ```
-*Run this command only if its the first time using the application*
+*Run this install command only if its the first time using the application*
 ```
 python pip install -r requirements.txt
 ```
@@ -29,7 +29,7 @@ Run each of these commands one by one:
 ```
 cd skillcloud-frontend
 ```
-*Run this command only if its the first time using the application*
+*Run this install command only if its the first time using the application*
 ```
 npm i
 ```
