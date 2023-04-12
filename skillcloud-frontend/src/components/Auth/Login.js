@@ -2,6 +2,9 @@ import React, {useState} from 'react'
 import { Link, useNavigate } from "react-router-dom";
 import { UserAuth } from '../../context/AuthContext';
 
+{/* The following code is an adaptation of the code created by
+Briley,C (2022) firebase-auth-context[Source Code]. https://github.com/fireclint/firebase-auth-context */}
+
 const Login = () => {
     const { login } = UserAuth();
     const navigate = useNavigate();

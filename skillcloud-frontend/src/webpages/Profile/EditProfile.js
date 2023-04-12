@@ -107,8 +107,7 @@ const EditProfile = () => {
                             <label htmlFor="job_category">Job Category</label>
                             <select id="job_category" onChange={(e) => setUserData({...userData, job_category: e.target.value})}>
                             <option disabled selected>Select a role category...</option>
-                            <option disabled selected>Select a role category...</option>
-                                    {/*The following occupation list was created by 
+                                    {/*The following occupation list is an adaptation of a list created by
                                     McKenna,J (2017) occupation-dropdown.html[Source Code]. https://gist.github.com/ag14spirit/fbf877576c9d6b78899e3ad02fe92b50*/}
                                     <optgroup label="Healthcare Practitioners and Technical Occupations:">
                                         <option>-  Dentist</option>

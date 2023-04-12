@@ -51,7 +51,6 @@ const AcceptDetails = () => {
         navigate(-1)
     }
 
-    
     return (
         <div className='create-profile-page'>
             <div className='create-profile-heading'>

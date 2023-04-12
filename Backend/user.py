@@ -3,6 +3,9 @@ from db_connect import connect_db
 mydb = connect_db()
 
 class User:
+    """
+    User class to create and update user information
+    """
     def __init__(self):
         self.email = ""
         self.fname = ""
@@ -20,6 +23,9 @@ class User:
         self.current_project = ""
 
     def create_experience(self, email, experience):
+        """
+        Create the user work experience
+        """
         cursor = mydb.cursor()
         for val in experience:
             experience_name = val['experience_name']
@@ -36,6 +42,9 @@ class User:
         return experience
     
     def update_experience(self, email, experience):
+        """
+        Update the user work experience
+        """
         cursor = mydb.cursor()
         for val in experience:
             experience_name = val['experience_name']
@@ -50,6 +59,9 @@ class User:
         return experience
 
     def get_experience(self, email):
+        """
+        Get the user work experience
+        """
         try:
             experience = []
             cursor = mydb.cursor()
@@ -63,10 +75,12 @@ class User:
                     experience.append(person)
             return experience
         except Exception as e:
-            print(e)
             return "404"
 
     def create_education(self, email, education):
+        """
+        Create the user education
+        """
         cursor = mydb.cursor()
         for val in education:
             edu_type = val['edu_type']
@@ -82,6 +96,9 @@ class User:
         return education
 
     def get_education(self, email):
+        """
+        Get the user education
+        """
         try:
             education = []
             cursor = mydb.cursor()
@@ -95,11 +112,12 @@ class User:
                     education.append(person)
             return education
         except Exception as e:
-            print(e)
             return "404"
 
-    
     def update_education(self, email, education):
+        """
+        Update the user education
+        """
         cursor = mydb.cursor()
         for val in education:
             edu_type = val['edu_type']
@@ -113,6 +131,9 @@ class User:
         return education
 
     def create_user(self, requestjson):
+        """
+        Create the user basic info
+        """
         cursor = mydb.cursor()
         email = requestjson['email']
         fname = requestjson['fname']
@@ -161,6 +182,9 @@ class User:
             return 404
 
     def get_user(self, email):
+        """
+        Get the user basic info
+        """
         cursor = mydb.cursor()
         try :
             cursor.execute("SELECT * FROM users WHERE email = %s", (email, ))
@@ -184,10 +208,12 @@ class User:
                 self.education = self.get_education(email)
             return "200"
         except Exception as e:
-            print(e)
             return "404"
 
     def update_user(self, requestjson):
+        """
+        Update the user basic info
+        """
         cursor = mydb.cursor()
         try:
             email = requestjson["email"]
@@ -218,6 +244,9 @@ class User:
             return 404
 
     def delete_user(self, email):
+        """
+        Delete the user basic info
+        """
         try:
             mycursor = mydb.cursor()
             sql = "DELETE FROM users WHERE email = %s"
@@ -273,10 +302,12 @@ class User:
                 mydb.commit()
             return 200
         except Exception as e:
-            print(e)
             return 404
 
     def get_current_projects(self, email):
+        """
+        Get the current projects of the user
+        """
         cursor = mydb.cursor()
         sql = "SELECT current_project FROM users WHERE email = %s"
         cursor.execute(sql, (email, ))
@@ -301,7 +332,10 @@ class User:
             projects_json = []
             return projects_json
 
-    def get_previous_projects(self, email):    
+    def get_previous_projects(self, email):
+        """
+        Get the previous projects of the user
+        """
         cursor = mydb.cursor()
         sql = "SELECT project_ids FROM users WHERE email = %s"
         cursor.execute(sql, (email, ))
@@ -327,6 +361,9 @@ class User:
             return projects_json
         
     def get_owned_projects(self, email):
+        """
+        Get the projects owned by the user
+        """
         cursor = mydb.cursor()
         sql = "SELECT * FROM projects WHERE project_author = %s"
         cursor.execute(sql, (email, ))
@@ -338,6 +375,9 @@ class User:
         return projects_json
 
     def leave_project(self, email, project_id):
+        """
+        Leave the input project for the user
+        """
         try:
             cursor = mydb.cursor()
             sql = "UPDATE users SET current_project = null, availability = 'Open' WHERE email = %s"
@@ -363,10 +403,12 @@ class User:
                 mydb.commit()
                 return 200
         except Exception as e:
-            print(e)
             return 404            
 
     def get_user_json(self):
+        """
+        Return the user as a json object
+        """
         experience_json = []
         for val in self.work_experience:
             newVal = {"experience_name":val[1], "experience_title":val[2], "experience_start":val[3], "experience_end":val[4], "experience_desc":val[5]}
@@ -385,7 +427,3 @@ class User:
         user.append(user_json)
         user_json = {"result":user}
         return user_json
-    
-        
-# u1 = User()
-# u1.get_owned_projects("sullivanlouis0@gmail.com")

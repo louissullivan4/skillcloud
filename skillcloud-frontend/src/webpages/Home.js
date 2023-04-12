@@ -26,6 +26,9 @@ const Home = () => {
       fetchData()
     }, []);
 
+    {/* The following 4 lines of code is an adaptation of the code created by
+    KunalN25 (2022) simple-react-pagination[Source Code]. https://github.com/KunalN25/simple-react-pagination */}
+
     const indexOfData= currentPage * tilesPerPage;
     const indexOfFData = indexOfData - tilesPerPage;
     const curData = tileData.slice(indexOfFData, indexOfData);

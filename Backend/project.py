@@ -5,6 +5,9 @@ from db_connect import connect_db
 mydb = connect_db()
 
 class Project:
+    """
+    Project class to create, update and get projects
+    """
     def __init__(self):
         self.id = ""
         self.title = ""
@@ -19,6 +22,9 @@ class Project:
         self.roles = []
 
     def create_roles(self, project_id, roles):
+        """
+        Create roles for the project
+        """
         cursor = mydb.cursor()
         for val in roles:
             role_id = check_id(mydb, "roles")
@@ -36,6 +42,9 @@ class Project:
         return roles
 
     def update_roles(self, project_id, roles):
+        """
+        Update roles for the project
+        """
         cursor = mydb.cursor()
         for val in roles:
             role_id = val['role_id']
@@ -51,6 +60,9 @@ class Project:
         return roles
 
     def get_roles(self, id):
+        """
+        Get roles for the project
+        """
         roles = []
         cursor = mydb.cursor()
         sql = "SELECT * FROM roles WHERE project_id = %s"
@@ -64,6 +76,9 @@ class Project:
         return roles
 
     def create_project(self, requestjson):
+        """
+        Create a project
+        """
         today = str(date.today())
         id = check_id(mydb, "projects")
         title = requestjson['project_title']
@@ -108,6 +123,9 @@ class Project:
             return "Error! Project already exists."
         
     def update_project(self, requestjson):
+        """
+        Update a project
+        """
         try:
             pid = requestjson['id']
             title = requestjson['title']
@@ -137,6 +155,9 @@ class Project:
             return "404"
 
     def delete_project(self, pid):  
+        """
+        Delete a project
+        """
         try:  
             mycursor = mydb.cursor()
             sql = "DELETE FROM projects WHERE project_id = %s"
@@ -163,10 +184,12 @@ class Project:
             mydb.commit()
             return 200
         except Exception as e:
-            print(e)
             return 404
 
     def close_project(self, pid):
+        """
+        Close a project
+        """
         try:
             cursor = mydb.cursor()
             sql = "UPDATE projects SET project_state = %s WHERE project_id = %s"
@@ -194,11 +217,12 @@ class Project:
             mydb.commit()
             return 200
         except Exception as e:
-            print(e)
             return 404
-
-                        
+          
     def get_project(self, id):
+        """
+        Get a project
+        """
         cursor = mydb.cursor()
         sql = "SELECT * FROM projects WHERE project_id = %s"
         cursor.execute(sql, (id, ))        
@@ -220,6 +244,9 @@ class Project:
             return (self.id, self.title, self.author, self.create_date, self.start_date, self.end_date, self.summary, self.state, self.city, self.country, self.roles)
 
     def create_project_pane(self, num=20):
+        """
+        Return a list of projects for the project home page
+        """
         cursor = mydb.cursor()
         sql = "SELECT project_id, project_title, project_summary, project_state, project_createdate FROM projects ORDER BY project_createdate DESC LIMIT %s"
         cursor.execute(sql, (num, ))
@@ -235,6 +262,9 @@ class Project:
             return projects_json
     
     def get_project_json(self):
+        """ 
+        Return a project as a json object
+        """
         self.get_project(self.id)
         roles_json = []
         for val in self.roles:

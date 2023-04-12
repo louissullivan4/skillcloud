@@ -9,6 +9,9 @@ import { createUserWithEmailAndPassword,
 import { auth } from '../firebase';
 import { getDownloadURL, getStorage, ref, uploadBytes } from "firebase/storage";
 
+{/* The following code is an adaptation of the code created by
+Briley,C (2022) firebase-auth-context[Source Code]. https://github.com/fireclint/firebase-auth-context */}
+
 const UserContext = createContext();
 
 export const AuthContextProvider = ({ children }) => {
@@ -53,7 +56,6 @@ export const AuthContextProvider = ({ children }) => {
         })
     }
         
-
     useEffect( () => {
         const unsubscribe = onAuthStateChanged(auth, (currentUser) => {
             setUser(currentUser)
@@ -65,8 +67,6 @@ export const AuthContextProvider = ({ children }) => {
             unsubscribe();
         }
     }, [])
-
-
 
     return (
         <UserContext.Provider value={{ createUser, user, login, logout, deleteAUser, updateProfilePic }}>
