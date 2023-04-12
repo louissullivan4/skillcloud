@@ -10,6 +10,9 @@ from project import Project
 mydb = connect_db()
 
 def get_notifications(user_email):
+    """
+    Returns the notifications for the input user
+    """
     cursor = mydb.cursor()
     msg_json = []
     sql = "SELECT * FROM notifications WHERE project_author = %s && status = 'pending' && type = 'project_apply'"
@@ -57,6 +60,9 @@ def get_notifications(user_email):
     return {"Status Code": 200, "result": msg_json}
 
 def no_candidates_notifications(project, role):
+    """
+    Notifies the project author that no candidates were found for a role
+    """
     try :
         project = str(project).replace("'", '"').replace("True", "true").replace("False", "false").replace("None", "null").replace("'", '\\"')
         project = json.loads(project)
@@ -75,6 +81,9 @@ def no_candidates_notifications(project, role):
         return 404
 
 def delete_role_notifications(projectvals):
+    """
+    Deletes a notification from a user inbox
+    """
     try:
         cursor = mydb.cursor()
         project = str(projectvals).replace("'", '"').replace("True", "true").replace("False", "false").replace("None", "null").replace("'", '\\"')
@@ -90,10 +99,12 @@ def delete_role_notifications(projectvals):
             mydb.commit()
         return 200
     except Exception as e:
-        print(e)
         return 404
 
 def create_role_notifications(project):
+    """
+    Creates notifications for users who have been invited to a project
+    """
     cursor = mydb.cursor()
     project = str(project).replace("'", '"').replace("True", "true").replace("False", "false").replace("None", "null").replace("'", '\\"')
     new = json.loads(project)
@@ -102,7 +113,6 @@ def create_role_notifications(project):
         candidates = event_match(role)
         # sort candidates by hightest to lowest value percentage
         candidates = dict(sorted(candidates.items(), key=lambda item: item[1], reverse=True))
-        print(role, candidates)
         if len(candidates) < 1:
             no_candidates_notifications(project, role)
         else:
@@ -110,6 +120,9 @@ def create_role_notifications(project):
     return 200
 
 def notify_invite_project(candidates, role, project_author, project_id):
+    """
+    Notifies user that they have been invited to a project
+    """
     try:
         cursor = mydb.cursor()
         try:
@@ -140,10 +153,12 @@ def notify_invite_project(candidates, role, project_author, project_id):
                 mydb.commit()
         return 200
     except Exception as e:
-        print(traceback.format_exc())
         return 404
 
 def notify_response_project(user_email, role_id, req):
+    """
+    Notify the project author of a user response to a project role has been accepted or rejected
+    """
     try:
         cursor = mydb.cursor()
         sql = "SELECT roles.role_no_needed, roles.roles_filled FROM roles WHERE role_id = %s"
@@ -220,10 +235,12 @@ def notify_response_project(user_email, role_id, req):
             return 403
         return 200
     except Exception as e:
-        print(traceback.format_exc())
         return 404
 
 def response_apply_project(email, user_notified, role_id, response):
+    """
+    Notifies the user that applied for a role in a project
+    """
     cursor = mydb.cursor()
     try:
         if response == "accepted":
@@ -235,7 +252,6 @@ def response_apply_project(email, user_notified, role_id, response):
                 if roles_available > 0:
                     project_id = res[0][2]
                     if len(res) > 0:
-                        print("Role(s) available: ", roles_available)
                         sql = "UPDATE notifications SET status = %s WHERE type = %s AND user_notified = %s AND role_id = %s"
                         cursor.execute(sql, ("accepted", "project_apply", user_notified, role_id))
                         mydb.commit()
@@ -259,13 +275,13 @@ def response_apply_project(email, user_notified, role_id, response):
             cursor.execute(sql, ("declined", "project_apply", user_notified, role_id))
             mydb.commit()
             return 200
-        else:
-            print("Error with response"), response
     except Exception as e:
-        print(e)
         return 404
     
 def notify_role_change(user_email, role_id, req):
+    """
+    This function is used to notify the user that they have been added or removed from a role
+    """
     cursor = mydb.cursor()
     sql = "SELECT roles.role_no_needed, roles.roles_filled FROM roles WHERE role_id = %s"
     cursor.execute(sql, (role_id, ))
@@ -338,6 +354,9 @@ def notify_role_change(user_email, role_id, req):
         return 404
     
 def apply_project(email, role_id):
+    """
+    Creates a notification for the project author to accept or decline the user's application
+    """
     cursor = mydb.cursor()
     try:
         sql = "SELECT role_no_needed, roles_filled, project_id FROM roles WHERE role_id = %s"
@@ -357,20 +376,24 @@ def apply_project(email, role_id):
                     mydb.commit()
                 return 200
     except Exception as e:
-        print(e)
         return 404
     
 def get_final_candidates_dict(job, candidates):
+    """
+    Sorts the dictionary returned from match skills event of candidates by percentage
+    """
     percentages_dict = {}
     percentages_dict = match_skills(job, candidates)
     return dict(sorted(percentages_dict.items(), key=lambda val: val[:1]))
 
 def get_input_users(category, project_id):
+    """
+    Returns list of possible users for a role
+    """
     cursor = mydb.cursor()
     sql = "SELECT project_author FROM projects WHERE project_id = %s"
     cursor.execute(sql, (project_id, ))
     row = cursor.fetchall()
-    print(row)
     project_author = row[0][0]
     sql = "SELECT email, job_title, job_desc, certifications FROM users WHERE job_category = %s && availability = 'Open' && email != %s"
     cursor.execute(sql, (category, project_author))     
@@ -398,6 +421,9 @@ def get_input_users(category, project_id):
     return candidates
 
 def get_ineligible_users(role_id):
+    """
+    Returns list of ineligible users for a role.
+    """
     cursor = mydb.cursor()
     sql = "SELECT user_email FROM ineligible WHERE role_id = %s"
     cursor.execute(sql, (role_id, ))     
@@ -406,6 +432,9 @@ def get_ineligible_users(role_id):
     return ineligible_users
 
 def fulfill_roles(data):
+    """
+    Creates a list of eligible users for a role, passes this list to the match event algorithm and then requests invites to be made from the match event output.
+    """
     data = str(data).replace("'", '"').replace("True", "true").replace("False", "false").replace("None", "null").replace("'", '\\"')
     json_data = json.loads(data)
     desc = json_data["role_desc"]
@@ -424,6 +453,9 @@ def fulfill_roles(data):
     return final
 
 def user_values(data):
+    """
+    Returns all usable data from the user json
+    """
     email = data["email"].lower()
     title = data["job_title"].lower()
     category = data["job_category"].lower()
@@ -441,6 +473,9 @@ def user_values(data):
     return profile, category, email
 
 def fulfill_user(jsonVals):
+    """
+    Creates a list of eligible roles for a user, passes this list to the match event algorithm and then requests invites to be made from the match event output.
+    """
     percentages_dict = {}
     job = {}
     candidates = {}
@@ -474,18 +509,22 @@ def fulfill_user(jsonVals):
                         cursor.execute(sql, (role[0], ))
                         project_author = cursor.fetchone()
                         if len(project_author) > 0:
-                            print(role, candidates)
                             notify_invite_project(candidates, role, project_author, role[0])     
         return "200" 
     except Exception as e:
-        print(traceback.format_exc())
         return "400"
 
 def event_match_user(jsonVals):
+    """
+    Called to match a user to a role. Returns a dictionary of roles.
+    """
     complete = fulfill_user(jsonVals)
     return complete
 
 def event_match(jsonVals):
+    """
+    Called to match a role to a user. Returns a dictionary of candidates.
+    """
     jsonVals = str(jsonVals).replace("'", '"').replace("True", "true").replace("False", "false").replace("None", "null").replace("'", '\\"')
     data = json.loads(jsonVals)
     candidates = fulfill_roles(data)
