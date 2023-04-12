@@ -2,6 +2,9 @@ import React from 'react'
 
 import { BiLeftArrowAlt, BiRightArrowAlt } from "react-icons/bi";
 
+{/* The following code is an adaptation of the code created by
+KunalN25 (2022) simple-react-pagination[Source Code]. https://github.com/KunalN25/simple-react-pagination */}
+
 const Pagination = ({ nPages, currentPage, setCurrentPage }) => {
     const pageNumbers = [...Array(nPages + 1).keys()].slice(1)
     const nextPage = () => {

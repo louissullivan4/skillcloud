@@ -5,6 +5,9 @@ import { auth } from '../../firebase'
 
 import "../../index.css";
 
+{/* The following code is an adaptation of the code created by
+Briley,C (2022) firebase-auth-context[Source Code]. https://github.com/fireclint/firebase-auth-context */}
+
 const CreateAccount = () => {
     const [email, setEmail] = useState('')
     const [password, setPassword] = useState('')
